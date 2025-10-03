@@ -1,59 +1,245 @@
+"use client";
+import { useEffect, useMemo, useState } from "react";
 import styles from "./f168.module.css";
+import copy from "copy-to-clipboard";
 import Faq from './faq'
 
 interface PromoCode {
   code: string;
   status: "Used" | "Available";
+  site : string;
   date: string;
 }
 
+interface RewardRow {
+  user: string;
+  code: string;
+  points: number;
+  site: "F168" | "MK8";
+  time: string; 
+}
+
+const VISIBLE_COUNT = 7;
+const RECENT_VISIBLE = 5;
+
 const promoCodes: PromoCode[] = [
-  { code: "CODE123", status: "Used", date: "2025-10-01" },
-  { code: "CODE456", status: "Available", date: "2025-10-02" },
-  { code: "CODE789", status: "Used", date: "2025-09-30" },
+  { code: "CODE1", status: "Available", site: "F168", date: "2025-10-01" },
+  { code: "CODE2", status: "Available", site: "MK8", date: "2025-10-02" },
+  { code: "CODE3", status: "Available", site: "MK8", date: "2025-09-30" },
+  { code: "CODE4", status: "Available", site: "F168", date: "2025-09-30" },
+  { code: "CODE5", status: "Available", site: "MK8", date: "2025-09-30" },
+  { code: "CODE6", status: "Available", site: "F168", date: "2025-10-01" },
+  { code: "CODE7", status: "Available", site: "MK8", date: "2025-10-02" },
+  { code: "CODE8", status: "Available", site: "MK8", date: "2025-09-30" },
+  { code: "CODE9", status: "Available", site: "F168", date: "2025-09-30" },
+  { code: "CODE10", status: "Available", site: "MK8", date: "2025-09-30" },
+  { code: "CODE11", status: "Available", site: "MK8", date: "2025-10-02" },
+  { code: "CODE12", status: "Available", site: "MK8", date: "2025-09-30" },
+  { code: "CODE13", status: "Available", site: "F168", date: "2025-09-30" },
+  { code: "CODE14", status: "Available", site: "MK8", date: "2025-09-30" },
+];
+
+const recentRewards: RewardRow[] = [
+  { user: "neu***", code: "CODE2", points: 80, site: "MK8", time: "2025-10-02 12:35" },
+  { user: "amy***", code: "CODE7", points: 50, site: "MK8", time: "2025-10-02 11:58" },
+  { user: "kd9***", code: "CODE1", points: 30, site: "F168", time: "2025-10-01 22:05" },
+  { user: "sol***", code: "CODE6", points: 60, site: "F168", time: "2025-10-01 18:41" },
+  { user: "hen***", code: "CODE3", points: 80, site: "MK8", time: "2025-10-02 12:35" },
+  { user: "amy***", code: "CODE4", points: 50, site: "MK8", time: "2025-10-02 11:58" },
+  { user: "puri***", code: "CODE9", points: 30, site: "F168", time: "2025-10-01 22:05" },
+  { user: "rob***", code: "CODE8", points: 60, site: "F168", time: "2025-10-01 18:41" },
 ];
 
 export default function F168Page() {
+  const [copiedIndex, setCopiedIndex] = useState<number | null>(null);
+  const [start, setStart] = useState(0);
+  const [recentStart, setRecentStart] = useState(0);
+
+  const handleCopy = (code: string, rowIndex: number) => {
+    copy(code);
+    setCopiedIndex(rowIndex);
+    setTimeout(() => setCopiedIndex(null), 1400);
+  };
+
+  const sortedCodes = useMemo(() => {
+    return [...promoCodes].sort(
+      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    );
+  }, []);
+
+  const sortedRecent = useMemo(() => {
+    const parse = (t: string) => new Date(t.replace(" ", "T")).getTime();
+    return [...recentRewards].sort((a, b) => parse(b.time) - parse(a.time));
+  }, []);
+
+  const visibleRows = useMemo(() => {
+    const total = sortedCodes.length;
+    if (total === 0) return new Array(VISIBLE_COUNT).fill(null);
+
+    if (total <= VISIBLE_COUNT) {
+      return [...sortedCodes, ...Array(VISIBLE_COUNT - total).fill(null)];
+    }
+
+    const rows: (typeof sortedCodes[number] | null)[] = [];
+    for (let i = 0; i < VISIBLE_COUNT; i++) {
+      rows.push(sortedCodes[(start + i) % total]);
+    }
+    return rows;
+  }, [sortedCodes, start]);
+  
+  const visibleRecent = useMemo(() => {
+    const total = sortedRecent.length;
+    if (total === 0) return new Array(RECENT_VISIBLE).fill(null);
+
+    if (total <= RECENT_VISIBLE) {
+      return [...sortedRecent, ...Array(RECENT_VISIBLE - total).fill(null)];
+    }
+
+    const rows: (RewardRow | null)[] = [];
+    for (let i = 0; i < RECENT_VISIBLE; i++) {
+      rows.push(sortedRecent[(recentStart + i) % total]);
+    }
+    return rows;
+  }, [sortedRecent, recentStart]);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setRecentStart((s) =>
+        sortedRecent.length > 0 ? (s + 1) % sortedRecent.length : 0
+      );
+    }, 4000);
+    return () => clearInterval(id);
+  }, [sortedRecent.length]);
+
+  useEffect(() => {
+    if (sortedCodes.length <= VISIBLE_COUNT) return;
+    const id = setInterval(() => {
+      setStart((s) => (s + 1) % sortedCodes.length);
+    }, 4000);
+    return () => clearInterval(id);
+  }, [sortedCodes.length]);
+
   return (
     <div className={styles.container}>
       {/*{Top Section}*/}
       <section>
         <div className={styles.topSection}>
-          <h1 className={styles.promoTitle}>Promotion</h1>
-          <div className={styles.banner}>
-              <div className={styles.leftBox}>
-                <input
-                  id="promoCode"
-                  type="text"
-                  placeholder="Enter promo code"
-                  className={styles.input}
-                  aria-label="Promo code"
-                />
-                <div className={styles.actions}>
+          <div className={styles.sectionHeading}>
+            <h1 className={`${styles.promoTitle}`}>F168 Promotions</h1>
+          </div>
+          <div className={styles.bannerGrid}>
+            {/* Box 1 (6/12) — Input */}
+              <div className={`${styles.box1} ${styles.leftBox}`}>
+                <img src="/images/left1.jpg" alt="" className={styles.pokerArt}/>
+                <div className={styles.formStack}>
+                  <input id="promoCode" type="text" placeholder="Enter promo code" className={styles.input} aria-label="Promo code" />
+                  <select id="siteSelect" name="site" className={styles.select}>
+                    <option value="Select">Select Site</option>
+                    <option value="F168">F168</option>
+                    <option value="MK8">MK8</option>
+                  </select>
                   <button className={styles.button}>Check Now</button>
                 </div>
               </div>
-              <div className={styles.rightBox}>
-                  <table className={styles.table}>
-                    <tbody>
-                      {promoCodes.map((promo, i) => (
-                        <tr key={i}>
-                          <td>{promo.code}</td>
-                          <td
-                            className={
-                              promo.status === "Available"
-                                ? styles.available
-                                : styles.used
-                            }
-                          >
-                            {promo.status}
+              {/* Box 1 (6/12) — Code */}
+              <div className={`${styles.box2} ${styles.rightBox}`}>
+                <table className={styles.table}>
+                  <colgroup>
+                    <col style={{ width: "28%" }} /> {/* Code */}
+                    <col style={{ width: "22%" }} /> {/* Available */}
+                    <col style={{ width: "20%" }} /> {/* Web */}
+                    <col style={{ width: "30%" }} /> {/* Date */}
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>Code</th>
+                      <th>Available</th>
+                      <th>Web</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody className={styles.tableBody}>
+                    {visibleRows.map((row, i) =>
+                      row ? (
+                        <tr key={`${row.code}-${i}`} className={styles.tableRow}>
+                          <td>
+                            <div className={styles.codeCell}>
+                              <span className={styles.codeText}>{row.code}</span>
+                              <button
+                                type="button"
+                                className={`${styles.copyBtn} ${
+                                  copiedIndex === i ? styles.copyBtnActive : ""
+                                }`}
+                                onClick={() => handleCopy(row.code, i)}
+                                aria-label={`Copy ${row.code}`}
+                                title={copiedIndex === i ? "Copied!" : "Copy"}
+                              >
+                                {copiedIndex === i ? (
+                                  <span className={styles.copiedLabel}>Copied</span>
+                                ) : (
+                                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                                    <path d="M16 3H7a2 2 0 0 0-2 2v9" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                                    <rect x="9" y="7" width="12" height="14" rx="2" stroke="currentColor" strokeWidth="2"/>
+                                  </svg>
+                                )}
+                              </button>
+                            </div>
                           </td>
-                          <td>{promo.date}</td>
+
+                          <td className={row.status === "Available" ? styles.available : styles.used}>
+                            {row.status}
+                          </td>
+
+                          <td>{row.site}</td>
+                          <td>{row.date}</td>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                      ) : (
+                        <tr key={`filler-${i}`} className={`${styles.tableRow} ${styles.fillerRow}`}>
+                          <td colSpan={4}>&nbsp;</td>
+                        </tr>
+                      )
+                    )}
+                  </tbody>
+                </table>
+              </div>
+              {/* Box 3 (12/12) — Recent Rewards */}
+              <div className={`${styles.box3}  ${styles.fullBoxNoChrome}`}>
+                <table className={`${styles.table} ${styles.recentTable}`}>
+                  <colgroup>
+                    <col style={{ width: "20%" }} /> {/* User */}
+                    <col style={{ width: "20%" }} /> {/* Code */}
+                    <col style={{ width: "16%" }} /> {/* Points */}
+                    <col style={{ width: "14%" }} /> {/* Site */}
+                    <col style={{ width: "20%" }} /> {/* Time */}
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>User</th>
+                      <th>Code</th>
+                      <th>Points</th>
+                      <th>Site</th>
+                      <th>Time</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                     {visibleRecent.map((r, i) =>
+                      r ? (
+                        <tr key={`${r.user}-${i}`}>
+                          <td>{r.user}</td>
+                          <td>{r.code}</td>
+                          <td>{r.points}</td>
+                          <td>{r.site}</td>
+                          <td>{r.time}</td>
+                        </tr>
+                      ) : (
+                        <tr key={`recent-filler-${i}`} className={styles.fillerRow}>
+                          <td colSpan={5} />
+                        </tr>
+                      )
+                    )}
+                  </tbody>
+                </table>
+              </div>            
           </div>
         </div>
       </section>

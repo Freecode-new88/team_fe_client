@@ -38,14 +38,33 @@
   opacity: 0.95;
 }
 
-/* Optional: make footer stack nicely on small screens */
+/* ===============================
+   Tablet ≤ 1024px
+   =============================== */
+@media (max-width: 1024px) {
+  .footer { padding: 0.85rem 1.25rem; }
+  .logo { height: 36px; }
+  .footerText { font-size: 0.9rem; }
+}
+
+/* ===============================
+   Phone ≤ 576px
+   =============================== */
 @media (max-width: 576px) {
   .footer {
     flex-direction: column;
     text-align: center;
     gap: 0.5rem;
+    padding: 0.75rem 1rem;
   }
   .right {
     justify-content: center;
+  }
+
+  .logo { height: 32px; }
+
+  .footerText {
+    font-size: 0.85rem;
+    line-height: 1.3;
   }
 }

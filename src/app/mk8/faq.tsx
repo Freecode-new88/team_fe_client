@@ -1,11 +1,11 @@
 'use client'
 import { useState } from 'react'
-import styles from './f168.module.css'
+import styles from './mk8.module.css'
 
 type QA = { q: string; a: string }
 
 const faqs: QA[] = [
-  { q: 'What types of home cleaning services do you offer?', a: 'Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…' },
+  { q: 'What types of home cleaning services do you offer?', a: 'Online casinos have become a popular form of entertainment…' },
   { q: 'Are your cleaners trained and insured?', a: 'Online casinos have become a popular form of entertainment…' },
   { q: 'What is your pricing structure for home cleaning services?', a: 'Online casinos have become a popular form of entertainment…' },
   { q: 'How often should I schedule home cleaning services?', a: 'Online casinos have become a popular form of entertainment…' },
@@ -17,6 +17,7 @@ export default function Faq() {
     <section className={styles.fqa}>
       <div className={styles.sectionHeading}>
         <h2 className={styles.gradientFont}>Frequently Asked Questions</h2>
+        <p>Online casinos have the advantage of being accessible from anywhere at any time…</p>
       </div>
 
       <div className={styles.faqWrap}>

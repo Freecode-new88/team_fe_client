@@ -1,6 +1,6 @@
 /* Fullscreen overlay (theme-matched to your style.css) */
 .overlay {
-  background: rgba(18, 194, 233, 0.9);
+  background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
   position: fixed;
   inset: 0;
   z-index: 999999; /* above everything */
@@ -39,3 +39,4 @@
 @media (min-width: 768px) and (max-width: 991px) { .centerAbs { width: 45%; } }
 @media (min-width: 576px) and (max-width: 767px) { .centerAbs { width: 50%; } }
 @media (max-width: 575px) { .centerAbs { width: 60%; } }
+
