@@ -1,0 +1,50 @@
+.scrollUp {
+  position: fixed;
+  right: 20px;
+  bottom: 100px;
+  height: 45px;
+  width: 45px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  z-index: 10000;
+
+  display: grid;
+  place-items: center;
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(15px);
+  transition: all 200ms linear;
+
+  background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
+  color: #000;
+}
+
+.active {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+
+.ring {
+  position: absolute;
+  inset: 0;
+}
+
+.track {
+  stroke: rgba(255,255,255,0.25);
+}
+
+.progress {
+  stroke: #000;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+.arrow {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 1;
+  z-index: 1;
+}

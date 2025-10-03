@@ -1,0 +1,54 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59); 
+  color: white;
+}
+
+.logoArea {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #f1c40f;
+}
+
+.nav {
+  display: flex;
+  gap: 5.5rem;
+}
+
+.tab {
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-decoration: none;
+  color: #FFF;
+  padding-bottom: 4px;
+  border-bottom: 3px solid transparent;
+  transition: all 0.3s ease;
+}
+
+.tab:hover {
+  color: white;
+}
+
+.activeTabF168 {
+  color: #fc8b00;
+  border-color: #fc8b00;
+}
+
+.activeTabMK8 {
+  color: #f0d36f;
+  border-color: #f0d36f;
+}

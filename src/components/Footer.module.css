@@ -1,0 +1,51 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 2rem;
+
+  /* Improved contrast & consistent with your theme */
+  background: linear-gradient(to right, #f64f59, #c471ed, #12c2e9);
+  color: #fff;
+}
+
+.left,
+.right {
+  display: flex;
+  align-items: center;
+}
+
+.logoArea {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo {
+  height: 40px;
+  width: auto;
+  display: block;
+}
+
+.brand {
+  font-weight: 800;
+  letter-spacing: 0.5px;
+}
+
+.footerText {
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+
+/* Optional: make footer stack nicely on small screens */
+@media (max-width: 576px) {
+  .footer {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+  .right {
+    justify-content: center;
+  }
+}
