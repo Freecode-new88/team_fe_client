@@ -3,13 +3,7 @@ import { useEffect, useMemo, useState } from "react";
 import styles from "./f168.module.css";
 import copy from "copy-to-clipboard";
 import Faq from './faq'
-
-interface PromoCode {
-  code: string;
-  status: "Used" | "Available";
-  site : string;
-  date: string;
-}
+import { fetchPromoCodes, type PromoItem } from "@/services/promo.service";
 
 interface RewardRow {
   user: string;
@@ -21,23 +15,6 @@ interface RewardRow {
 
 const VISIBLE_COUNT = 6;
 const RECENT_VISIBLE = 5;
-
-const promoCodes: PromoCode[] = [
-  { code: "CODE1", status: "Available", site: "F168", date: "2025-10-01" },
-  { code: "CODE2", status: "Available", site: "MK8", date: "2025-10-02" },
-  { code: "CODE3", status: "Available", site: "MK8", date: "2025-09-30" },
-  { code: "CODE4", status: "Available", site: "F168", date: "2025-09-30" },
-  { code: "CODE5", status: "Available", site: "MK8", date: "2025-09-30" },
-  { code: "CODE6", status: "Available", site: "F168", date: "2025-10-01" },
-  { code: "CODE7", status: "Available", site: "MK8", date: "2025-10-02" },
-  { code: "CODE8", status: "Available", site: "MK8", date: "2025-09-30" },
-  { code: "CODE9", status: "Available", site: "F168", date: "2025-09-30" },
-  { code: "CODE10", status: "Available", site: "MK8", date: "2025-09-30" },
-  { code: "CODE11", status: "Available", site: "MK8", date: "2025-10-02" },
-  { code: "CODE12", status: "Available", site: "MK8", date: "2025-09-30" },
-  { code: "CODE13", status: "Available", site: "F168", date: "2025-09-30" },
-  { code: "CODE14", status: "Available", site: "MK8", date: "2025-09-30" },
-];
 
 const recentRewards: RewardRow[] = [
   { user: "neu***", code: "CODE2", points: 80, site: "MK8", time: "2025-10-02 12:35" },
@@ -55,6 +32,22 @@ export default function F168Page() {
   const [start, setStart] = useState(0);
   const [recentStart, setRecentStart] = useState(0);
 
+  const [promoData, setPromoData] = useState<PromoItem[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      const res = await fetchPromoCodes();
+      if (!alive) return;
+      if (res.ok) setPromoData(res.data);
+      setLoading(false);
+    })();
+    return () => {
+      alive = false;
+    };
+  }, []);
+
   const handleCopy = (code: string, rowIndex: number) => {
     copy(code);
     setCopiedIndex(rowIndex);
@@ -62,10 +55,12 @@ export default function F168Page() {
   };
 
   const sortedCodes = useMemo(() => {
-    return [...promoCodes].sort(
-      (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+    const list = promoData ?? [];
+    // date is "YYYY-MM-DD" per your API. If you later switch to "YYYY-MM-DD HH:mm", this still works.
+    return [...list].sort(
+      (a, b) => new Date(b.date.replace(" ", "T")).getTime() - new Date(a.date.replace(" ", "T")).getTime()
     );
-  }, []);
+  }, [promoData]);
 
   const sortedRecent = useMemo(() => {
     const parse = (t: string) => new Date(t.replace(" ", "T")).getTime();
@@ -172,7 +167,7 @@ export default function F168Page() {
                         <tr key={`${row.code}-${i}`} className={styles.tableRow}>
                           <td>
                             <div className={styles.codeCell}>
-                              <span className={styles.codeText}>{row.code}</span>
+                              <span className={styles.codeText}>{row.promo_code}</span>
                               <button
                                 type="button"
                                 className={`${styles.copyBtn} ${
@@ -194,8 +189,8 @@ export default function F168Page() {
                             </div>
                           </td>
 
-                          <td className={row.status === "Available" ? styles.available : styles.used}>
-                            {row.status}
+                          <td className={row.available === "Available" ? styles.available : styles.used}>
+                            {row.available}
                           </td>
 
                           <td>{row.site}</td>

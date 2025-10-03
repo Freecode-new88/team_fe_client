@@ -5,8 +5,8 @@ import styles from './f168.module.css'
 type QA = { q: string; a: string }
 
 const faqs: QA[] = [
-  { q: 'What types of home cleaning services do you offer?', a: 'Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…Online casinos have become a popular form of entertainment…' },
-  { q: 'Are your cleaners trained and insured?', a: 'Online casinos have become a popular form of entertainment…' },
+  { q: 'How can I get the promo code?', a: 'You can get at the promo code section from above...' },
+  { q: 'How do I claim a promo code?', a: 'Online casinos have become a popular form of entertainment…' },
   { q: 'What is your pricing structure for home cleaning services?', a: 'Online casinos have become a popular form of entertainment…' },
   { q: 'How often should I schedule home cleaning services?', a: 'Online casinos have become a popular form of entertainment…' },
 ]
