@@ -19,7 +19,7 @@ interface RewardRow {
   time: string; 
 }
 
-const VISIBLE_COUNT = 7;
+const VISIBLE_COUNT = 6;
 const RECENT_VISIBLE = 5;
 
 const promoCodes: PromoCode[] = [
@@ -44,10 +44,10 @@ const recentRewards: RewardRow[] = [
   { user: "amy***", code: "CODE7", points: 50, site: "MK8", time: "2025-10-02 11:58" },
   { user: "kd9***", code: "CODE1", points: 30, site: "F168", time: "2025-10-01 22:05" },
   { user: "sol***", code: "CODE6", points: 60, site: "F168", time: "2025-10-01 18:41" },
-  { user: "hen***", code: "CODE3", points: 80, site: "MK8", time: "2025-10-02 12:35" },
-  { user: "amy***", code: "CODE4", points: 50, site: "MK8", time: "2025-10-02 11:58" },
-  { user: "puri***", code: "CODE9", points: 30, site: "F168", time: "2025-10-01 22:05" },
-  { user: "rob***", code: "CODE8", points: 60, site: "F168", time: "2025-10-01 18:41" },
+  // { user: "hen***", code: "CODE3", points: 80, site: "MK8", time: "2025-10-02 12:35" },
+  // { user: "amy***", code: "CODE4", points: 50, site: "MK8", time: "2025-10-02 11:58" },
+  // { user: "puri***", code: "CODE9", points: 30, site: "F168", time: "2025-10-01 22:05" },
+  // { user: "rob***", code: "CODE8", points: 60, site: "F168", time: "2025-10-01 18:41" },
 ];
 
 export default function F168Page() {
@@ -102,6 +102,12 @@ export default function F168Page() {
     return rows;
   }, [sortedRecent, recentStart]);
 
+  const onlyTime = (ts: string) => {
+  const t = ts.replace("T", " ");
+  const hhmm = t.slice(11, 16);
+  return hhmm;
+};
+
   useEffect(() => {
     const id = setInterval(() => {
       setRecentStart((s) =>
@@ -128,6 +134,7 @@ export default function F168Page() {
             <h1 className={`${styles.promoTitle}`}>F168 Promotions</h1>
           </div>
           <div className={styles.bannerGrid}>
+            
             {/* Box 1 (6/12) — Input */}
               <div className={`${styles.box1} ${styles.leftBox}`}>
                 <img src="/images/left1.jpg" alt="" className={styles.pokerArt}/>
@@ -141,20 +148,21 @@ export default function F168Page() {
                   <button className={styles.button}>Check Now</button>
                 </div>
               </div>
-              {/* Box 1 (6/12) — Code */}
+              
+              {/* Box 2 (6/12) — Code */}
               <div className={`${styles.box2} ${styles.rightBox}`}>
                 <table className={styles.table}>
                   <colgroup>
-                    <col style={{ width: "28%" }} /> {/* Code */}
-                    <col style={{ width: "22%" }} /> {/* Available */}
-                    <col style={{ width: "20%" }} /> {/* Web */}
-                    <col style={{ width: "30%" }} /> {/* Date */}
+                    <col style={{ width: "28%" }} /> 
+                    <col style={{ width: "22%" }} />
+                    <col style={{ width: "20%" }} />
+                    <col style={{ width: "30%" }} />
                   </colgroup>
                   <thead>
                     <tr>
                       <th>Code</th>
                       <th>Available</th>
-                      <th>Web</th>
+                      <th>Site</th>
                       <th>Date</th>
                     </tr>
                   </thead>
@@ -202,15 +210,16 @@ export default function F168Page() {
                   </tbody>
                 </table>
               </div>
+              
               {/* Box 3 (12/12) — Recent Rewards */}
               <div className={`${styles.box3}  ${styles.fullBoxNoChrome}`}>
                 <table className={`${styles.table} ${styles.recentTable}`}>
                   <colgroup>
-                    <col style={{ width: "20%" }} /> {/* User */}
-                    <col style={{ width: "20%" }} /> {/* Code */}
-                    <col style={{ width: "16%" }} /> {/* Points */}
-                    <col style={{ width: "14%" }} /> {/* Site */}
-                    <col style={{ width: "20%" }} /> {/* Time */}
+                    <col style={{ width: "18%" }} />
+                    <col style={{ width: "18%" }} /> 
+                    <col style={{ width: "16%" }} /> 
+                    <col style={{ width: "14%" }} /> 
+                    <col style={{ width: "18%" }} /> 
                   </colgroup>
                   <thead>
                     <tr>
@@ -224,15 +233,15 @@ export default function F168Page() {
                   <tbody>
                      {visibleRecent.map((r, i) =>
                       r ? (
-                        <tr key={`${r.user}-${i}`}>
+                        <tr key={`${r.user}-${i}`} >
                           <td>{r.user}</td>
                           <td>{r.code}</td>
                           <td>{r.points}</td>
                           <td>{r.site}</td>
-                          <td>{r.time}</td>
+                          <td>{onlyTime(r.time)}</td>
                         </tr>
                       ) : (
-                        <tr key={`recent-filler-${i}`} className={styles.fillerRow}>
+                        <tr key={`recent-filler-${i}`} className={`${styles.fillerRow}`}>
                           <td colSpan={5} />
                         </tr>
                       )
@@ -244,7 +253,7 @@ export default function F168Page() {
         </div>
       </section>
       
-      {/*{Awesome Casino Games}*/}
+      {/*{Awesome Games}*/}
       <section className={styles.game}>
         <div className={styles.sectionHeading}>
           <h2 className={styles.gradientFont}>Awesome Games</h2>
