@@ -185,8 +185,8 @@
   font-weight: 800;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  position: static;
-  top: auto;
+  position: sticky;
+  top: 0;
   z-index: 2;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
@@ -213,109 +213,6 @@
 .copyBtnActive { background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59); color: #000; }
 .copiedLabel { font-size: 0.8rem; font-weight: 800; }
 .recentTable{ min-width: 760px; }
-
-.panelPulse {
-  animation: panel-pulse 900ms ease-out;
-}
-@keyframes panel-pulse {
-  0%   { box-shadow: 0 0 0 rgba(18,194,233,0); }
-  30%  { box-shadow: 0 0 24px rgba(18,194,233,.45); }
-  100% { box-shadow: 0 0 0 rgba(18,194,233,0); }
-}
-
-.panelPop {
-  animation: panel-pop 320ms cubic-bezier(.2,.9,.2,1.1);
-}
-@keyframes panel-pop {
-  0%   { transform: translateY(6px) scale(.985); opacity:.75; }
-  100% { transform: translateY(0)  scale(1);     opacity:1;    }
-}
-
-.rowEnter {
-  animation:
-    row-slide-in 520ms ease-out both,
-    row-glow     1600ms ease-out both;
-}
-@keyframes row-slide-in {
-  from { transform: translateY(-10px); opacity: 0; }
-  to   { transform: translateY(0);     opacity: 1; }
-}
-@keyframes row-glow {
-  0%   { background-color: rgba(226, 64, 204, 0.082); }
-  100% { background-color: transparent; }
-}
-
-/* When an existing row is updated in place (e.g., value changed) */
-.rowUpdate {
-  animation: row-pulse 900ms ease-in-out 0s 2;
-}
-@keyframes row-pulse {
-  0%   { background-color: rgba(197,113,237,.22); }
-  50%  { background-color: rgba(197,113,237,.06); }
-  100% { background-color: transparent; }
-}
-
-/* (Optional) if you remove rows and want a collapse feel */
-.rowExit {
-  animation: row-exit 260ms ease-in forwards;
-}
-@keyframes row-exit {
-  from { opacity: 1; height: var(--row-h, 48px); }
-  to   { opacity: 0; height: 0; padding-top: 0; padding-bottom: 0; }
-}
-
-/* Flame on for new claimed user */
-.flameRow {
-  position: relative;
-  animation: flameGlow 1.2s ease-in-out infinite alternate;
-}
-.flameCell {
-  position: relative;
-  padding-left: 52px; 
-}
-
-.flameBadge {
-  position: absolute;
-  left: 3rem;
-  top: 50%;
-  transform: translateY(-50%) rotate(-8deg);
-  width: 24px;
-  height: 34px;
-  background: url("/images/fire.webp") center / contain no-repeat;
-  pointer-events: none;
-  filter: drop-shadow(0 0 6px rgba(245, 80, 91, 0.75));
-  animation:
-    flame-pop 0.35s ease-out both,
-    flame-flicker 1s ease-in-out infinite alternate;
-  z-index: 1;
-}
-
-@keyframes flame-pop {
-  from { opacity: 0; transform: translateY(-50%) scale(0.7) rotate(-8deg); }
-  to   { opacity: 1; transform: translateY(-50%) scale(1.0) rotate(-8deg); }
-}
-
-/* subtle flicker vibe */
-@keyframes flame-flicker {
-  from { transform: translateY(calc(-50% - 1px)) rotate(-8deg) scale(1.00); }
-  to   { transform: translateY(calc(-50% + 1px)) rotate(-6deg) scale(1.05); }
-}
-
-/* accessibility: respect reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .flameBadge { animation: none; }
-}
-
-/* smaller flame on small screens */
-@media (max-width: 576px) {
-  .flameCell { padding-left: 40px; }
-  .flameBadge { width: 32px; height: 32px; left: 6px; }
-}
-
-@keyframes flameGlow {
-  0%   { box-shadow: inset 0 0 0 0 rgba(255, 110, 20, 0.00); background: rgba(255,140,0,0.08); }
-  100% { box-shadow: inset 0 0 22px 0 rgba(255, 110, 20, 0.35); background: rgba(255,140,0,0.14); }
-}
 
 /* ===== Shared headings + buttons used below ===== */
 .gradientFont {
@@ -347,30 +244,15 @@
   border-radius: 10px;
   padding: 1px;
   overflow: hidden;
-  opacity: 0;
-  box-shadow: 0 0 0 rgba(0,0,0,0);
-  transition: box-shadow 250ms ease, opacity 600ms cubic-bezier(.22,.61,.36,1), transform 600ms cubic-bezier(.22,.61,.36,1);
-  transform: translateY(18px) scale(0.98);
-  transition-delay: calc(var(--i, 0) * 180ms);
-  will-change: transform, opacity;
+  background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
 }
-.inView {
-  opacity: 1;
-  transform: translateY(0) scale(1);
+.gameImg img { width: 100%; display: block; border-radius: 10px; transition: 0.4s; }
+.gameInfo {
+  text-align: center; position: absolute; text-transform: uppercase; width: 100%;
+  top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0; transition: 0.4s;
 }
-.gameImg img {
-  width: 100%;
-  display: block;
-  border-radius: 10px;
-  transition: transform 450ms ease, filter 300ms ease;
-  will-change: transform;
-  transform-origin: center center;
-}
-
-.gameItem:hover .gameImg img {
-  transform: scale(1.08);
-  opacity: 1;
-}
+.gameItem:hover .gameImg img { opacity: 0.1; }
+.gameItem:hover .gameInfo { opacity: 1; }
 
 .customBtn {
   padding: 12px 36px;
@@ -398,37 +280,9 @@
   gap: 1rem;
   padding: 16px 0 24px;
 }
-.processItem {
-  opacity: 0;
-  transform: translateY(18px) scale(0.98);
-  will-change: opacity, transform;
-}
-.processItem h3 { color: #12c2e9; padding-bottom: 10px; text-transform: capitalize; text-align: center; }
-.processItem p { color: #FFF; text-align: center; }
-.stepVisible {
-  animation: proc-step-in 560ms ease-out forwards;
-  animation-delay: calc(var(--i, 0) * 500ms);
-}
-@keyframes proc-step-in {
-  from {
-    opacity: 0;
-    transform: translateY(18px) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .processItem,
-  .stepVisible {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
-}
-
+.processItem { text-align: center; padding: 12px; }
+.processItem h3 { color: #12c2e9; padding-bottom: 10px; text-transform: capitalize; }
+.processItem p { color: #FFF; }
 .processIconWrap {
   background: linear-gradient(to right, #12c2e9, #c471ed, #f64f59);
   padding: 1px; width: 80px; height: 80px; border-radius: 50%;
@@ -448,37 +302,8 @@
 }
 .faqWrap { max-width: 95%; margin: 20px auto 0; }
 .faqItem {
-  margin-bottom: 15px; 
-  border-radius: 8px; 
-  overflow: hidden;
-  border: 1px solid rgba(255,255,255,0.8); 
-  background: #000;
-  opacity: 0;
-  transform: translateX(-22px);
-  will-change: opacity, transform;
-}
-.faqVisible {
-  animation: faq-left-in 520ms ease-out forwards;
-  animation-delay: calc(var(--i, 0) * 200ms);
-}
-@keyframes faq-left-in {
-  from {
-    opacity: 0;
-    transform: translateX(-22px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .faqItem,
-  .faqVisible {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: none !important;
-  }
+  margin-bottom: 15px; border-radius: 8px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.8); background: #000;
 }
 .faqButton {
   width: 100%; text-align: left; font-size: 22px; background: #000; color: #fff;

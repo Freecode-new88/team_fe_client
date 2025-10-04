@@ -1,4 +1,5 @@
 'use client'
+import { useEffect, useRef, useState } from 'react';
 import styles from '../f168.module.css'
 
 type Games = { img: string; title: string; }
@@ -16,6 +17,31 @@ const games: Games[] = [
 
 
 export default function Game() {
+    const [visible, setVisible] = useState<Set<number>>(new Set());
+  const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
+
+  useEffect(() => {
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const index = Number((entry.target as HTMLElement).dataset.index);
+            setVisible((prev) => {
+              if (prev.has(index)) return prev;
+              const next = new Set(prev);
+              next.add(index);
+              return next;
+            });
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.15 }
+    );
+
+    itemRefs.current.forEach((el) => el && io.observe(el));
+    return () => io.disconnect();
+  }, []);
   return (
     <section className={styles.game}>
         <div className={styles.sectionHeading}>
@@ -24,18 +50,21 @@ export default function Game() {
 
         <div className={styles.gameGrid}>
             {games.map((item, i) => {
-                return (
-                    <div key={i} className={styles.gameItem}>
-                    <div className={styles.gameImg}>
-                        <img src={item.img} alt="blackjack" />
-                    </div>
-                    <div className={styles.gameInfo}>
-                        <h3>{item.title}</h3>
-                        <a href="#0" className={styles.customBtn}>play now</a>
-                    </div>
-                    </div>
-                )
-            })}
+            const inViewClass = visible.has(i) ? styles.inView : '';
+            return (
+              <div
+                key={i}
+                ref={(el) => { itemRefs.current[i] = el; }}
+                data-index={i}
+                className={`${styles.gameItem} ${inViewClass}`}
+                style={{ ['--i' as any]: i }} // used for stagger delay
+              >
+                <div className={styles.gameImg}>
+                  <img src={item.img} alt={item.title} />
+                </div>
+              </div>
+            );
+          })}
         </div>
     </section>
   )

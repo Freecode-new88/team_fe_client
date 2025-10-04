@@ -159,7 +159,7 @@ export async function verifyPromoCode(args: {
   const base = `/${siteKey.toLowerCase()}`;
   try {
     const res = await api.post<VerifySuccess | VerifyFail200 | VerifyFail400>(
-      `${base}/api/client/get-code`,
+      `${base}/api/team/get-code`,
       { captchaCode, token },
       { params: { promo_code: promoCode, site: site.id } }
     );

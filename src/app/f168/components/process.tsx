@@ -1,4 +1,5 @@
 'use client'
+import { useEffect, useRef } from 'react';
 import styles from '../f168.module.css'
 
 type PROCESS = { step: string; title: string; text: string }
@@ -11,24 +12,51 @@ const procs: PROCESS[] = [
 ]
 
 export default function Process() {
+  const gridRef = useRef<HTMLDivElement | null>(null);
+  useEffect(() => {
+    const items = gridRef.current?.querySelectorAll<HTMLElement>('[data-step-item]');
+    if (!items || items.length === 0) return;
+
+    items.forEach((el, i) => el.style.setProperty('--i', String(i)));
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(styles.stepVisible);
+            io.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.2 }
+    );
+
+    items.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
   return (
     <section className={styles.process}>
         <div className={styles.sectionHeading}>
           <h2 className={styles.gradientFont}>Steps to Enjoy The Promotion</h2>
         </div>
 
-        <div className={styles.processGrid}>
+        <div className={styles.processGrid} ref={(el) => { gridRef.current = el; }}>
             {procs.map((item, i) => {
-                return (
-                <div key={i} className={styles.processItem}>
-                <div className={styles.processIconWrap}>
+          return (
+            <div
+              key={i}
+              className={styles.processItem}
+              data-step-item
+              style={{ ['--i' as any]: i }}
+            >
+              <div className={styles.processIconWrap}>
                 <div className={styles.processIcon}><span>{item.step}</span></div>
-                </div>
-                <h3>{item.title}</h3>
-                <p>{item.text}</p>
-                </div>
-                )
-            })}
+              </div>
+              <h3>{item.title}</h3>
+              <p>{item.text}</p>
+            </div>
+          )
+        })}
         </div>
       </section>
   )

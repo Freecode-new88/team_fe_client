@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "../f168.module.css";
 
@@ -35,13 +35,11 @@ export default function CaptchaModal({
   open,
   step,
   onClose,
-
   // Captcha
   captchaUrl,
   note,
   busy,
   onContinue,
-
   // Review
   detail,
   account,
@@ -51,7 +49,9 @@ export default function CaptchaModal({
   onSubmit,
 }: Props) {
   const codeRef = useRef<HTMLInputElement>(null);
+  const [captchaCode, setCaptchaCode] = useState("");
 
+  // lock body scroll while open
   useEffect(() => {
     if (!open) return;
     const prev = document.body.style.overflow;
@@ -61,13 +61,18 @@ export default function CaptchaModal({
     };
   }, [open]);
 
+  // autofocus when entering captcha step
   useEffect(() => {
-    // autofocus when you enter captcha step
     if (open && step === "captcha") {
       const t = setTimeout(() => codeRef.current?.focus(), 50);
       return () => clearTimeout(t);
     }
   }, [open, step]);
+
+  // reset field when modal closes or a new captcha arrives
+  useEffect(() => {
+    if (!open) setCaptchaCode("");
+  }, [open, captchaUrl]);
 
   if (!open) return null;
 
@@ -87,13 +92,14 @@ export default function CaptchaModal({
         placeholder="Enter captcha here"
         className={styles.captinput}
         aria-label="Captcha code"
+        value={captchaCode}
+        onChange={(e) => setCaptchaCode(e.target.value)}
         onKeyDown={async (e) => {
           if (e.key === "Enter") {
-            const v = (e.target as HTMLInputElement).value.trim();
+            const v = captchaCode.trim();
             if (v && onContinue) await onContinue(v);
           }
         }}
-        onChange={() => {}}
       />
 
       {note ? <div className={styles.note}>{note}</div> : null}
@@ -101,10 +107,10 @@ export default function CaptchaModal({
       <button
         className={styles.continueBtn}
         onClick={async () => {
-          const v = codeRef.current?.value?.trim() ?? "";
+          const v = captchaCode.trim();
           if (v && onContinue) await onContinue(v);
         }}
-        disabled={busy}
+        disabled={busy || !captchaCode.trim()}
       >
         {busy ? "Processing..." : "Continue"}
       </button>
@@ -127,7 +133,9 @@ export default function CaptchaModal({
             <tr>
               <td>{detail.promo_code}</td>
               <td>{detail.point}</td>
-              <td>{detail.min_point} - {detail.max_point}</td>
+              <td>
+                {detail.min_point} - {detail.max_point}
+              </td>
               <td>{detail.time.replace("T", " ").slice(0, 16)}</td>
             </tr>
           </tbody>
@@ -162,7 +170,9 @@ export default function CaptchaModal({
           <h3 className={styles.captTitle}>
             {step === "captcha" ? "Captcha Verification" : "Confirm Promotion"}
           </h3>
-          <button onClick={onClose} className={styles.closeBtn} aria-label="Close">×</button>
+          <button onClick={onClose} className={styles.closeBtn} aria-label="Close">
+            ×
+          </button>
         </div>
 
         <div className={styles.captbody}>

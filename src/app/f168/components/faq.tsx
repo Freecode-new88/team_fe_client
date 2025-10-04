@@ -1,5 +1,5 @@
 'use client'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'   // ← add useEffect/useRef
 import styles from '../f168.module.css'
 
 type QA = { q: string; a: string }
@@ -14,17 +14,49 @@ const faqs: QA[] = [
 
 export default function Faq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+
+  // ↓↓↓ NEW: ref + intersection observer for staggered reveal
+  const wrapRef = useRef<HTMLDivElement | null>(null)
+  useEffect(() => {
+    const nodes = wrapRef.current?.querySelectorAll<HTMLElement>('[data-faq-item]')
+    if (!nodes || nodes.length === 0) return
+
+    nodes.forEach((el, i) => el.style.setProperty('--i', String(i)))
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add(styles.faqVisible)
+            io.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.2 }
+    )
+
+    nodes.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [])
+  // ↑↑↑ NEW
+
   return (
     <section className={styles.fqa}>
       <div className={styles.sectionHeading}>
         <h2 className={styles.gradientFont}>Frequently Asked Questions</h2>
       </div>
 
-      <div className={styles.faqWrap}>
+      {/* NEW: attach ref here */}
+      <div className={styles.faqWrap} ref={(el) => { wrapRef.current = el }}>
         {faqs.map((item, i) => {
           const isOpen = openIndex === i
           return (
-            <div key={i} className={`${styles.faqItem} ${isOpen ? styles.open : ''}`}>
+            <div
+              key={i}
+              className={`${styles.faqItem} ${isOpen ? styles.open : ''}`}
+              data-faq-item
+              style={{ ['--i' as any]: i }}
+            >
               <button
                 className={`${styles.faqButton} ${!isOpen ? styles.collapsed : ''}`}
                 aria-expanded={isOpen}
