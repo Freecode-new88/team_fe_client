@@ -1,7 +1,7 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from "axios";
 
 /** Base URL: set NEXT_PUBLIC_API_BASE_URL for other environments */
-const baseURL = "http://localhost:3002";
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3002";
 
 const api = axios.create({
   baseURL,

@@ -1,14 +1,15 @@
 'use client'
 import { useState } from 'react'
-import styles from './f168.module.css'
+import styles from '../f168.module.css'
 
 type QA = { q: string; a: string }
 
 const faqs: QA[] = [
   { q: 'How can I get the promo code?', a: 'You can get at the promo code section from above...' },
-  { q: 'How do I claim a promo code?', a: 'Online casinos have become a popular form of entertainment…' },
-  { q: 'What is your pricing structure for home cleaning services?', a: 'Online casinos have become a popular form of entertainment…' },
-  { q: 'How often should I schedule home cleaning services?', a: 'Online casinos have become a popular form of entertainment…' },
+  { q: 'How do I claim a promo code?', a: 'You can get available promo codes at the top, Add the code into promo Code box and solve the captcha and claim...' },
+  { q: 'How many times I can claim a promo code?', a: 'For the most of the promotions, you can only claim one time…' },
+  { q: 'I am new user. Can I claim the promo?', a: 'Welcome.. Sure, you can claim the promo and enjoy the extra point bonus…' },
+  { q: 'Is the promotion have expire?', a: 'Yes.. Promotion have expire time. If exceed this time, you cannot get it anymore. Claim fast and Enjoy!!…' },
 ]
 
 export default function Faq() {
