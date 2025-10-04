@@ -17,8 +17,8 @@ import { showClaimSuccess } from '../../../components/ShowClaimSuccess';
 const VISIBLE_COUNT = 6;
 const RECENT_VISIBLE = 5;
 const CLAIM_HIGHLIGHT_MS = 15_000;  // 15s
-const POLL_PROMO_MS = 10_000;       // 10s
-const POLL_RECENT_MS = 20_000;      // 20s
+const POLL_PROMO_MS = 20_000;       // 10s
+const POLL_RECENT_MS = 30_000;      // 20s
 
 function usePanelChangeFlag(deps: any[]) {
   const [flag, setFlag] = useState(false);
@@ -111,6 +111,7 @@ export default function Promo() {
       clearInterval(id);
     };
   }, []);
+  
 
   /* ----- POLLING: recent claims every 20s + detect new rows to highlight ----- */
   useEffect(() => {
@@ -210,6 +211,23 @@ export default function Promo() {
   // keep panel pulse for the carousel stepping
   const box2Changed = usePanelChangeFlag([start]);
   const box3Changed = usePanelChangeFlag([recentStart]);
+
+  // BOX-2 loop 
+  useEffect(() => {
+    if (!sortedCodes.length) return;
+    const id = setInterval(() => {
+      setStart(s => (s + VISIBLE_COUNT) % sortedCodes.length);
+    }, POLL_PROMO_MS);
+    return () => clearInterval(id);
+  }, [sortedCodes.length]);
+  // Box-3 loop
+  useEffect(() => {
+    if (!sortedRecent.length) return;
+    const id = setInterval(() => {
+      setRecentStart(s => (s + RECENT_VISIBLE) % sortedRecent.length);
+    }, POLL_RECENT_MS);
+    return () => clearInterval(id);
+  }, [sortedRecent.length]);
 
   /* helpers */
   const onlyTime = (ts: string) => {
@@ -495,7 +513,7 @@ export default function Promo() {
                       {r.user}
                     </td>
                     <td>{r.code}</td>
-                    <td>Received {r.point} Points</td>
+                    <td>Received {r.point}</td>
                     <td>{r.site}</td>
                     <td>{onlyTime(r.time)}</td>
                   </tr>

@@ -666,6 +666,7 @@
   .input { width: 92%; }
   .leftBox, .rightBox { height: 380px; }
   .rightBox { justify-self: stretch; } 
+  .flameBadge { left:2rem; width: 20px; height: 28px; }
   .sectionHeading h2 { font-size: 36px; }
   .sectionHeading p { font-size: 16px; line-height: 26px; }
   
@@ -685,6 +686,8 @@
   .rightBox::after { top: 0; bottom: 0; left: 0; right: 0; }
   .leftBox::after { top: 0; bottom: 0; left: 0; right: 0; }
   .fullBoxNoChrome::after { top: 0; bottom: 0; left: 0; right: 0; }
+  .flameBadge { left:1rem; width: 14px; height: 20px; }
+  .fullBoxNoChrome { padding: 1rem; }
   .input { width: 89%; }
   .table thead tr { font-size: 9px; }
   .table tbody tr { font-size: 11px; }
@@ -700,6 +703,8 @@
   .input { width: 89%; }
   .table thead tr { font-size: 9px; }
   .table tbody tr { font-size: 11px; }
+  .flameBadge { left:1.5rem; width: 20px; height: 28px; }
+  .fullBoxNoChrome { padding: 2rem; }
   .gameItem { width: 100%; }
   .processGrid { gap: 4rem; }
   .recentTable { min-width: 690px; }
@@ -732,7 +737,11 @@
     z-index: auto; 
   }
   .table thead tr { font-size: 11px }
-  .table tbody tr { font-size: 8px; }
+  .table tbody tr { font-size: 11px; }
+  .table tbody tr td { padding: .5rem .3rem; }
+  .copyBtn { min-width: 14px; height: 20px; }
+  .flameBadge { left:0.3rem; width: 14px; height: 20px; }
+  .fullBoxNoChrome { padding: 1rem; }
   .captmodal {
     position: relative;
     width: min(92vw, 400px);
