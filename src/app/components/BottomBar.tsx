@@ -1,0 +1,64 @@
+import Link from "next/link";
+import clsx from "clsx";
+
+export type MobileBottomBarProps = {
+  left: { label: string; href: string };
+  right: { label: string; href: string };
+  className?: string;
+};
+
+/**
+ * MobileBottomBar — fixed bottom bar (mobile only) with gradient bg + two CTA buttons
+ * Tailwind required. Drop into your layout and add bottom padding to main content to avoid overlap.
+ *
+ * Usage:
+ * <MobileBottomBar
+ *   left={{ label: "สมัคร F168", href: "/register-f168" }}
+ *   right={{ label: "สมัคร MK8", href: "/register-mk8" }}
+ * />
+ *
+ * Tip: Add padding-bottom to your page container: `pb-20 md:pb-0` so content is not hidden behind the bar.
+ */
+export default function MobileBottomBar({ left, right, className }: MobileBottomBarProps) {
+  return (
+    <div
+      className={clsx(
+        "md:hidden fixed inset-x-0 bottom-0 z-50",
+        "bg-gradient-to-r from-cyan-400 via-purple-500 to-rose-500",
+        "shadow-[0_-6px_20px_rgba(0,0,0,.25)]",
+        "px-3 pt-2 pb-[calc(env(safe-area-inset-bottom,0)+10px)]",
+        className
+      )}
+      role="contentinfo"
+      aria-label="Bottom action bar"
+    >
+      <div className="mx-auto max-w-md">
+        <div className="flex items-stretch gap-2 text-white text-sm font-semibold">
+          {/* Left button */}
+          <Link
+            href={left.href}
+            className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
+          >
+            {/* icon: lightning */}
+            <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="currentColor" aria-hidden="true">
+              <path d="M13 2L3 14h6l-2 8 10-12h-6l2-8z" />
+            </svg>
+            <span className="opacity-90">{left.label}</span>
+          </Link>
+
+          {/* Right button */}
+          <Link
+            href={right.href}
+            className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
+          >
+            {/* icon: crown */}
+            <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="currentColor" aria-hidden="true">
+              <path d="M3 7l4 4 5-7 5 7 4-4v10H3V7z" />
+            </svg>
+            <span className="opacity-90">{right.label}</span>
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
+}

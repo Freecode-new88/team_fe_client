@@ -1,0 +1,56 @@
+{
+  "name": "ทิมล่าโปร — รวมโค้ด & เครดิตฟรี",
+  "short_name": "ทิมล่าโปร",
+  "description": "ศูนย์รวมโค้ดและเครดิตฟรี อัปเดตทุกวัน โปร่งใส ปลอดภัย ฝาก-ถอนออโต้",
+  "start_url": "/",
+  "scope": "/",
+  "id": "https://thaibetz.com/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B0F19",
+  "theme_color": "#111827",
+  "lang": "th-TH",
+  "dir": "ltr",
+  "icons": [
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "ดูโค้ดวันนี้",
+      "short_name": "โค้ดวันนี้",
+      "url": "/?today=1",
+      "icons": [{ "src": "/icons/shortcut-codes.png", "sizes": "96x96", "type": "image/png" }]
+    },
+    {
+      "name": "วิธีรับสิทธิ์",
+      "short_name": "How-to",
+      "url": "/how-to-claim",
+      "icons": [{ "src": "/icons/shortcut-howto.png", "sizes": "96x96", "type": "image/png" }]
+    }
+  ],
+  "categories": ["utilities", "shopping"],
+  "prefer_related_applications": false
+}

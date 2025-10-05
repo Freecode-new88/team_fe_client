@@ -1,37 +1,47 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import styles from "./Header.module.css";
+import NextImage from "next/image";
 
 export default function Header() {
-  const pathname = usePathname();
 
   return (
-    <header className={styles.header}>
+    <header className={`${styles.header} hidden lg:block`}>
       <div className={styles.logoArea}>
-        {pathname === "/f168" ? (
-          <img src="/images/logo-f168.png" alt="F168 Logo" className={styles.logo} />
-        ) : (
-          <img src="/images/logo-mk8.png" alt="MK8 Logo" className={styles.logo} />
-        )}
+        <img src="/logo01.png" alt="ทิมล่าโปร" className={styles.logo} />
       </div>
 
       <nav className={styles.nav}>
+
         <Link
           href="/f168"
-          className={`${styles.tab} ${
-            pathname === "/f168" ? styles.activeTabF168 : ""
-          }`}
+          aria-label="สมัครสมาชิก F168"
+          className={`${styles.tab} inline-flex items-center justify-center gap-2 rounded-xl px-0 py-0 no-underline`}
         >
-          F168
+          <NextImage
+            src="/images/logo-f168.png"
+            alt=""
+            aria-hidden
+            width={128}
+            height={45}
+            className="block object-contain w-10 h-auto"
+          />
+          <span className="">สมัคร F168</span>
         </Link>
         <Link
-          href="/mk8"
-          className={`${styles.tab} ${
-            pathname === "/mk8" ? styles.activeTabMK8 : ""
-          }`}
+          href="/f168"
+          aria-label="สมัครสมาชิก F168"
+          className={`${styles.tab} inline-flex items-center justify-center gap-2 rounded-xl px-0 py-0 no-underline`}
         >
-          MK8
+          <NextImage
+            src="/images/logo-mk8.png"
+            alt=""
+            aria-hidden
+            width={128}
+            height={45}
+            className="block object-contain w-10 h-auto"
+          />
+          <span className="">สมัคร MK8</span>
         </Link>
       </nav>
     </header>

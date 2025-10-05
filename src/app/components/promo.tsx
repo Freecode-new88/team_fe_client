@@ -3,7 +3,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import styles from '../f168.module.css';
 import copy from 'copy-to-clipboard';
-import { siteOptions, type SiteKey } from '../../../config/site';
 import {
   fetchPromoCodes, type PromoItem,
   fetchClaimedData, type ClaimItem,
@@ -11,7 +10,9 @@ import {
   verifyPromoCode, submitUserClaim,
 } from '@/services/promo.service';
 import CaptchaModal, { type CaptchaStep } from './captcha';
-import { showClaimSuccess } from '../../../components/ShowClaimSuccess';
+import { SiteKey, siteOptions } from '@/config/site';
+import { showClaimSuccess } from '@/components/ShowClaimSuccess';
+import { Gift } from 'lucide-react';
 
 /* ---------- constants / helpers ---------- */
 const VISIBLE_COUNT = 6;
@@ -111,7 +112,7 @@ export default function Promo() {
       clearInterval(id);
     };
   }, []);
-  
+
 
   /* ----- POLLING: recent claims every 20s + detect new rows to highlight ----- */
   useEffect(() => {
@@ -258,7 +259,7 @@ export default function Promo() {
     setModalStep('captcha');
 
     if (!promoCode.trim()) {
-      setErrorMsg('Please enter your promo code.');
+      setErrorMsg('กรุณากรอกโค้ดโปรโมชันของคุณ');
       return;
     }
 
@@ -273,7 +274,7 @@ export default function Promo() {
 
   const handleCaptchaContinue = async (captchaCode: string) => {
     if (!captchaData?.token) {
-      setNoteMsg('Captcha token is missing. Please close and try again.');
+      setNoteMsg('ไม่พบโทเค็นแคปชา กรุณาปิดหน้าต่างนี้แล้วลองใหม่อีกครั้ง');
       return;
     }
     setVerifying(true);
@@ -301,11 +302,11 @@ export default function Promo() {
   const handleSubmitClaim = async () => {
     setSubmitMsg(null);
     if (!verifiedDetail) {
-      setSubmitMsg('No verified promo data. Please verify again.');
+      setSubmitMsg('ไม่พบข้อมูลโปรโมชันที่ยืนยันแล้ว กรุณาตรวจสอบอีกครั้ง');
       return;
     }
     if (!account.trim()) {
-      setSubmitMsg('Please enter your account.');
+      setSubmitMsg('กรุณากรอกบัญชีผู้ใช้ของคุณ');
       return;
     }
 
@@ -325,11 +326,11 @@ export default function Promo() {
       setPromoCode('');
       setAccount('');
       await showClaimSuccess({
-          points: verifiedDetail?.point,
-          soundUrl: '/sounds/confetti-pop.mp3',
-          onClose: () => {
+        points: verifiedDetail?.point,
+        soundUrl: '/sounds/confetti-pop.mp3',
+        onClose: () => {
           setSubmitMsg(null);
-          },
+        },
       });
     } else {
       setSubmitMsg(res.error);
@@ -353,7 +354,7 @@ export default function Promo() {
   return (
     <section className={styles.topSection}>
       <div className={styles.sectionHeading}>
-        <h1 className={styles.promoTitle}>F168 Promotions</h1>
+        <h1 className={styles.promoTitle}>แจกโค้ด & เครดิตฟรี F168, MK8 ทุกวัน — ฝาก-ถอนออโต้ — ปลอดภัย</h1>
       </div>
 
       <div className={styles.bannerGrid}>
@@ -363,7 +364,7 @@ export default function Promo() {
           <div className={styles.formStack}>
             <input
               className={styles.input}
-              placeholder="Enter promo code"
+              placeholder="กรอกโค้ดโปรโมชัน"
               value={promoCode}
               onChange={(e) => setPromoCode(e.target.value)}
             />
@@ -378,8 +379,15 @@ export default function Promo() {
                 </option>
               ))}
             </select>
-            <button className={styles.button} onClick={handleCheckNow}>
-              Check Now
+
+            <button
+              type="button"
+              className={styles.button}
+              onClick={handleCheckNow}
+              aria-label="ตรวจสอบเลย"
+            >
+              <Gift aria-hidden />
+              ตรวจสอบเลย
             </button>
             {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
           </div>
@@ -387,27 +395,30 @@ export default function Promo() {
 
         {/* Box 2 */}
         <div
-          className={`${styles.box2} ${styles.rightBox} ${
-            box2Changed ? `${styles.panelPulse} ${styles.panelPop}` : ''
-          }`}
+          className={`${styles.box2} ${styles.rightBox} ${box2Changed ? `${styles.panelPulse} ${styles.panelPop}` : ""
+            }`}
         >
           <table className={styles.table}>
             <colgroup>
               {[
-                { width: '28%' },
-                { width: '22%' },
-                { width: '20%' },
-                { width: '30%' },
-              ].map((s, i) => <col key={i} style={s} />)}
+                { width: "28%" },
+                { width: "22%" },
+                { width: "20%" },
+                { width: "30%" },
+              ].map((s, i) => (
+                <col key={i} style={s} />
+              ))}
             </colgroup>
+
             <thead>
               <tr>
-                <th>Code</th>
-                <th>Available</th>
-                <th>Site</th>
-                <th>Expired At</th>
+                <th>โค้ด</th>
+                <th>สถานะ</th>
+                <th>เว็บไซต์</th>
+                <th>หมดอายุ</th>
               </tr>
             </thead>
+
             <tbody key={start} className={styles.tableBody}>
               {visibleRows.map((row, i) =>
                 row ? (
@@ -418,46 +429,61 @@ export default function Promo() {
                     <td>
                       <div className={styles.codeCell}>
                         <span className={styles.codeText}>{row.promo_code}</span>
+
                         <button
-                            type="button"
-                            className={`${styles.copyBtn} ${copiedIndex === i ? styles.copyBtnActive : ''}`}
-                            onClick={() => handleCopy(row.promo_code, i)}
-                            aria-label={`Copy ${row.promo_code}`}
-                            title={copiedIndex === i ? 'Copied!' : 'Copy'}
+                          type="button"
+                          className={`${styles.copyBtn} ${copiedIndex === i ? styles.copyBtnActive : ""
+                            }`}
+                          onClick={() => handleCopy(row.promo_code, i)}
+                          aria-label={`คัดลอก ${row.promo_code}`}
+                          title={copiedIndex === i ? "คัดลอกแล้ว!" : "คัดลอก"}
+                        >
+                          {copiedIndex === i ? (
+                            <span className={styles.copiedLabel}>คัดลอกแล้ว</span>
+                          ) : (
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              aria-hidden="true"
+                              focusable="false"
                             >
-                            {copiedIndex === i ? (
-                                <span className={styles.copiedLabel}>Copied</span>
-                            ) : (
-                                <svg
-                                width="16"
-                                height="16"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                aria-hidden="true"
-                                focusable="false"
-                                >
-                                <path d="M16 3H7a2 2 0 0 0-2 2v9" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                                <rect x="9" y="7" width="12" height="14" rx="2" stroke="currentColor" strokeWidth="2"/>
-                                </svg>
-                            )}
-                            </button>
+                              <path
+                                d="M16 3H7a2 2 0 0 0-2 2v9"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                                strokeLinecap="round"
+                              />
+                              <rect
+                                x="9"
+                                y="7"
+                                width="12"
+                                height="14"
+                                rx="2"
+                                stroke="currentColor"
+                                strokeWidth="2"
+                              />
+                            </svg>
+                          )}
+                        </button>
                       </div>
                     </td>
+
+                    {/* ใช้ค่าอังกฤษเดิมเพื่อกำหนดคลาส แต่แสดงผลเป็นไทย */}
                     <td
                       className={
-                        row.available === 'Available' ? styles.available : styles.used
+                        row.available === "Available" ? styles.available : styles.used
                       }
                     >
-                      {row.available}
+                      {row.available === "Available" ? "พร้อมใช้" : "ถูกใช้แล้ว"}
                     </td>
+
                     <td>{row.site}</td>
                     <td>{row.date}</td>
                   </tr>
                 ) : (
-                  <tr
-                    key={`filler-${i}`}
-                    className={`${styles.tableRow} ${styles.fillerRow}`}
-                  >
+                  <tr key={`filler-${i}`} className={`${styles.tableRow} ${styles.fillerRow}`}>
                     <td colSpan={4}>&nbsp;</td>
                   </tr>
                 )
@@ -466,31 +492,35 @@ export default function Promo() {
           </table>
         </div>
 
+
         {/* Box 3 */}
         <div
-          className={`${styles.box3} ${styles.fullBoxNoChrome} ${
-            box3Changed ? `${styles.panelPulse} ${styles.panelPop}` : ''
-          }`}
+          className={`${styles.box3} ${styles.fullBoxNoChrome} ${box3Changed ? `${styles.panelPulse} ${styles.panelPop}` : ""
+            }`}
         >
           <table className={`${styles.table} ${styles.recentTable}`}>
             <colgroup>
               {[
-                { width: '18%' },
-                { width: '18%' },
-                { width: '16%' },
-                { width: '14%' },
-                { width: '18%' },
-              ].map((s, i) => <col key={i} style={s} />)}
+                { width: "18%" },
+                { width: "18%" },
+                { width: "16%" },
+                { width: "14%" },
+                { width: "18%" },
+              ].map((s, i) => (
+                <col key={i} style={s} />
+              ))}
             </colgroup>
+
             <thead>
               <tr>
-                <th>User</th>
-                <th>Code</th>
-                <th>Points</th>
-                <th>Site</th>
-                <th>Time</th>
+                <th>ผู้ใช้</th>
+                <th>โค้ด</th>
+                <th>แต้ม</th>
+                <th>เว็บไซต์</th>
+                <th>เวลา</th>
               </tr>
             </thead>
+
             <tbody key={recentStart}>
               {visibleRecent.map((r, i) => {
                 if (!r) {
@@ -506,14 +536,14 @@ export default function Promo() {
                 return (
                   <tr
                     key={`${r.user}-${i}`}
-                    className={`${styles.rowEnter} ${isHot ? styles.flameRow : ''}`}
+                    className={`${styles.rowEnter} ${isHot ? styles.flameRow : ""}`}
                   >
                     <td className={styles.flameCell}>
                       {isHot && <span className={styles.flameBadge} aria-hidden></span>}
                       {r.user}
                     </td>
                     <td>{r.code}</td>
-                    <td>Received {r.point}</td>
+                    <td>ได้รับ {r.point} แต้ม</td>
                     <td>{r.site}</td>
                     <td>{onlyTime(r.time)}</td>
                   </tr>
@@ -522,6 +552,7 @@ export default function Promo() {
             </tbody>
           </table>
         </div>
+
       </div>
 
       {/* Captcha / claim modal */}
