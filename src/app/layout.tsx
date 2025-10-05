@@ -234,8 +234,49 @@ export default function RootLayout({
       <head>
         <meta name="msvalidate.01" content="1C15A36A3A5BC7B9C3B25F930B875D3C" />
         <meta name="yandex-verification" content="6617f160bacf4988" />
+        {/* GA4 ตามที่ให้มา */}
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-95DWKD4J5C"
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', 'G-95DWKD4J5C'); // ใช้ออโต้ page_view
+          `}
+        </Script>
+        {/* GTM - HEAD */}
+        <Script id="gtm-head" strategy="afterInteractive">
+          {`
+            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+            })(window,document,'script','dataLayer','GTM-MMTZHR4T');
+          `}
+        </Script>
+        {/* Ahrefs Web Analytics */}
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="A0ew7rDIrELHZli1Z6TB1w"
+          strategy="afterInteractive"
+          async
+        />
       </head>
       <body style={{ margin: '0px' }}>
+        {/* GTM - BODY (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MMTZHR4T"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
+
         <Preloader />
         <Header />
         {children}
@@ -265,6 +306,12 @@ export default function RootLayout({
         id="ld-json-faqpage"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      {/* Ahrefs Web Analytics */}
+      <Script
+        src="https://analytics.ahrefs.com/analytics.js"
+        data-key="A0ew7rDIrELHZli1Z6TB1w"
+        async
       />
     </html>
   );
