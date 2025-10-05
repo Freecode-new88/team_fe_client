@@ -234,6 +234,7 @@ export default function RootLayout({
       <head>
         <meta name="msvalidate.01" content="1C15A36A3A5BC7B9C3B25F930B875D3C" />
         <meta name="yandex-verification" content="6617f160bacf4988" />
+        <meta name="ahrefs-site-verification" content="331fc5cd20258534cbd5350c2f14552462a6314fc939757dfcecc1554bc30388"></meta>
         {/* GA4 ตามที่ให้มา */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-95DWKD4J5C"
