@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
 import ScrollUp from "@/components/ScrollUp";
 import "./globals.css";
@@ -77,8 +76,11 @@ export const metadata: Metadata = {
   },
   manifest: "/site.webmanifest",
   verification: {
-    // google: "xxxxxxxxxxxxxxxx",
-    // yandex: "xxxxxxxxxxxxxxxx"
+    google: "6B6z7GYEpScXkuFyiryYsnPPcuHXoYviBFPcdzWgftM",
+    yandex: "6617f160bacf4988",
+    other: {
+      "msvalidate.01": "1C15A36A3A5BC7B9C3B25F930B875D3C",
+    }
   },
 };
 
@@ -229,6 +231,9 @@ export default function RootLayout({
   };
   return (
     <html lang="th">
+      <head>
+        <meta name="msvalidate.01" content="1C15A36A3A5BC7B9C3B25F930B875D3C" />
+      </head>
       <body style={{ margin: '0px' }}>
         <Preloader />
         <Header />
