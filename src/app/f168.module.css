@@ -703,8 +703,8 @@
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.8);
   background: #000;
-  opacity: 0;
-  transform: translateX(-22px);
+  opacity: 1;
+  transform: none;
   will-change: opacity, transform;
 }
 
@@ -753,7 +753,7 @@
 .faqButton::after {
   content: "+";
   width: 35px;
-  height: 35px;
+  height: 40px;
   line-height: 35px;
   text-align: center;
   border-radius: 50%;
