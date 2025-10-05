@@ -8,7 +8,14 @@ export default function Header() {
   return (
     <header className={`${styles.header} hidden lg:block`}>
       <div className={styles.logoArea}>
-        <img src="/logo01.png" alt="ทิมล่าโปร" className={styles.logo} />
+        <NextImage
+          src="/logo01.png"
+          alt="ทิมล่าโปร"
+          width={160}         
+          height={40}
+          className={styles.logo}
+          priority            
+        />
       </div>
 
       <nav className={styles.nav}>
