@@ -4,7 +4,7 @@ import { siteByKey } from "../config/site";
 
 export type PromoItem = {
   promo_code: string;
-  available: "Available" | string; 
+  available: "Available" | string;
   site: string;
   date: string;
 };
@@ -44,6 +44,9 @@ export type ClaimItem = {
   point: number;
   site: string;
   time: string;
+  receiveCount: number;
+  receiveTotal: number;
+
 };
 
 
@@ -73,12 +76,12 @@ export async function fetchClaimedData(): Promise<ServiceResult<ClaimItem[]>> {
 
 export type Captcha = {
   captchaUrl: string;
-  token : string;
+  token: string;
   valid: boolean;
 }
 
 type CaptchaError = {
-  message: string; 
+  message: string;
 };
 
 type CaptchaResult =
@@ -137,8 +140,8 @@ type VerifySuccess = {
   };
 };
 
-type VerifyFail200 = { ok: false; message: string }; 
-type VerifyFail400 = { message: string };           
+type VerifyFail200 = { ok: false; message: string };
+type VerifyFail400 = { message: string };
 
 export type VerifyResult =
   | { ok: true; status: number; data: VerifySuccess }
@@ -234,7 +237,7 @@ export type ClaimResult =
   | { ok: true; status: number; data: ClaimOk }
   | { ok: false; status?: number; error: string };
 
-  export async function submitUserClaim(args: {
+export async function submitUserClaim(args: {
   siteKey: SiteKey;
   promoId: string;   // promo code string
   account: string;

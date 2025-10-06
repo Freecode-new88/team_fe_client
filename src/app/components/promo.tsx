@@ -14,6 +14,7 @@ import { SiteKey, siteOptions } from '@/config/site';
 import { showClaimSuccess } from '@/components/ShowClaimSuccess';
 import { Gift } from 'lucide-react';
 import { getSocket } from '@/services/socket';
+import { maskUser } from '@/utils/random';
 
 /* ---------- constants / helpers ---------- */
 const VISIBLE_COUNT = 6;
@@ -80,6 +81,7 @@ export default function Promo() {
   const [noteMsg, setNoteMsg] = useState<string | null>(null);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
+  const [live, setLive] = useState(0);
   const [verifiedDetail, setVerifiedDetail] = useState<{
     promo_code: string;
     point: number;
@@ -98,7 +100,7 @@ export default function Promo() {
     const clearOnUnload = () => {
       try {
         sessionStorage.removeItem(CLAIMS_BOOTSTRAPPED_KEY);
-      } catch {}
+      } catch { }
     };
     window.addEventListener('beforeunload', clearOnUnload);
     return () => window.removeEventListener('beforeunload', clearOnUnload);
@@ -114,7 +116,6 @@ export default function Promo() {
         const next = upsertPromos(prev, [payload]);
         return next;
       });
-
       setStart(0);
     };
 
@@ -149,11 +150,16 @@ export default function Promo() {
     };
 
     socket.on('promo:created', onPromoCreated);
-    socket.on('claim:created', onClaimCreated);
+    socket.on('claim:created', onClaimCreated); //onClaimCreated
+    socket.on('presence:stats', (data: Record<string, number>) => {
+        const total = Object.values(data).reduce((a, b) => a + b, 0);
+        setLive(total)
+    });
 
     return () => {
-      socket.off('promo:created', onPromoCreated);
-      socket.off('claim:created', onClaimCreated);
+      socket.off('promo:created');
+      socket.off('claim:created');
+      socket.off('presence:stats');
     };
   }, []);
 
@@ -170,18 +176,17 @@ export default function Promo() {
 
     // initial + interval
     poll();
-    const id = setInterval(poll, POLL_PROMO_MS);
+    //const id = setInterval(poll, POLL_PROMO_MS);
 
     return () => {
       alive = false;
-      clearInterval(id);
+      //clearInterval(id);
     };
   }, []);
 
   /* ----- Get Recent claims ----- */
   useEffect(() => {
     let alive = true;
-
     if (sessionStorage.getItem(CLAIMS_BOOTSTRAPPED_KEY) === '1') {
       return;
     }
@@ -193,7 +198,7 @@ export default function Promo() {
       sessionStorage.setItem(CLAIMS_BOOTSTRAPPED_KEY, '1');
     })();
 
-   return () => { alive = false; };
+    return () => { alive = false; };
   }, []);
 
   // prune expired highlights every 1s
@@ -403,7 +408,14 @@ export default function Promo() {
       <div className={styles.bannerGrid}>
         {/* Box 1 */}
         <div className={`${styles.box1} ${styles.leftBox}`}>
-          <img src="/images/left1.jpg" alt="" className={styles.pokerArt} />
+          <div className="relative">
+            <img src="/images/left1.jpg" alt="ภาพประกอบโปรโมชัน" className={styles.pokerArt} />
+
+            {/* ป้าย Live Active ที่มุมขวาบน ใช้ Tailwind จัดแต่ง */}
+            <div className="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">
+              Live: {live} 
+            </div>
+          </div>
           <div className={styles.formStack}>
             <input
               className={styles.input}
@@ -583,7 +595,7 @@ export default function Promo() {
                   >
                     <td className={styles.flameCell}>
                       {isHot && <span className={styles.flameBadge} aria-hidden></span>}
-                      {r.user}
+                      {maskUser(r.user)}
                     </td>
                     <td>{r.code}</td>
                     <td>ได้รับ {r.point} แต้ม</td>

@@ -6,6 +6,7 @@ import "./globals.css";
 import Script from "next/script";
 import MobileBottomBar from "./components/BottomBar";
 import Footer from "@/components/Footer";
+import { F168lINK, MK8LINK } from "@/config/site";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://thaibetz.com/"), // ← ใส่โดเมนจริงของคุณ
@@ -279,8 +280,8 @@ export default function RootLayout({
         {children}
         <ScrollUp />
         <MobileBottomBar
-          left={{ label: "สมัคร F168", href: "/register-f168" }}
-          right={{ label: "สมัคร MK8", href: "/register-mk8" }}
+          left={{ label: "สมัคร F168", href: F168lINK }}
+          right={{ label: "สมัคร MK8", href: MK8LINK }}
         />
         <Footer />
       </body>
