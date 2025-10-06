@@ -256,7 +256,7 @@
   z-index: 2;
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
-  border-bottom: 2px solid #12c2e9;
+  border-bottom: 2px solid #c471ed;
 }
 
 .table tbody tr:not(:last-child) td {
