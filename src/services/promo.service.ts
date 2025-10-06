@@ -66,7 +66,7 @@ export async function fetchClaimedData(): Promise<ServiceResult<ClaimItem[]>> {
       return { ok: false, error: "Unexpected response shape" };
     }
 
-    const items = res.data.data;
+    const items = res.data.data.slice(0, 5);
 
     return { ok: true, data: items };
   } catch (e: any) {

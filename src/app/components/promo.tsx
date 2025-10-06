@@ -125,18 +125,17 @@ export default function Promo() {
     const onClaimCreated = (payload: ClaimCreatedPayload) => {
       const normalized: ClaimItem = {
         ...payload,
+        user: maskUser({ user: payload.user }),
         time: payload.time.includes('T') ? payload.time : payload.time.replace(' ', 'T'),
       };
 
-      setClaimData(prev => upsertClaims([normalized, ...prev], []));
+      setClaimData(prev => [normalized, ...prev].slice(0, 5));
 
       const k = `${normalized.user}|${normalized.code}|${normalized.time}`;
       setClaimHighlights(old => ({ ...old, [k]: Date.now() + CLAIM_HIGHLIGHT_MS }));
-      setRecentStart(0);
 
       // if Box 2 has this code and it's "Available", mark it "Used"
       setPromoData(prev => {
-        console.log("Will mark as used");
         let changed = false;
         const next = prev.map(p => {
           if (p.promo_code === normalized.code && p.available === 'Available') {
@@ -170,7 +169,6 @@ export default function Promo() {
     const poll = async () => {
       const res = await fetchPromoCodes();
       if (!alive || !res.ok) return;
-      console.log("Promo codes", res.data);
       setPromoData((prev) => upsertPromos(prev, res.data));
     };
 
@@ -194,7 +192,13 @@ export default function Promo() {
     (async () => {
       const res = await fetchClaimedData();
       if (!alive || !res.ok) return;
-      setClaimData(prev => upsertClaims(prev, res.data));
+      
+      const masked = res.data.map(it => ({
+        ...it,
+        user: maskUser({ user: it.user })
+      }));
+
+      setClaimData(masked.slice(0, 5));
       sessionStorage.setItem(CLAIMS_BOOTSTRAPPED_KEY, '1');
     })();
 
@@ -576,34 +580,32 @@ export default function Promo() {
               </tr>
             </thead>
 
-            <tbody key={recentStart}>
-              {visibleRecent.map((r, i) => {
-                if (!r) {
-                  return (
+            <tbody>
+              {claimData.length === 0
+                ? new Array(RECENT_VISIBLE).fill(null).map((_, i) => (
                     <tr key={`recent-filler-${i}`} className={styles.fillerRow}>
                       <td colSpan={5} />
                     </tr>
-                  );
-                }
-                const k = `${r.user}|${r.code}|${r.time}`;
-                const isHot = claimHighlights[k] && claimHighlights[k] > Date.now();
-
-                return (
-                  <tr
-                    key={`${r.user}-${i}`}
-                    className={`${styles.rowEnter} ${isHot ? styles.flameRow : ""}`}
-                  >
-                    <td className={styles.flameCell}>
-                      {isHot && <span className={styles.flameBadge} aria-hidden></span>}
-                      {maskUser(r.user)}
-                    </td>
-                    <td>{r.code}</td>
-                    <td>ได้รับ {r.point} แต้ม</td>
-                    <td>{r.site}</td>
-                    <td>{onlyTime(r.time)}</td>
-                  </tr>
-                );
-              })}
+                  ))
+                : claimData.map((r, i) => {
+                    const k = `${r.user}|${r.code}|${r.time}`;
+                    const isHot = claimHighlights[k] && claimHighlights[k] > Date.now();
+                    return (
+                      <tr
+                        key={`${r.user}-${r.code}-${r.time}-${i}`}
+                        className={`${styles.rowEnter} ${isHot ? styles.flameRow : ""}`}
+                      >
+                        <td className={styles.flameCell}>
+                          {isHot && <span className={styles.flameBadge} aria-hidden></span>}
+                          { r.user}
+                        </td>
+                        <td>{r.code}</td>
+                        <td>ได้รับ {r.point} แต้ม</td>
+                        <td>{r.site}</td>
+                        <td>{onlyTime(r.time)}</td>
+                      </tr>
+                    );
+                  })}
             </tbody>
           </table>
         </div>
