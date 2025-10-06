@@ -128,7 +128,7 @@ export default function Game() {
 
     <section className={styles.game}>
       <div className={styles.sectionHeading}>
-        <h2 className={styles.gradientFont}>เกมยอดนิยม</h2>
+        <h2 className={styles.gradientFont}>โปรโมชั่นร้อนแรง</h2>
       </div>
 
       {/* Grid: มือถือ 1 คอลัมน์ (12/12), แท็บเล็ต 3 คอลัมน์ (4/12), พีซี 4 คอลัมน์ (3/12) */}
