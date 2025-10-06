@@ -13,13 +13,15 @@ import CaptchaModal, { type CaptchaStep } from './captcha';
 import { SiteKey, siteOptions } from '@/config/site';
 import { showClaimSuccess } from '@/components/ShowClaimSuccess';
 import { Gift } from 'lucide-react';
+import { getSocket } from '@/services/socket';
 
 /* ---------- constants / helpers ---------- */
 const VISIBLE_COUNT = 6;
 const RECENT_VISIBLE = 5;
 const CLAIM_HIGHLIGHT_MS = 15_000;  // 15s
-const POLL_PROMO_MS = 20_000;       // 10s
+const POLL_PROMO_MS = 50_000;       // 10s
 const POLL_RECENT_MS = 30_000;      // 20s
+const CLAIMS_BOOTSTRAPPED_KEY = 'claims_bootstrapped_v1';
 
 function usePanelChangeFlag(deps: any[]) {
   const [flag, setFlag] = useState(false);
@@ -90,16 +92,79 @@ export default function Promo() {
   const [submitMsg, setSubmitMsg] = useState<string | null>(null);
 
   // 🔥 track which claim-rows are "new" (highlight for 15s)
-  // key = `${user}|${code}|${time}`, value = expiry timestamp
   const [claimHighlights, setClaimHighlights] = useState<Record<string, number>>({});
 
-  /* ----- POLLING: promo codes every 10s ----- */
+  useEffect(() => {
+    const clearOnUnload = () => {
+      try {
+        sessionStorage.removeItem(CLAIMS_BOOTSTRAPPED_KEY);
+      } catch {}
+    };
+    window.addEventListener('beforeunload', clearOnUnload);
+    return () => window.removeEventListener('beforeunload', clearOnUnload);
+  }, []);
+
+  // Socket For Box 2 and 3
+  useEffect(() => {
+    const socket = getSocket();
+
+    // === Box 2: add new promo to TOP, then rotation continues as usual ===
+    const onPromoCreated = (payload: PromoItem) => {
+      setPromoData(prev => {
+        const next = upsertPromos(prev, [payload]);
+        return next;
+      });
+
+      setStart(0);
+    };
+
+    // === Box 3: add claim to TOP, highlight, reset view, If code === promo_code, change status
+    type ClaimCreatedPayload = ClaimItem;
+
+    const onClaimCreated = (payload: ClaimCreatedPayload) => {
+      const normalized: ClaimItem = {
+        ...payload,
+        time: payload.time.includes('T') ? payload.time : payload.time.replace(' ', 'T'),
+      };
+
+      setClaimData(prev => upsertClaims([normalized, ...prev], []));
+
+      const k = `${normalized.user}|${normalized.code}|${normalized.time}`;
+      setClaimHighlights(old => ({ ...old, [k]: Date.now() + CLAIM_HIGHLIGHT_MS }));
+      setRecentStart(0);
+
+      // if Box 2 has this code and it's "Available", mark it "Used"
+      setPromoData(prev => {
+        console.log("Will mark as used");
+        let changed = false;
+        const next = prev.map(p => {
+          if (p.promo_code === normalized.code && p.available === 'Available') {
+            changed = true;
+            return { ...p, available: 'Used' as PromoItem['available'] };
+          }
+          return p;
+        });
+        return changed ? next : prev;
+      });
+    };
+
+    socket.on('promo:created', onPromoCreated);
+    socket.on('claim:created', onClaimCreated);
+
+    return () => {
+      socket.off('promo:created', onPromoCreated);
+      socket.off('claim:created', onClaimCreated);
+    };
+  }, []);
+
+  /* ----- Get Promo codes ----- */
   useEffect(() => {
     let alive = true;
 
     const poll = async () => {
       const res = await fetchPromoCodes();
       if (!alive || !res.ok) return;
+      console.log("Promo codes", res.data);
       setPromoData((prev) => upsertPromos(prev, res.data));
     };
 
@@ -113,41 +178,22 @@ export default function Promo() {
     };
   }, []);
 
-
-  /* ----- POLLING: recent claims every 20s + detect new rows to highlight ----- */
+  /* ----- Get Recent claims ----- */
   useEffect(() => {
     let alive = true;
 
-    const poll = async () => {
+    if (sessionStorage.getItem(CLAIMS_BOOTSTRAPPED_KEY) === '1') {
+      return;
+    }
+
+    (async () => {
       const res = await fetchClaimedData();
       if (!alive || !res.ok) return;
+      setClaimData(prev => upsertClaims(prev, res.data));
+      sessionStorage.setItem(CLAIMS_BOOTSTRAPPED_KEY, '1');
+    })();
 
-      setClaimData((prev) => {
-        const beforeKeys = new Set(prev.map((c) => `${c.user}|${c.code}|${c.time}`));
-        const updated = upsertClaims(prev, res.data);
-        const now = Date.now();
-        const newHighlights: Record<string, number> = {};
-        for (const c of updated) {
-          const k = `${c.user}|${c.code}|${c.time}`;
-          if (!beforeKeys.has(k)) {
-            newHighlights[k] = now + CLAIM_HIGHLIGHT_MS;
-          }
-        }
-        if (Object.keys(newHighlights).length) {
-          setClaimHighlights((old) => ({ ...old, ...newHighlights }));
-        }
-        return updated;
-      });
-    };
-
-    // initial + interval
-    poll();
-    const id = setInterval(poll, POLL_RECENT_MS);
-
-    return () => {
-      alive = false;
-      clearInterval(id);
-    };
+   return () => { alive = false; };
   }, []);
 
   // prune expired highlights every 1s
@@ -319,9 +365,6 @@ export default function Promo() {
     setSubmitting(false);
 
     if (res.ok) {
-      setPromoData(prev =>
-        prev.filter(p => p.promo_code !== verifiedDetail!.promo_code)
-      );
       setCaptchaOpen(false);
       setPromoCode('');
       setAccount('');

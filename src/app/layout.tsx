@@ -5,6 +5,7 @@ import ScrollUp from "@/components/ScrollUp";
 import "./globals.css";
 import Script from "next/script";
 import MobileBottomBar from "./components/BottomBar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://thaibetz.com/"), // ← ใส่โดเมนจริงของคุณ
@@ -286,6 +287,7 @@ export default function RootLayout({
           left={{ label: "สมัคร F168", href: "/register-f168" }}
           right={{ label: "สมัคร MK8", href: "/register-mk8" }}
         />
+        <Footer />
       </body>
       <Script
         id="ld-json-home-webpage"
