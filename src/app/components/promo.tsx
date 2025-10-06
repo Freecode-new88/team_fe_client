@@ -408,9 +408,8 @@ export default function Promo() {
       <div className={styles.bannerGrid}>
         {/* Box 1 */}
         <div className={`${styles.box1} ${styles.leftBox}`}>
-          <img src="/images/left1.jpg" alt="" className={styles.pokerArt} draggable="false"/>
           <div className="relative">
-            <img src="/images/left1.jpg" alt="ภาพประกอบโปรโมชัน" className={styles.pokerArt} />
+            <img src="/images/left1.jpg" alt="ภาพประกอบโปรโมชัน" className={styles.pokerArt} draggable="false" />
 
             {/* ป้าย Live Active ที่มุมขวาบน ใช้ Tailwind จัดแต่ง */}
             <div className="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">
