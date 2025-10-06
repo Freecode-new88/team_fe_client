@@ -114,7 +114,7 @@ export default function RootLayout({
     ],
     address: { "@type": "PostalAddress", addressCountry: "TH" },
     sameAs: [
-      "https://twitter.com/yourhandle",
+      "https://x.com/CosplayFeverX",
     ],
   };
   {/* ✅ JSON-LD: WebSite */ }
@@ -136,17 +136,12 @@ export default function RootLayout({
         url: "https://thaibetz.com/icons/icon-512.png"
       }
     },
-    potentialAction: {
+   /* potentialAction: {
       "@type": "SearchAction",
       target: "https://thaibetz.com/search?q={query}",
       "query-input": "required name=query"
-    },
-    sameAs: [
-      "https://www.facebook.com/yourpage",
-      "https://twitter.com/yourhandle",
-      "https://www.instagram.com/yourhandle",
-      "https://www.youtube.com/@yourchannel"
-    ]
+    },*/
+    sameAs: []
   };
   {/* ✅ JSON-LD: WebPage (หน้าโฮม) */ }
 
