@@ -7,62 +7,62 @@ type Games = { img: string; title: string; web: string }
 
 const games: Games[] = [
   {
-    img: "/images/mk8/refer-friends-triple-bonus-1-3-commission.png",
+    img: "/images/mk8/refer-friends-triple-bonus-1-3-commission.webp",
     title: "แนะนำเพื่อนรับโบนัสเน้นๆไปเลย3ต่อ ค่าคอมมิชชั่นสูงสุด 1.3%",
     web: "mk8"
   },
   {
-    img: "/images/mk8/daily-profit-bonus-slots-fishing-card-games.png",
+    img: "/images/mk8/daily-profit-bonus-slots-fishing-card-games.webp",
     title: "โบนัสกำไรรายวัน (สล๊อต-ยิงปลา-เกมไพ่)",
     web: "mk8"
   },
   {
-    "img": "/images/mk8/first-deposit-bonus-20.jpg",
+    "img": "/images/mk8/first-deposit-bonus-20.webp",
     "title": "ฝากครั้งแรกของยูส 20%",
     web: "mk8"
   },
   {
-    "img": "/images/mk8/lucky-wheel-spin-and-win.jpg",
+    "img": "/images/mk8/lucky-wheel-spin-and-win.webp",
     "title": "วงล้อนำโชค",
     web: "mk8"
   },
   {
-    "img": "/images/mk8/monthly-random-giveaways-bonus.jpg",
+    "img": "/images/mk8/monthly-random-giveaways-bonus.webp",
     "title": "สุ่มแจกทุกเดือน (โบนัสรายเดือน • โบนัสสมาชิก • โบนัสลึกลับ)",
     web: "mk8"
   },
   {
-    "img": "/images/mk8/refer-friends-triple-bonus-1-3-commission.png",
+    "img": "/images/mk8/refer-friends-triple-bonus-1-3-commission.webp",
     "title": "แนะนำเพื่อน รับโบนัส 3 ต่อ ค่าคอมมิชชั่นสูงสุด 1.3%",
     web: "mk8"
   },
   {
-    "img": "/images/mk8/register-get-28-8-free-credit.jpg",
+    "img": "/images/mk8/register-get-28-8-free-credit.webp",
     "title": "ลงทะเบียนรับเครดิตฟรี 28.8",
     web: "mk8"
   },
   {
-    "img": "/images/mk8/usdt-deposit-bonus-2-percent.jpg",
+    "img": "/images/mk8/usdt-deposit-bonus-2-percent.webp",
     "title": "โบนัสฝากเงิน USDT รับเพิ่ม 2%",
     web: "mk8"
   },
   {
-    "img": "/images/f168/all-bank.png",
+    "img": "/images/f168/all-bank.webp",
     "title": "รองรับธนาคารทุกแห่งในประเทศไทย",
     web: "f168"
   },
   {
-    "img": "/images/f168/get-36.png",
+    "img": "/images/f168/get-36.webp",
     "title": "ลงทะเบียนรับเครดิตฟรี 36 บาท",
     web: "f168"
   },
   {
-    "img": "/images/f168/get-more-2-percent.png",
+    "img": "/images/f168/get-more-2-percent.webp",
     "title": "โบนัสฝากเงิน USDT รับเพิ่ม 2%",
     web: "f168"
   },
   {
-    "img": "/images/f168/get-more-10-percent.png",
+    "img": "/images/f168/get-more-10-percent.webp",
     "title": "ฝากรายวันรับเพิ่ม 10%",
     web: "f168"
   }
