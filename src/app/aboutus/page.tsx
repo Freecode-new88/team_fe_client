@@ -73,6 +73,53 @@ export default function AboutUsPage() {
     return () => io.disconnect();
   }, []);
 
+  useEffect(() => {
+  const $ = (id: string) =>
+    document.querySelector<HTMLElement>(`[data-id="${id}"]`);
+  const getNum = (el: HTMLElement | null) =>
+    el ? Number(el.textContent?.replace(/,/g, '') || 0) : 0;
+  const setNum = (el: HTMLElement | null, v: number) => {
+    if (el) el.textContent = v.toLocaleString();
+  };
+  const rand = (min: number, max: number) =>
+    Math.floor(Math.random() * (max - min + 1)) + min;
+
+  const winEl = $('win');
+  const happyEl = $('happy');
+  const playersEl = $('players');
+
+  let timeouts: number[] = [];
+
+  const scheduleWinHappy = () => {
+    const delay = rand(1000, 10000);      // 1–10s
+    const inc = rand(2, 5);    // 2-5 random
+    const t = window.setTimeout(() => {
+      setNum(winEl, getNum(winEl) + inc);
+      setNum(happyEl, getNum(happyEl) + inc);
+      scheduleWinHappy();
+    }, delay);
+    timeouts.push(t);
+  };
+
+  const schedulePlayers = () => {
+    const delay = rand(1000, 5000);
+    const inc = rand(1, 2);
+    const t = window.setTimeout(() => {
+      setNum(playersEl, getNum(playersEl) + inc);
+      schedulePlayers();
+    }, delay);
+    timeouts.push(t);
+  };
+
+  scheduleWinHappy();
+  schedulePlayers();
+
+  return () => {
+    timeouts.forEach(clearTimeout);
+    timeouts = [];
+  };
+}, []);
+
   return (
     <main className={styles.page}>
       {/* Top section */}
@@ -99,7 +146,7 @@ export default function AboutUsPage() {
               <div className={styles.statIconWrap}>
                 <Image src={c.icon} alt="" width={76} height={76} draggable="false"/>
               </div>
-              <div className={styles.statValue} data-count data-end={c.end}>0</div>
+              <div className={styles.statValue} data-count data-id={c.id} data-end={c.end}>0</div>
               <div className={styles.statLabel}>{c.label}</div>
             </div>
           ))}
