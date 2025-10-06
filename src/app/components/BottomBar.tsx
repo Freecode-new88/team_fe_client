@@ -37,6 +37,8 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
           {/* Left button */}
           <Link
             href={left.href}
+            rel="noopener noreferrer"
+            target="_blank"
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
           >
             {/* icon: lightning */}
@@ -49,6 +51,8 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
           {/* Right button */}
           <Link
             href={right.href}
+            rel="noopener noreferrer"
+            target="_blank"
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
           >
             {/* icon: crown */}

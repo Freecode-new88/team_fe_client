@@ -8,6 +8,7 @@ export default function ContactUsPage() {
   const qrRef = useRef<HTMLDivElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
 
+  // ********** (Code ส่วน useEffect Logic เดิม) **********
   // QR
   useEffect(() => {
     const el = qrRef.current;
@@ -41,46 +42,52 @@ export default function ContactUsPage() {
     items.forEach(li => io.observe(li));
     return () => io.disconnect();
   }, []);
+  // ********** (สิ้นสุด Logic) **********
 
   return (
-    <section className={styles.hero} aria-label="Contact us">
+    // ปรับ aria-label ให้เป็นภาษาไทย
+    <section className={styles.hero} aria-label="ช่องทางการติดต่อเรา">
       <div className={styles.contactcontainer}>
         {/* Left: simple info block */}
         <div className={styles.left}>
-          <nav className={styles.breadcrumb} aria-label="Breadcrumb">
+          {/* ปรับ Breadcrumb */}
+          <nav className={styles.breadcrumb} aria-label="เส้นทางหน้าเว็บ">
             <ol>
-                <li><Link href="/">Home</Link></li>
-                <li aria-current="page">Contact Us</li>
+              <li><Link href="/">หน้าหลัก</Link></li>
+              <li aria-current="page">ติดต่อเรา</li>
             </ol>
           </nav>
-          <h1 className={styles.title}><span className={styles.gradient}>Join Us For More Updates</span></h1>
+          
+          {/* ปรับ H1 เน้นคีย์เวิร์ด */}
+          <h1 className={styles.title}><span className={styles.gradient}>ติดต่อเรา: รับโปรโมชั่นและอัปเดตผ่าน Telegram และ Line</span></h1>
           <p className={styles.lead}>
-            You can get daily promotions at the telegram group.
-            Don't miss the amazing chance of giveaways points and import update NEWS. Join the group now!!
+            มึงสามารถรับโปรโมชั่นรายวันได้ที่กลุ่ม **Telegram** ห้ามพลาดโอกาสในการแจกพ้อยท์ และข่าวสารอัปเดตสำคัญ เข้าร่วมกลุ่มเลย!!
           </p>
 
           <ul className={styles.infoList} ref={listRef}>
             <li>
               <Image
                 src="/images/tele.png"
-                alt="Telegram user"
+                // ปรับ alt
+                alt="ไอคอนผู้ใช้ Telegram"
                 width={40}
                 height={40}
                 priority
                 draggable="false"
               />
-              <span>Telegram username</span>
+              <span>ชื่อผู้ใช้ Telegram</span>
             </li>
             <li>
               <Image
                 src="/images/line.png"
-                alt="Line user"
+                // ปรับ alt
+                alt="ไอคอนผู้ใช้ Line"
                 width={50}
                 height={50}
                 priority
                 draggable="false"
               />
-              <span>Line</span>
+              <span>Line Official</span>
             </li>
           </ul>
         </div>
@@ -90,13 +97,14 @@ export default function ContactUsPage() {
           <div className={styles.qrCard} ref={qrRef} data-motion="drop">
             <Image
               src="/images/TGQR.png"
-              alt="Telegram QR"
+              // ปรับ alt ชัดเจน
+              alt="คิวอาร์โค้ดสำหรับติดต่อเราทาง Telegram"
               width={320}
               height={320}
               priority
               draggable="false"
             />
-            <p className={styles.qrCaption}>Scan to contact us on Telegram</p>
+            <p className={styles.qrCaption}>สแกนเพื่อติดต่อเราผ่าน Telegram</p> {/* ปรับข้อความ */}
           </div>
         </div>
       </div>

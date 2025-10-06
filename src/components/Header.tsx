@@ -2,26 +2,31 @@
 import Link from "next/link";
 import styles from "./Header.module.css";
 import NextImage from "next/image";
+import { F168lINK, MK8LINK } from "@/config/site";
 
 export default function Header() {
 
   return (
     <header className={`${styles.header} hidden lg:block`}>
       <div className={styles.logoArea}>
-        <NextImage
-          src="/logo01.png"
-          alt="ทิมล่าโปร"
-          width={160}         
-          height={40}
-          className={styles.logo}
-          priority            
-        />
+        <Link
+          href={"/"} >
+          <NextImage
+            src="/logo01.png"
+            alt="ทิมล่าโปร"
+            width={160}
+            height={40}
+            className={styles.logo}
+            priority
+          /></Link>
       </div>
 
       <nav className={styles.nav}>
 
         <Link
-          href="/f168"
+          href={F168lINK}
+          rel="noopener noreferrer"
+          target="_blank"
           aria-label="สมัครสมาชิก F168"
           className={`${styles.tab} inline-flex items-center justify-center gap-2 rounded-xl px-0 py-0 no-underline`}
         >
@@ -36,7 +41,9 @@ export default function Header() {
           <span className="">สมัคร F168</span>
         </Link>
         <Link
-          href="/f168"
+          href={MK8LINK}
+          rel="noopener noreferrer"
+          target="_blank"
           aria-label="สมัครสมาชิก F168"
           className={`${styles.tab} inline-flex items-center justify-center gap-2 rounded-xl px-0 py-0 no-underline`}
         >
