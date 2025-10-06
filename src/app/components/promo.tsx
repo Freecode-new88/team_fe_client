@@ -268,13 +268,13 @@ export default function Promo() {
     return () => clearInterval(id);
   }, [sortedCodes.length]);
   // Box-3 loop
-  useEffect(() => {
-    if (!sortedRecent.length) return;
-    const id = setInterval(() => {
-      setRecentStart(s => (s + RECENT_VISIBLE) % sortedRecent.length);
-    }, POLL_RECENT_MS);
-    return () => clearInterval(id);
-  }, [sortedRecent.length]);
+  // useEffect(() => {
+  //   if (!sortedRecent.length) return;
+  //   const id = setInterval(() => {
+  //     setRecentStart(s => (s + RECENT_VISIBLE) % sortedRecent.length);
+  //   }, POLL_RECENT_MS);
+  //   return () => clearInterval(id);
+  // }, [sortedRecent.length]);
 
   /* helpers */
   const onlyTime = (ts: string) => {
@@ -403,7 +403,7 @@ export default function Promo() {
       <div className={styles.bannerGrid}>
         {/* Box 1 */}
         <div className={`${styles.box1} ${styles.leftBox}`}>
-          <img src="/images/left1.jpg" alt="" className={styles.pokerArt} />
+          <img src="/images/left1.jpg" alt="" className={styles.pokerArt} draggable="false"/>
           <div className={styles.formStack}>
             <input
               className={styles.input}

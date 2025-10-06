@@ -60,7 +60,7 @@ export default function Game() {
               style={{ ['--i' as any]: i }} // used for stagger delay
             >
               <div className={styles.gameImg}>
-                <img src={item.img} alt={item.title} />
+                <img src={item.img} alt={item.title} draggable="false"/>
               </div>
             </div>
           );
