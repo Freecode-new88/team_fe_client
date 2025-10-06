@@ -3,10 +3,13 @@ import type { SiteKey } from "../config/site";
 import { siteByKey } from "../config/site";
 
 export type PromoItem = {
-  promo_code: string;
-  available: "Available" | string;
+  user: string | "";
+  code: string;
+  point: number;
   site: string;
-  date: string;
+  time: string;
+  receiveCount: number;
+  receiveTotal: number;
 };
 
 type GetPromoResponse = {
@@ -25,7 +28,6 @@ export async function fetchPromoCodes(): Promise<ServiceResult<PromoItem[]>> {
   try {
     const res = await api.get<GetPromoResponse>("/clientpromo/getpromo");
 
-    // Basic shape check
     if (!res?.data || !Array.isArray(res.data.data)) {
       return { ok: false, error: "Unexpected response shape" };
     }
@@ -38,35 +40,20 @@ export async function fetchPromoCodes(): Promise<ServiceResult<PromoItem[]>> {
   }
 }
 
-export type ClaimItem = {
-  user: string;
-  code: string;
-  point: number;
-  site: string;
-  time: string;
-  receiveCount: number;
-  receiveTotal: number;
 
-};
-
-
-type GetClaimResponse = {
-  status_code: number;
-  data: ClaimItem[];
-}
 /**
  * Fetch user claimed promo codes from BE and return a normalized result.
  */
-export async function fetchClaimedData(): Promise<ServiceResult<ClaimItem[]>> {
+export async function fetchClaimedData(): Promise<ServiceResult<PromoItem[]>> {
   try {
-    const res = await api.get<GetClaimResponse>("/clientpromo/getpromoclaim");
+    const res = await api.get<GetPromoResponse>("/clientpromo/getpromoclaim");
 
     // Basic shape check
     if (!res?.data || !Array.isArray(res.data.data)) {
       return { ok: false, error: "Unexpected response shape" };
     }
 
-    const items = res.data.data;
+    const items = res.data.data.slice(0, 5);
 
     return { ok: true, data: items };
   } catch (e: any) {
@@ -179,8 +166,8 @@ export async function verifyPromoCode(args: {
     }
 
     // 400 wrong promo gets here only if axios doesn't throw
-    if ((data as any)?.message) {
-      return { ok: false, status, error: (data as any).message };
+    if ((data as any)?.reason) {
+      return { ok: false, status, error: (data as any).reason };
     }
 
     return { ok: false, status, error: "Unexpected response" };

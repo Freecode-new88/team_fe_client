@@ -149,6 +149,7 @@ export default function Game() {
               className={`${inViewClass} col-span-12 md:col-span-4 lg:col-span-3`}
               style={{ ['--i' as any]: i }}
             >
+<<<<<<< HEAD
               <div className="group relative w-full overflow-hidden rounded-xl shadow transition hover:shadow-lg cursor-pointer">
                 <img
                   src={item.img}
@@ -164,6 +165,10 @@ export default function Game() {
                     ลงทะเบียนรับสิทธิ์ทันที
                   </span>
                 </div>
+=======
+              <div className={styles.gameImg}>
+                <img src={item.img} alt={item.title} draggable="false"/>
+>>>>>>> 3cb6c3cd9f8e6116613fe2ec7313f0a809335c42
               </div>
             </div>
           );

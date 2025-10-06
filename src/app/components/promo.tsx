@@ -5,7 +5,7 @@ import styles from '../f168.module.css';
 import copy from 'copy-to-clipboard';
 import {
   fetchPromoCodes, type PromoItem,
-  fetchClaimedData, type ClaimItem,
+  fetchClaimedData,
   getCaptchaBySite, type Captcha,
   verifyPromoCode, submitUserClaim,
 } from '@/services/promo.service';
@@ -20,8 +20,7 @@ import { maskUser } from '@/utils/random';
 const VISIBLE_COUNT = 6;
 const RECENT_VISIBLE = 5;
 const CLAIM_HIGHLIGHT_MS = 15_000;  // 15s
-const POLL_PROMO_MS = 50_000;       // 10s
-const POLL_RECENT_MS = 30_000;      // 20s
+const POLL_PROMO_MS = 50_000;
 const CLAIMS_BOOTSTRAPPED_KEY = 'claims_bootstrapped_v1';
 
 function usePanelChangeFlag(deps: any[]) {
@@ -35,29 +34,24 @@ function usePanelChangeFlag(deps: any[]) {
 }
 
 function upsertPromos(prev: PromoItem[], incoming: PromoItem[]) {
-  const map = new Map(prev.map((p) => [p.promo_code, p]));
-  for (const it of incoming) map.set(it.promo_code, it);
-  const merged = Array.from(map.values());
-  merged.sort(
-    (a, b) =>
-      new Date(b.date.replace(' ', 'T')).getTime() -
-      new Date(a.date.replace(' ', 'T')).getTime()
-  );
-  return merged;
-}
-
-function upsertClaims(prev: ClaimItem[], incoming: ClaimItem[], limit = 200) {
-  const key = (c: ClaimItem) => `${c.user}|${c.code}|${c.time}`;
-  const map = new Map(prev.map((c) => [key(c), c]));
-  for (const it of incoming) map.set(key(it), it);
+  const map = new Map(prev.map((p) => [p.code, p]));
+  for (const it of incoming) map.set(it.code, it);
   const merged = Array.from(map.values());
   merged.sort(
     (a, b) =>
       new Date(b.time.replace(' ', 'T')).getTime() -
       new Date(a.time.replace(' ', 'T')).getTime()
   );
-  return merged.slice(0, limit);
+  return merged;
 }
+
+function normalizePromo(p: PromoItem): PromoItem{
+  const count = Number(p.receiveCount ?? 0);
+  const totalRaw = Number(p.receiveTotal);
+  const total = Number.isFinite(totalRaw) && totalRaw > 0 ? totalRaw : 1;
+  const available = count >= total ? 'Used' : 'Available';
+  return { ...p, receiveCount: count, receiveTotal: total };
+};
 
 export default function Promo() {
   const [start, setStart] = useState(0);
@@ -65,7 +59,7 @@ export default function Promo() {
 
   // data
   const [promoData, setPromoData] = useState<PromoItem[]>([]);
-  const [claimData, setClaimData] = useState<ClaimItem[]>([]);
+  const [claimData, setClaimData] = useState<PromoItem[]>([]);
 
   // form
   const [promoCode, setPromoCode] = useState('');
@@ -112,38 +106,40 @@ export default function Promo() {
 
     // === Box 2: add new promo to TOP, then rotation continues as usual ===
     const onPromoCreated = (payload: PromoItem) => {
-      setPromoData(prev => {
-        const next = upsertPromos(prev, [payload]);
-        return next;
-      });
+      const normalized = normalizePromo(payload);
+      setPromoData(prev => upsertPromos(prev, [normalized]));
       setStart(0);
     };
 
     // === Box 3: add claim to TOP, highlight, reset view, If code === promo_code, change status
-    type ClaimCreatedPayload = ClaimItem;
+    type ClaimCreatedPayload = PromoItem;
 
     const onClaimCreated = (payload: ClaimCreatedPayload) => {
-      const normalized: ClaimItem = {
+      const normalized: PromoItem = {
         ...payload,
+        user: maskUser({ user: payload.user }),
         time: payload.time.includes('T') ? payload.time : payload.time.replace(' ', 'T'),
       };
 
-      setClaimData(prev => upsertClaims([normalized, ...prev], []));
+      setClaimData(prev => [normalized, ...prev].slice(0, 5));
 
       const k = `${normalized.user}|${normalized.code}|${normalized.time}`;
       setClaimHighlights(old => ({ ...old, [k]: Date.now() + CLAIM_HIGHLIGHT_MS }));
-      setRecentStart(0);
 
-      // if Box 2 has this code and it's "Available", mark it "Used"
+      // if Box 2 has this code and check count 0/1. it's "Available", else mark it "Used"
       setPromoData(prev => {
-        console.log("Will mark as used");
         let changed = false;
         const next = prev.map(p => {
-          if (p.promo_code === normalized.code && p.available === 'Available') {
-            changed = true;
-            return { ...p, available: 'Used' as PromoItem['available'] };
-          }
-          return p;
+          if (p.code !== normalized.code) return p;
+
+          const newCount = Math.min((p.receiveCount ?? 0) + 1, p.receiveTotal ?? 1);
+          const willBeUsed = newCount >= (p.receiveTotal ?? 1);
+          changed = true;
+          return {
+            ...p,
+            receiveCount: newCount,
+            available: willBeUsed ? 'Used' : 'Available',
+          } as any;
         });
         return changed ? next : prev;
       });
@@ -170,17 +166,14 @@ export default function Promo() {
     const poll = async () => {
       const res = await fetchPromoCodes();
       if (!alive || !res.ok) return;
-      console.log("Promo codes", res.data);
-      setPromoData((prev) => upsertPromos(prev, res.data));
+      const normalized = res.data.map(normalizePromo);
+      setPromoData(prev => upsertPromos(prev, normalized));
     };
 
-    // initial + interval
     poll();
-    //const id = setInterval(poll, POLL_PROMO_MS);
 
     return () => {
       alive = false;
-      //clearInterval(id);
     };
   }, []);
 
@@ -194,7 +187,13 @@ export default function Promo() {
     (async () => {
       const res = await fetchClaimedData();
       if (!alive || !res.ok) return;
-      setClaimData(prev => upsertClaims(prev, res.data));
+      
+      const masked = res.data.map(it => ({
+        ...it,
+        user: maskUser({ user: it.user })
+      }));
+
+      setClaimData(masked.slice(0, 5));
       sessionStorage.setItem(CLAIMS_BOOTSTRAPPED_KEY, '1');
     })();
 
@@ -220,19 +219,29 @@ export default function Promo() {
 
   /* computed views */
   const sortedCodes = useMemo(() => {
-    const list = promoData ?? [];
-    return [...list].sort(
-      (a, b) =>
-        new Date(b.date.replace(' ', 'T')).getTime() -
-        new Date(a.date.replace(' ', 'T')).getTime()
-    );
-  }, [promoData]);
+  const list = promoData ?? [];
 
-  const sortedRecent = useMemo(() => {
-    const list = claimData ?? [];
-    const parse = (t: string) => new Date(t.replace(' ', 'T')).getTime();
-    return [...list].sort((a, b) => parse(b.time) - parse(a.time));
-  }, [claimData]);
+  const key = (p: PromoItem) => {
+    const c = Number(p.receiveCount ?? 0);
+    const t = Math.max(1, Number(p.receiveTotal ?? 1));
+    const used = c >= t ? 1 : 0;
+
+    return [used, c, t];
+  };
+
+  const byDateDesc = (a: PromoItem, b: PromoItem) =>
+    new Date(b.time.replace(' ', 'T')).getTime() -
+    new Date(a.time.replace(' ', 'T')).getTime();
+
+  return [...list].sort((a, b) => {
+    const [ua, ca, ta] = key(a);
+    const [ub, cb, tb] = key(b);
+    if (ua !== ub) return ua - ub;
+    if (ca !== cb) return ca - cb;
+    if (ta !== tb) return ta - tb;
+    return byDateDesc(a, b);
+  });
+}, [promoData]);
 
   const visibleRows = useMemo(() => {
     const total = sortedCodes.length;
@@ -247,20 +256,7 @@ export default function Promo() {
     return rows;
   }, [sortedCodes, start]);
 
-  const visibleRecent = useMemo(() => {
-    const total = sortedRecent.length;
-    if (total === 0) return new Array(RECENT_VISIBLE).fill(null);
-    if (total <= RECENT_VISIBLE) {
-      return [...sortedRecent, ...Array(RECENT_VISIBLE - total).fill(null)];
-    }
-    const rows: (ClaimItem | null)[] = [];
-    for (let i = 0; i < RECENT_VISIBLE; i++) {
-      rows.push(sortedRecent[(recentStart + i) % total]);
-    }
-    return rows;
-  }, [sortedRecent, recentStart]);
-
-  // keep panel pulse for the carousel stepping
+  /* keep panel pulse for the carousel stepping */
   const box2Changed = usePanelChangeFlag([start]);
   const box3Changed = usePanelChangeFlag([recentStart]);
 
@@ -272,14 +268,6 @@ export default function Promo() {
     }, POLL_PROMO_MS);
     return () => clearInterval(id);
   }, [sortedCodes.length]);
-  // Box-3 loop
-  useEffect(() => {
-    if (!sortedRecent.length) return;
-    const id = setInterval(() => {
-      setRecentStart(s => (s + RECENT_VISIBLE) % sortedRecent.length);
-    }, POLL_RECENT_MS);
-    return () => clearInterval(id);
-  }, [sortedRecent.length]);
 
   /* helpers */
   const onlyTime = (ts: string) => {
@@ -409,7 +397,7 @@ export default function Promo() {
         {/* Box 1 */}
         <div className={`${styles.box1} ${styles.leftBox}`}>
           <div className="relative">
-            <img src="/images/left1.jpg" alt="ภาพประกอบโปรโมชัน" className={styles.pokerArt} />
+            <img src="/images/left1.jpg" alt="ภาพประกอบโปรโมชัน" className={styles.pokerArt} draggable="false" />
 
             {/* ป้าย Live Active ที่มุมขวาบน ใช้ Tailwind จัดแต่ง */}
             <div className="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">
@@ -456,8 +444,8 @@ export default function Promo() {
           <table className={styles.table}>
             <colgroup>
               {[
-                { width: "28%" },
-                { width: "22%" },
+                { width: "32%" },
+                { width: "18%" },
                 { width: "20%" },
                 { width: "30%" },
               ].map((s, i) => (
@@ -468,9 +456,9 @@ export default function Promo() {
             <thead>
               <tr>
                 <th>โค้ด</th>
+                <th>รับแล้ว</th>
                 <th>สถานะ</th>
                 <th>เว็บไซต์</th>
-                <th>หมดอายุ</th>
               </tr>
             </thead>
 
@@ -478,19 +466,19 @@ export default function Promo() {
               {visibleRows.map((row, i) =>
                 row ? (
                   <tr
-                    key={`${row.promo_code}-${i}`}
+                    key={`${row.code}-${i}`}
                     className={`${styles.tableRow} ${styles.rowEnter}`}
                   >
                     <td>
                       <div className={styles.codeCell}>
-                        <span className={styles.codeText}>{row.promo_code}</span>
+                        <span className={styles.codeText}>{row.code}</span>
 
                         <button
                           type="button"
                           className={`${styles.copyBtn} ${copiedIndex === i ? styles.copyBtnActive : ""
                             }`}
-                          onClick={() => handleCopy(row.promo_code, i)}
-                          aria-label={`คัดลอก ${row.promo_code}`}
+                          onClick={() => handleCopy(row.code, i)}
+                          aria-label={`คัดลอก ${row.code}`}
                           title={copiedIndex === i ? "คัดลอกแล้ว!" : "คัดลอก"}
                         >
                           {copiedIndex === i ? (
@@ -524,18 +512,22 @@ export default function Promo() {
                         </button>
                       </div>
                     </td>
+                    
+                     {/* รับแล้ว */}
+                    <td className={(row.receiveCount ?? 0) >= (row.receiveTotal ?? 1) ? styles.claimExhausted : undefined}>
+                      {`${row.receiveCount ?? 0}/${row.receiveTotal ?? 1}`}
+                    </td>
 
                     {/* ใช้ค่าอังกฤษเดิมเพื่อกำหนดคลาส แต่แสดงผลเป็นไทย */}
                     <td
                       className={
-                        row.available === "Available" ? styles.available : styles.used
+                        (row.receiveCount ?? 0) >= (row.receiveTotal ?? 1) ? styles.used : undefined
                       }
                     >
-                      {row.available === "Available" ? "พร้อมใช้" : "ถูกใช้แล้ว"}
+                      {(row.receiveCount ?? 0) >= (row.receiveTotal ?? 1) ? "พร้อมใช้" : "ถูกใช้แล้ว"}
                     </td>
 
                     <td>{row.site}</td>
-                    <td>{row.date}</td>
                   </tr>
                 ) : (
                   <tr key={`filler-${i}`} className={`${styles.tableRow} ${styles.fillerRow}`}>
@@ -576,34 +568,32 @@ export default function Promo() {
               </tr>
             </thead>
 
-            <tbody key={recentStart}>
-              {visibleRecent.map((r, i) => {
-                if (!r) {
-                  return (
+            <tbody>
+              {claimData.length === 0
+                ? new Array(RECENT_VISIBLE).fill(null).map((_, i) => (
                     <tr key={`recent-filler-${i}`} className={styles.fillerRow}>
                       <td colSpan={5} />
                     </tr>
-                  );
-                }
-                const k = `${r.user}|${r.code}|${r.time}`;
-                const isHot = claimHighlights[k] && claimHighlights[k] > Date.now();
-
-                return (
-                  <tr
-                    key={`${r.user}-${i}`}
-                    className={`${styles.rowEnter} ${isHot ? styles.flameRow : ""}`}
-                  >
-                    <td className={styles.flameCell}>
-                      {isHot && <span className={styles.flameBadge} aria-hidden></span>}
-                      {maskUser(r.user)}
-                    </td>
-                    <td>{r.code}</td>
-                    <td>ได้รับ {r.point} แต้ม</td>
-                    <td>{r.site}</td>
-                    <td>{onlyTime(r.time)}</td>
-                  </tr>
-                );
-              })}
+                  ))
+                : claimData.map((r, i) => {
+                    const k = `${r.user}|${r.code}|${r.time}`;
+                    const isHot = claimHighlights[k] && claimHighlights[k] > Date.now();
+                    return (
+                      <tr
+                        key={`${r.user}-${r.code}-${r.time}-${i}`}
+                        className={`${styles.rowEnter} ${isHot ? styles.flameRow : ""}`}
+                      >
+                        <td className={styles.flameCell}>
+                          {isHot && <span className={styles.flameBadge} aria-hidden></span>}
+                          { r.user}
+                        </td>
+                        <td>{r.code}</td>
+                        <td>ได้รับ {r.point} แต้ม</td>
+                        <td>{r.site}</td>
+                        <td>{onlyTime(r.time)}</td>
+                      </tr>
+                    );
+                  })}
             </tbody>
           </table>
         </div>
