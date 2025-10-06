@@ -125,6 +125,7 @@ export default function Game() {
   }
 
   return (
+
     <section className={styles.game}>
       <div className={styles.sectionHeading}>
         <h2 className={styles.gradientFont}>เกมยอดนิยม</h2>
@@ -133,42 +134,42 @@ export default function Game() {
       {/* Grid: มือถือ 1 คอลัมน์ (12/12), แท็บเล็ต 3 คอลัมน์ (4/12), พีซี 4 คอลัมน์ (3/12) */}
       <div className="grid grid-cols-12 gap-4 p-5">
         {picked.map((item, i) => {
-          const inViewClass = visible.has(i) ? styles.inView : '';
+          const inViewClass = visible.has(i) ? styles.inView : "";
+
           return (
             <div
-              onClick={() => {
-                if (item.web == "mk8") {
-                  openSafe(MK8LINK)
-                } else if (item.web == "f168") {
-                  openSafe(F168lINK)
-                }
-              }}
               key={item.img}
               ref={(el) => { itemRefs.current[i] = el; }}
               data-index={i}
               className={`${inViewClass} col-span-12 md:col-span-4 lg:col-span-3`}
-              style={{ ['--i' as any]: i }}
+              style={{ ["--i" as any]: i }}
             >
-<<<<<<< HEAD
-              <div className="group relative w-full overflow-hidden rounded-xl shadow transition hover:shadow-lg cursor-pointer">
+              <div
+                role="button"
+                tabIndex={0}
+                aria-label={item.title}
+                onClick={() => {
+                  if (item.web == "mk8") { openSafe(MK8LINK) } else if (item.web == "f168") { openSafe(F168lINK) }
+                }}
+                className="group relative w-full overflow-hidden rounded-xl shadow transition hover:shadow-lg cursor-pointer"
+              >
                 <img
                   src={item.img}
                   alt={item.title}
+                  draggable="false"
                   loading="lazy"
                   className="w-full h-auto block transform-gpu transition duration-300 ease-out group-hover:scale-105"
                 />
                 {/* hover overlay */}
-                <div className="pointer-events-none absolute inset-0 flex items-center justify-center
-                          bg-blue-600/60 opacity-0 group-hover:opacity-100
-                          transition duration-300 ease-out">
+                <div
+                  className="pointer-events-none absolute inset-0 flex items-center justify-center
+                         bg-blue-600/60 opacity-0 group-hover:opacity-100
+                         transition duration-300 ease-out"
+                >
                   <span className="text-white text-lg md:text-xl font-semibold drop-shadow px-4 py-2">
                     ลงทะเบียนรับสิทธิ์ทันที
                   </span>
                 </div>
-=======
-              <div className={styles.gameImg}>
-                <img src={item.img} alt={item.title} draggable="false"/>
->>>>>>> 3cb6c3cd9f8e6116613fe2ec7313f0a809335c42
               </div>
             </div>
           );
