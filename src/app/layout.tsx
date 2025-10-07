@@ -7,6 +7,7 @@ import Script from "next/script";
 import MobileBottomBar from "./components/BottomBar";
 import Footer from "@/components/Footer";
 import { F168lINK, MK8LINK } from "@/config/site";
+import { Fab } from "@/components/Fab";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://thaibetz.com/"), // ← ใส่โดเมนจริงของคุณ
@@ -137,11 +138,11 @@ export default function RootLayout({
         url: "https://thaibetz.com/icons/icon-512.png"
       }
     },
-   /* potentialAction: {
-      "@type": "SearchAction",
-      target: "https://thaibetz.com/search?q={query}",
-      "query-input": "required name=query"
-    },*/
+    /* potentialAction: {
+       "@type": "SearchAction",
+       target: "https://thaibetz.com/search?q={query}",
+       "query-input": "required name=query"
+     },*/
     sameAs: []
   };
   {/* ✅ JSON-LD: WebPage (หน้าโฮม) */ }
@@ -278,7 +279,9 @@ export default function RootLayout({
         <Preloader />
         <Header />
         {children}
-        <ScrollUp />
+        { /* <ScrollUp /> */}
+
+        <Fab />
         <MobileBottomBar
           left={{ label: "สมัคร F168", href: F168lINK }}
           right={{ label: "สมัคร MK8", href: MK8LINK }}

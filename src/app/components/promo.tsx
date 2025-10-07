@@ -1,5 +1,5 @@
 'use client';
-
+import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from '../f168.module.css';
 import copy from 'copy-to-clipboard';
@@ -15,6 +15,11 @@ import { showClaimSuccess } from '@/components/ShowClaimSuccess';
 import { Copy, Gift } from 'lucide-react';
 import { getSocket } from '@/services/socket';
 import { maskUser } from '@/utils/random';
+
+const LeftImageWithGifts = dynamic(
+  () => import("@/components/LeftImageWithGifts").then(m => m.LeftImageWithGifts),
+  { ssr: false } // 👈 ปิด SSR
+);
 
 /* ---------- constants / helpers ---------- */
 const VISIBLE_COUNT = 6;
@@ -410,6 +415,7 @@ export default function Promo() {
                 รับโค้ดฟรีทุกวัน
               </h2>
             </div>
+            <LeftImageWithGifts count={6} />
           </div>
           <div className={styles.formStack}>
             <input
@@ -439,12 +445,12 @@ export default function Promo() {
               <Gift aria-hidden />
               ตรวจสอบเลย
             </button>
-            {errorMsg && <div className={styles.errorMsg}>{errorMsg}</div>}
+            {errorMsg && <div className={`text-red-700 ${styles.errorMsg} `}>{errorMsg}</div>}
           </div>
         </div>
 
         {/* Box 2 */}
-        <div className={`relative ${styles.box2} ${styles.rightBox} ${box2Changed ? `${styles.panelPulse} ${styles.panelPop}` : ""}`} >
+        <div className={`relative min-h-[160px] ${styles.box2} ${styles.rightBox} ${box2Changed ? `${styles.panelPulse} ${styles.panelPop}` : ""}`} >
           <table className={styles.table}>
             <colgroup>
               {[
