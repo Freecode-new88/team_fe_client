@@ -126,7 +126,7 @@
 }
 
 .chooseInner {
-  width:min(1200px,92vw);
+  width:min(1450px,92vw);
   margin:0 auto;
   display:grid;
   grid-template-columns:.9fr 1.1fr;
@@ -233,6 +233,14 @@
 }
 
 /* Macbook */
+@media (max-width: 1440) {
+  .chooseInner {
+  width:min(1200px,92vw);
+  }
+  .title {
+    font-size: 45px;
+  }
+}
 @media (max-width: 1024px) {
   .topInner {
     grid-template-columns:1fr;

@@ -18,6 +18,7 @@ export default function Header() {
             height={40}
             className={styles.logo}
             priority
+            draggable="false"
           /></Link>
       </div>
 
@@ -37,6 +38,7 @@ export default function Header() {
             width={128}
             height={45}
             className="block object-contain w-10 h-auto"
+            draggable="false"
           />
           <span className="">สมัคร F168</span>
         </Link>
@@ -54,6 +56,7 @@ export default function Header() {
             width={128}
             height={45}
             className="block object-contain w-10 h-auto"
+            draggable="false"
           />
           <span className="">สมัคร MK8</span>
         </Link>

@@ -60,17 +60,17 @@ export async function showClaimSuccess({
       const duration = 1800;
       const end = Date.now() + duration;
 
-      const defaults = { startVelocity: 35, spread: 360, ticks: 60, zIndex: 10000 };
+      const defaults = { startVelocity: 50, spread: 360, ticks: 260, zIndex: 10000 };
       const frame = () => {
         confetti({
           ...defaults,
-          particleCount: 80,
-          origin: { x: 0.25, y: 0.35 },
+          particleCount: 10,
+          origin: { x: 0.15, y: 0.05 },
         });
         confetti({
           ...defaults,
-          particleCount: 80,
-          origin: { x: 0.75, y: 0.35 },
+          particleCount: 10,
+          origin: { x: 0.85, y: 0.45 },
         });
         if (Date.now() < end) requestAnimationFrame(frame);
       };
