@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from '../f168.module.css';
 import copy from 'copy-to-clipboard';
 import {
@@ -48,6 +48,29 @@ function upsertPromos(prev: PromoItem[], incoming: PromoItem[]) {
 export default function Promo() {
   const [start, setStart] = useState(0);
   const [recentStart, setRecentStart] = useState(0);
+  // countdown
+  const getSecondsToHourEnd = () => {
+    const now = new Date();
+    /*const nextHour = new Date(now);
+    nextHour.setMinutes(60, 0, 0); // ตั้งเป็นนาทีที่ 60 วินาที 0 => ต้นชั่วโมงถัดไป
+    return Math.max(0, Math.floor((nextHour.getTime() - now.getTime()) / 1000));*/
+    const nextMinute = new Date(now);
+    nextMinute.setSeconds(60, 0); // ตั้งเป็นวินาที 60, มิลลิวินาที 0 => ต้นนาทีถัดไป
+    return Math.max(0, Math.floor((nextMinute.getTime() - now.getTime()) / 1000));
+  };
+
+  const [secondsLeft, setSecondsLeft] = useState(getSecondsToHourEnd());
+  const timerRef = useRef<number | null>(null);
+  useEffect(() => {
+    timerRef.current = window.setInterval(() => {
+      setSecondsLeft((s) => (s <= 1 ? getSecondsToHourEnd() : s - 1));
+    }, 1000);
+    return () => { if (timerRef.current) window.clearInterval(timerRef.current); };
+  }, []);
+
+  const isFinal5 = secondsLeft <= 5;
+  const mm = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
+  const ss = String(secondsLeft % 60).padStart(2, "0");
 
   // data
   const [promoData, setPromoData] = useState<PromoItem[]>([]);
@@ -342,6 +365,21 @@ export default function Promo() {
     setModalStep('captcha');
   };
 
+  const timeNode = (
+    <strong
+      key={secondsLeft}
+      className={
+        `min-w-[72px] text-center tabular-nums font-mono font-bold
+       transition-all duration-200
+       ${isFinal5
+          ? "text-red-500 drop-shadow-md animate-bounce scale-110"
+          : "text-white"}`
+      }
+    >
+      {mm}:{ss}
+    </strong>
+  );
+
 
   /* ---------- render ---------- */
   return (
@@ -369,7 +407,7 @@ export default function Promo() {
             {/* ข้อความกลางภาพ */}
             <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
               <h2 className={`${styles.neontext} px-3 py-1 rounded text-white text-xl font-semibold`}>
-                 รับโค้ดฟรีทุกวัน
+                รับโค้ดฟรีทุกวัน
               </h2>
             </div>
           </div>
@@ -406,10 +444,7 @@ export default function Promo() {
         </div>
 
         {/* Box 2 */}
-        <div
-          className={`${styles.box2} ${styles.rightBox} ${box2Changed ? `${styles.panelPulse} ${styles.panelPop}` : ""
-            }`}
-        >
+        <div className={`relative ${styles.box2} ${styles.rightBox} ${box2Changed ? `${styles.panelPulse} ${styles.panelPop}` : ""}`} >
           <table className={styles.table}>
             <colgroup>
               {[
@@ -493,6 +528,13 @@ export default function Promo() {
               )}
             </tbody>
           </table>
+          <div className="absolute left-3 right-3 bottom-3 flex items-center justify-center gap-2 h-10 rounded-lg text-red-200 backdrop-blur-sm
+                transition-shadow duration-200
+                {secondsLeft <= 5 ? 'shadow-[0_0_20px_rgba(255,0,0,.5)] animate-pulse' : ''}">
+            <span className="text-red-500" aria-hidden>●</span>
+            <span className="text-sm">โค้ดใหม่ในอีก</span>
+            {timeNode}
+          </div>
         </div>
 
 

@@ -1018,9 +1018,12 @@
     width: 100%;
   }
 
-  .leftBox,
-  .rightBox {
+  .leftBox {
     height: 380px;
+  }
+
+  .rightBox {
+    height: 400px;
   }
 
   .rightBox {

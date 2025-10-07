@@ -130,14 +130,12 @@ export default function CaptchaModal({
             <tr>
               <th>รหัสโปรโมชัน</th>
               <th>คะแนน</th>
-              <th>ช่วงคะแนน</th>
               <th>เวลาสิ้นสุด</th>
             </tr>
           </thead>
           <tbody>
             <tr>
               <td>{detail.promo_code}</td>
-              <td>{detail.point}</td>
               <td>
                 {detail.min_point} - {detail.max_point}
               </td>
