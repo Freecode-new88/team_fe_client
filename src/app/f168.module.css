@@ -278,6 +278,11 @@
   font-weight: 800;
 }
 
+.readygreen {
+  color: rgb(0, 255, 13) !important;
+  font-weight: 800;
+}
+
 .claimExhausted {
   color: red !important;
   font-weight: 800;
@@ -1364,6 +1369,7 @@
     display: none;
     width: 0 !important;
   }
+
   .recentTable thead th:nth-child(5),
   .recentTable tbody td:nth-child(5) {
     display: none;
@@ -1375,8 +1381,13 @@
     letter-spacing: 0.6px;
   }
 
-  .table thead tr { font-size: 10px; }
-  .table tbody tr { font-size: 10px; }
+  .table thead tr {
+    font-size: 10px;
+  }
+
+  .table tbody tr {
+    font-size: 10px;
+  }
 
   .flameBadge {
     left: 0.3rem;
@@ -1406,5 +1417,23 @@
     line-height: 1;
     display: grid;
     place-items: center;
+  }
+}
+
+
+.neontext {
+  font-size: clamp(2rem, 6vw, 4.5rem);
+  color: #fff;
+  text-shadow: 0 0 5px #ff005e, 0 0 10px #ff005e, 0 0 20px #ff005e, 0 0 40px #ff005e, 0 0 80px #ff005e;
+  animation: glow 1.5s infinite alternate;
+}
+
+@keyframes glow {
+  0% {
+    text-shadow: 0 0 5px #ff005e, 0 0 10px #ff005e, 0 0 20px #ff005e, 0 0 40px #ff005e, 0 0 80px #ff005e;
+  }
+
+  100% {
+    text-shadow: 0 0 10px #00d4ff, 0 0 20px #00d4ff, 0 0 40px #00d4ff, 0 0 80px #00d4ff, 0 0 160px #00d4ff;
   }
 }

@@ -93,7 +93,7 @@ export default function AboutUsPage() {
             <p className={styles.lead}>แพลตฟอร์มเหล่านี้มีเกมหลากหลาย ตั้งแต่เกมแบบดั้งเดิมอย่างโป๊กเกอร์ แบล็คแจ็ค และรูเล็ต ไปจนถึงเกมที่ทันสมัยกว่า เช่น วิดีโอสล็อตและการเดิมพันกีฬาเสมือนจริง คาสิโนออนไลน์มีข้อดีคือสามารถเข้าถึงได้จากทุกที่ทุกเวลา ทำให้เป็นตัวเลือกที่สะดวกสำหรับผู้เล่นหลายคน</p>
           </div>
           <div className={styles.topRight}>
-            <Image src="/images/about1.png" alt="ภาพรวมแพลตฟอร์มเกม F168 และ MK8" width={720} height={560} className={styles.heroImg} priority draggable="false" />
+            <Image src="/images/about1.webp" alt="ภาพรวมแพลตฟอร์มเกม F168 และ MK8" width={720} height={560} className={styles.heroImg} priority draggable="false" />
           </div>
         </div>
         <div className={styles.statsGrid} ref={statsRef}>
@@ -113,7 +113,7 @@ export default function AboutUsPage() {
       <section className={styles.choose}>
         <div className={styles.chooseInner}>
           <div className={styles.chooseLeft}>
-            <Image src="/images/about.png" alt="เหตุผลที่ควรเลือกเล่นเกมกับ F168 และ MK8" width={700} height={560} className={styles.heroImg} draggable="false" />
+            <Image src="/images/about.webp" alt="เหตุผลที่ควรเลือกเล่นเกมกับ F168 และ MK8" width={700} height={560} className={styles.heroImg} draggable="false" />
           </div>
           <div className={styles.chooseRight}>
             <h2 className={styles.title}><span className={styles.gradient}>ทำไมต้องเลือกเรา F168 & MK8</span></h2> 

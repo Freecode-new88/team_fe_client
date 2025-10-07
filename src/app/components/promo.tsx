@@ -12,7 +12,7 @@ import {
 import CaptchaModal, { type CaptchaStep } from './captcha';
 import { SiteKey, siteOptions } from '@/config/site';
 import { showClaimSuccess } from '@/components/ShowClaimSuccess';
-import { Gift } from 'lucide-react';
+import { Copy, Gift } from 'lucide-react';
 import { getSocket } from '@/services/socket';
 import { maskUser } from '@/utils/random';
 
@@ -20,7 +20,6 @@ import { maskUser } from '@/utils/random';
 const VISIBLE_COUNT = 6;
 const RECENT_VISIBLE = 5;
 const CLAIM_HIGHLIGHT_MS = 15_000;  // 15s
-const POLL_PROMO_MS = 50_000;
 const CLAIMS_BOOTSTRAPPED_KEY = 'claims_bootstrapped_v1';
 
 function usePanelChangeFlag(deps: any[]) {
@@ -45,13 +44,6 @@ function upsertPromos(prev: PromoItem[], incoming: PromoItem[]) {
   return merged;
 }
 
-function normalizePromo(p: PromoItem): PromoItem{
-  const count = Number(p.receiveCount ?? 0);
-  const totalRaw = Number(p.receiveTotal);
-  const total = Number.isFinite(totalRaw) && totalRaw > 0 ? totalRaw : 1;
-  const available = count >= total ? 'Used' : 'Available';
-  return { ...p, receiveCount: count, receiveTotal: total };
-};
 
 export default function Promo() {
   const [start, setStart] = useState(0);
@@ -106,15 +98,12 @@ export default function Promo() {
 
     // === Box 2: add new promo to TOP, then rotation continues as usual ===
     const onPromoCreated = (payload: PromoItem) => {
-      const normalized = normalizePromo(payload);
-      setPromoData(prev => upsertPromos(prev, [normalized]));
+      setPromoData(prev => upsertPromos(prev, [payload]));
       setStart(0);
     };
 
     // === Box 3: add claim to TOP, highlight, reset view, If code === promo_code, change status
-    type ClaimCreatedPayload = PromoItem;
-
-    const onClaimCreated = (payload: ClaimCreatedPayload) => {
+    const onClaimCreated = (payload: PromoItem) => {
       const normalized: PromoItem = {
         ...payload,
         user: maskUser({ user: payload.user }),
@@ -128,28 +117,25 @@ export default function Promo() {
 
       // if Box 2 has this code and check count 0/1. it's "Available", else mark it "Used"
       setPromoData(prev => {
-        let changed = false;
-        const next = prev.map(p => {
+        return prev.map(p => {
           if (p.code !== normalized.code) return p;
-
-          const newCount = Math.min((p.receiveCount ?? 0) + 1, p.receiveTotal ?? 1);
-          const willBeUsed = newCount >= (p.receiveTotal ?? 1);
-          changed = true;
-          return {
-            ...p,
-            receiveCount: newCount,
-            available: willBeUsed ? 'Used' : 'Available',
-          } as any;
+          // ใช้ค่าจาก payload/normalized โดยตรง
+          const nextCount = normalized.receiveCount ?? p.receiveCount;
+          // (เลือก) กันหลุดเกินโควตา/ติดลบ
+          const capped =
+            typeof p.receiveTotal === "number"
+              ? Math.max(0, Math.min(nextCount ?? 0, p.receiveTotal))
+              : Math.max(0, nextCount ?? 0);
+          return { ...p, receiveCount: capped };
         });
-        return changed ? next : prev;
       });
     };
 
     socket.on('promo:created', onPromoCreated);
     socket.on('claim:created', onClaimCreated); //onClaimCreated
     socket.on('presence:stats', (data: Record<string, number>) => {
-        const total = Object.values(data).reduce((a, b) => a + b, 0);
-        setLive(total)
+      const total = Object.values(data).reduce((a, b) => a + b, 0);
+      setLive(total)
     });
 
     return () => {
@@ -162,16 +148,14 @@ export default function Promo() {
   /* ----- Get Promo codes ----- */
   useEffect(() => {
     let alive = true;
-
     const poll = async () => {
       const res = await fetchPromoCodes();
       if (!alive || !res.ok) return;
-      const normalized = res.data.map(normalizePromo);
-      setPromoData(prev => upsertPromos(prev, normalized));
+      console.log(res.data);
+
+      setPromoData(prev => upsertPromos(prev, res.data));
     };
-
     poll();
-
     return () => {
       alive = false;
     };
@@ -180,14 +164,14 @@ export default function Promo() {
   /* ----- Get Recent claims ----- */
   useEffect(() => {
     let alive = true;
-    if (sessionStorage.getItem(CLAIMS_BOOTSTRAPPED_KEY) === '1') {
-      return;
-    }
+    /* if (sessionStorage.getItem(CLAIMS_BOOTSTRAPPED_KEY) === '1') {
+       return;
+     }*/
 
     (async () => {
       const res = await fetchClaimedData();
       if (!alive || !res.ok) return;
-      
+
       const masked = res.data.map(it => ({
         ...it,
         user: maskUser({ user: it.user })
@@ -219,55 +203,27 @@ export default function Promo() {
 
   /* computed views */
   const sortedCodes = useMemo(() => {
-  const list = promoData ?? [];
+    const list = promoData ?? [];
+    return [...list].sort((a, b) => {
+      const bt = Date.parse(b.time.includes("T") ? b.time : b.time.replace(" ", "T")) || 0;
+      const at = Date.parse(a.time.includes("T") ? a.time : a.time.replace(" ", "T")) || 0;
+      return bt - at;
+    });
+  }, [promoData]);
 
-  const key = (p: PromoItem) => {
-    const c = Number(p.receiveCount ?? 0);
-    const t = Math.max(1, Number(p.receiveTotal ?? 1));
-    const used = c >= t ? 1 : 0;
-
-    return [used, c, t];
-  };
-
-  const byDateDesc = (a: PromoItem, b: PromoItem) =>
-    new Date(b.time.replace(' ', 'T')).getTime() -
-    new Date(a.time.replace(' ', 'T')).getTime();
-
-  return [...list].sort((a, b) => {
-    const [ua, ca, ta] = key(a);
-    const [ub, cb, tb] = key(b);
-    if (ua !== ub) return ua - ub;
-    if (ca !== cb) return ca - cb;
-    if (ta !== tb) return ta - tb;
-    return byDateDesc(a, b);
-  });
-}, [promoData]);
-
-  const visibleRows = useMemo(() => {
+  const visibleRows: PromoItem[] = useMemo(() => {
     const total = sortedCodes.length;
-    if (total === 0) return new Array(VISIBLE_COUNT).fill(null);
-    if (total <= VISIBLE_COUNT) {
-      return [...sortedCodes, ...Array(VISIBLE_COUNT - total).fill(null)];
-    }
-    const rows: (typeof sortedCodes[number] | null)[] = [];
-    for (let i = 0; i < VISIBLE_COUNT; i++) {
-      rows.push(sortedCodes[(start + i) % total]);
-    }
-    return rows;
-  }, [sortedCodes, start]);
+    if (total === 0) return [];                    // ← ว่างก็คืน []
+
+    if (total <= VISIBLE_COUNT) return sortedCodes; // ← ไม่เติมแถว
+
+    // หมุนหน้าต่างยาว VISIBLE_COUNT
+    return Array.from({ length: VISIBLE_COUNT }, (_, i) => sortedCodes[(start + i) % total]);
+  }, [sortedCodes]);
 
   /* keep panel pulse for the carousel stepping */
   const box2Changed = usePanelChangeFlag([start]);
   const box3Changed = usePanelChangeFlag([recentStart]);
-
-  // BOX-2 loop 
-  useEffect(() => {
-    if (!sortedCodes.length) return;
-    const id = setInterval(() => {
-      setStart(s => (s + VISIBLE_COUNT) % sortedCodes.length);
-    }, POLL_PROMO_MS);
-    return () => clearInterval(id);
-  }, [sortedCodes.length]);
 
   /* helpers */
   const onlyTime = (ts: string) => {
@@ -386,6 +342,7 @@ export default function Promo() {
     setModalStep('captcha');
   };
 
+
   /* ---------- render ---------- */
   return (
     <section className={styles.topSection}>
@@ -397,11 +354,23 @@ export default function Promo() {
         {/* Box 1 */}
         <div className={`${styles.box1} ${styles.leftBox}`}>
           <div className="relative">
-            <img src="/images/left1.jpg" alt="ภาพประกอบโปรโมชัน" className={styles.pokerArt} draggable="false" />
+            <img
+              src="/images/left1.jpg"
+              alt="ภาพประกอบโปรโมชัน"
+              className={styles.pokerArt}
+              draggable="false"
+            />
 
-            {/* ป้าย Live Active ที่มุมขวาบน ใช้ Tailwind จัดแต่ง */}
-            <div className="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md">
-              Live: {live} 
+            {/* ป้าย Live มุมขวาบน */}
+            <div className="absolute top-2 right-2 bg-red-600 text-white text-xs font-bold px-2 py-1 rounded shadow-md z-20">
+              Live: {live}
+            </div>
+
+            {/* ข้อความกลางภาพ */}
+            <div className="absolute inset-0 flex items-center justify-center z-10 pointer-events-none">
+              <h2 className={`${styles.neontext} px-3 py-1 rounded text-white text-xl font-semibold`}>
+                 รับโค้ดฟรีทุกวัน
+              </h2>
             </div>
           </div>
           <div className={styles.formStack}>
@@ -458,13 +427,16 @@ export default function Promo() {
                 <th>โค้ด</th>
                 <th>รับแล้ว</th>
                 <th>สถานะ</th>
-                <th>เว็บไซต์</th>
+                <th>เว็บ</th>
               </tr>
             </thead>
 
             <tbody key={start} className={styles.tableBody}>
-              {visibleRows.map((row, i) =>
-                row ? (
+              {visibleRows.map((row, i) => {
+                const now = new Date()
+                const isEpire = now > new Date(row.time);
+
+                return row ? (
                   <tr
                     key={`${row.code}-${i}`}
                     className={`${styles.tableRow} ${styles.rowEnter}`}
@@ -484,47 +456,30 @@ export default function Promo() {
                           {copiedIndex === i ? (
                             <span className={styles.copiedLabel}>คัดลอกแล้ว</span>
                           ) : (
-                            <svg
-                              width="16"
-                              height="16"
-                              viewBox="0 0 24 24"
-                              fill="none"
+                            <Copy
+                              size={16}
+                              strokeWidth={2}
                               aria-hidden="true"
                               focusable="false"
-                            >
-                              <path
-                                d="M16 3H7a2 2 0 0 0-2 2v9"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                              />
-                              <rect
-                                x="9"
-                                y="7"
-                                width="12"
-                                height="14"
-                                rx="2"
-                                stroke="currentColor"
-                                strokeWidth="2"
-                              />
-                            </svg>
+                              className={styles.copyIcon}
+                            />
                           )}
                         </button>
                       </div>
                     </td>
-                    
-                     {/* รับแล้ว */}
-                    <td className={(row.receiveCount ?? 0) >= (row.receiveTotal ?? 1) ? styles.claimExhausted : undefined}>
-                      {`${row.receiveCount ?? 0}/${row.receiveTotal ?? 1}`}
+
+                    {/* รับแล้ว */}
+                    <td className={row.receiveCount >= row.receiveTotal ? styles.claimExhausted : styles.readygreen}>
+                      {`${row.receiveCount}/${row.receiveTotal}`}
                     </td>
 
                     {/* ใช้ค่าอังกฤษเดิมเพื่อกำหนดคลาส แต่แสดงผลเป็นไทย */}
                     <td
                       className={
-                        (row.receiveCount ?? 0) >= (row.receiveTotal ?? 1) ? styles.used : undefined
+                        (row.receiveCount >= row.receiveTotal || isEpire) ? styles.used : styles.readygreen
                       }
                     >
-                      {(row.receiveCount ?? 0) >= (row.receiveTotal ?? 1) ? "พร้อมใช้" : "ถูกใช้แล้ว"}
+                      {row.receiveCount >= row.receiveTotal ? "ถูกใช้แล้ว" : isEpire ? "หมดอายุแล้ว" : "ใช้ได้"}
                     </td>
 
                     <td>{row.site}</td>
@@ -534,6 +489,7 @@ export default function Promo() {
                     <td colSpan={4}>&nbsp;</td>
                   </tr>
                 )
+              }
               )}
             </tbody>
           </table>
@@ -571,29 +527,29 @@ export default function Promo() {
             <tbody>
               {claimData.length === 0
                 ? new Array(RECENT_VISIBLE).fill(null).map((_, i) => (
-                    <tr key={`recent-filler-${i}`} className={styles.fillerRow}>
-                      <td colSpan={5} />
-                    </tr>
-                  ))
+                  <tr key={`recent-filler-${i}`} className={styles.fillerRow}>
+                    <td colSpan={5} />
+                  </tr>
+                ))
                 : claimData.map((r, i) => {
-                    const k = `${r.user}|${r.code}|${r.time}`;
-                    const isHot = claimHighlights[k] && claimHighlights[k] > Date.now();
-                    return (
-                      <tr
-                        key={`${r.user}-${r.code}-${r.time}-${i}`}
-                        className={`${styles.rowEnter} ${isHot ? styles.flameRow : ""}`}
-                      >
-                        <td className={styles.flameCell}>
-                          {isHot && <span className={styles.flameBadge} aria-hidden></span>}
-                          { r.user}
-                        </td>
-                        <td>{r.code}</td>
-                        <td>ได้รับ {r.point} แต้ม</td>
-                        <td>{r.site}</td>
-                        <td>{onlyTime(r.time)}</td>
-                      </tr>
-                    );
-                  })}
+                  const k = `${r.user}|${r.code}|${r.time}`;
+                  const isHot = claimHighlights[k] && claimHighlights[k] > Date.now();
+                  return (
+                    <tr
+                      key={`${r.user}-${r.code}-${r.time}-${i}`}
+                      className={`${styles.rowEnter} ${isHot ? styles.flameRow : ""}`}
+                    >
+                      <td className={styles.flameCell}>
+                        {isHot && <span className={styles.flameBadge} aria-hidden></span>}
+                        {r.user}
+                      </td>
+                      <td>{r.code}</td>
+                      <td>ได้รับ {r.point} แต้ม</td>
+                      <td>{r.site}</td>
+                      <td>{onlyTime(r.time)}</td>
+                    </tr>
+                  );
+                })}
             </tbody>
           </table>
         </div>

@@ -80,18 +80,18 @@ export default function CaptchaModal({
     <>
       <div className={styles.captchaBox}>
         {captchaUrl ? (
-          <img src={captchaUrl} alt="captcha" className={styles.captchaImg} />
+          <img src={captchaUrl} alt="แคปชา" className={styles.captchaImg} />
         ) : (
-          <div className={styles.captchaPlaceholder}>Loading...</div>
+          <div className={styles.captchaPlaceholder}>กำลังโหลด...</div>
         )}
       </div>
 
       <input
         ref={codeRef}
         type="text"
-        placeholder="Enter captcha here"
+        placeholder="กรอกโค้ดแคปชา"
         className={styles.captinput}
-        aria-label="Captcha code"
+        aria-label="รหัสแคปชา"
         value={captchaCode}
         onChange={(e) => setCaptchaCode(e.target.value)}
         onKeyDown={async (e) => {
@@ -112,7 +112,7 @@ export default function CaptchaModal({
         }}
         disabled={busy || !captchaCode.trim()}
       >
-        {busy ? "Processing..." : "Continue"}
+        {busy ? "กำลังประมวลผล..." : "ดำเนินการต่อ"}
       </button>
     </>
   );
@@ -123,10 +123,10 @@ export default function CaptchaModal({
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>Promo</th>
-              <th>Point</th>
-              <th>Range</th>
-              <th>End Time</th>
+              <th>รหัสโปรโมชัน</th>
+              <th>คะแนน</th>
+              <th>ช่วงคะแนน</th>
+              <th>เวลาสิ้นสุด</th>
             </tr>
           </thead>
           <tbody>
@@ -144,9 +144,9 @@ export default function CaptchaModal({
 
       <input
         type="text"
-        placeholder="Enter your account"
+        placeholder="กรอกบัญชีของคุณ"
         className={styles.captinput}
-        aria-label="Account"
+        aria-label="บัญชี"
         value={account ?? ""}
         onChange={(e) => onAccountChange?.(e.target.value)}
       />
@@ -158,7 +158,7 @@ export default function CaptchaModal({
         onClick={onSubmit}
         disabled={submitBusy || !account?.trim()}
       >
-        {submitBusy ? "Submitting..." : "Confirm Promotion"}
+        {submitBusy ? "กำลังส่ง..." : "ยืนยันรับโปรโมชัน"}
       </button>
     </>
   );
@@ -168,9 +168,9 @@ export default function CaptchaModal({
       <div className={`${styles.captmodal} ${styles.modalChrome}`}>
         <div className={styles.captheader}>
           <h3 className={styles.captTitle}>
-            {step === "captcha" ? "Captcha Verification" : "Confirm Promotion"}
+            {step === "captcha" ? "ยืนยันแคปชา" : "ยืนยันรับโปรโมชัน"}
           </h3>
-          <button onClick={onClose} className={styles.closeBtn} aria-label="Close">
+          <button onClick={onClose} className={styles.closeBtn} aria-label="ปิด">
             ×
           </button>
         </div>
