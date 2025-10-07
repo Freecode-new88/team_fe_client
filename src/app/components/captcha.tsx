@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "../f168.module.css";
+import { AlertTriangle } from "lucide-react";
 
 export type CaptchaStep = "captcha" | "review";
 
@@ -101,8 +102,12 @@ export default function CaptchaModal({
           }
         }}
       />
-
-      {note ? <div className={styles.note}>{note}</div> : null}
+      {note ? (
+        <div className={`flex items-center gap-2 ${styles.note} `} role="alert" aria-live="polite">
+          <AlertTriangle aria-hidden />
+          <span>{note}</span>
+        </div>
+      ) : null}
 
       <button
         className={styles.continueBtn}
@@ -151,7 +156,12 @@ export default function CaptchaModal({
         onChange={(e) => onAccountChange?.(e.target.value)}
       />
 
-      {submitMsg ? <div className={styles.note}>{submitMsg}</div> : null}
+      {submitMsg ? (
+        <div className={styles.note} role="alert" aria-live="polite">
+          <AlertTriangle aria-hidden />
+          <span>{submitMsg}</span>
+        </div>
+      ) : null}
 
       <button
         className={styles.continueBtn}
