@@ -51,12 +51,12 @@ export default function Promo() {
   // countdown
   const getSecondsToHourEnd = () => {
     const now = new Date();
-    /*const nextHour = new Date(now);
+    const nextHour = new Date(now);
     nextHour.setMinutes(60, 0, 0); // ตั้งเป็นนาทีที่ 60 วินาที 0 => ต้นชั่วโมงถัดไป
-    return Math.max(0, Math.floor((nextHour.getTime() - now.getTime()) / 1000));*/
-    const nextMinute = new Date(now);
+    return Math.max(0, Math.floor((nextHour.getTime() - now.getTime()) / 1000));
+    /*const nextMinute = new Date(now);
     nextMinute.setSeconds(60, 0); // ตั้งเป็นวินาที 60, มิลลิวินาที 0 => ต้นนาทีถัดไป
-    return Math.max(0, Math.floor((nextMinute.getTime() - now.getTime()) / 1000));
+    return Math.max(0, Math.floor((nextMinute.getTime() - now.getTime()) / 1000));*/
   };
 
   const [secondsLeft, setSecondsLeft] = useState(getSecondsToHourEnd());
