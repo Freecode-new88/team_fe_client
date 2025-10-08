@@ -799,6 +799,16 @@
   content: "−";
 }
 
+.faqList {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.faqList li {
+  margin: 2px 0;
+  line-height: 2;
+}
+
 .errorMsg {
   background-color: transparent;
   height: 20px;
@@ -1320,6 +1330,9 @@
     max-width: 98%;
     margin: 20px auto 0;
   }
+  .faqList li {
+    line-height: 1.6;
+  }
 }
 
 /* Mobile ≤ 360px */
@@ -1419,6 +1432,9 @@
     line-height: 1;
     display: grid;
     place-items: center;
+  }
+  .faqList li {
+    line-height: 1.4;
   }
 }
 
