@@ -12,3 +12,5 @@ export function maskUser(r: { user: string }): string {
 
   return two + "xxxxx"; // ได้รูปแบบเช่น "sexxxxx"
 }
+
+export const rand0to30 = () => Math.floor(Math.random() * 31).toString();

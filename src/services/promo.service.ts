@@ -10,6 +10,7 @@ export type PromoItem = {
   time: string;
   receiveCount: number;
   receiveTotal: number;
+  emoji?: string 
 };
 
 type GetPromoResponse = {

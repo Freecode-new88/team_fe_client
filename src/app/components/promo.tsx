@@ -14,7 +14,7 @@ import { SiteKey, siteOptions } from '@/config/site';
 import { showClaimSuccess } from '@/components/ShowClaimSuccess';
 import { Copy, Gift } from 'lucide-react';
 import { getSocket } from '@/services/socket';
-import { maskUser } from '@/utils/random';
+import { maskUser, rand0to30 } from '@/utils/random';
 
 const LeftImageWithGifts = dynamic(
   () => import("@/components/LeftImageWithGifts").then(m => m.LeftImageWithGifts),
@@ -136,6 +136,7 @@ export default function Promo() {
         ...payload,
         user: maskUser({ user: payload.user }),
         time: payload.time.includes("T") ? payload.time : payload.time.replace(" ", "T"),
+        emoji: rand0to30()
       };
 
       setClaimData(prev => [normalized, ...prev].slice(0, 5));
@@ -144,17 +145,20 @@ export default function Promo() {
       setClaimHighlights(old => ({ ...old, [k]: Date.now() + CLAIM_HIGHLIGHT_MS }));
 
       // sync receiveCount ใน Box 2 ตามโค้ดที่ถูกเคลม
-      setPromoData(prev =>
-        prev.map(p => {
-          if (p.code !== normalized.code) return p;
-          const nextCount = normalized.receiveCount ?? p.receiveCount;
-          const capped =
-            typeof p.receiveTotal === "number"
-              ? Math.max(0, Math.min(nextCount ?? 0, p.receiveTotal))
-              : Math.max(0, nextCount ?? 0);
-          return { ...p, receiveCount: capped };
-        }),
-      );
+      setPromoData(prev => prev.map(p => {
+        if (p.code !== normalized.code) return p;
+        const total = p.receiveTotal ?? payload.receiveTotal;
+        let next = Math.max(p.receiveCount ?? 0, payload.receiveCount ?? (p.receiveCount ?? 0) + 1);
+        if (typeof total === 'number' && total > 0) next = Math.min(next, total);
+        return {
+          ...p,
+          receiveCount: next,
+          ...(p.receiveTotal == null && typeof payload.receiveTotal === 'number'
+            ? { receiveTotal: payload.receiveTotal }
+            : {})
+        };
+      }));
+
     };
 
     // === Bulk: promo:new (จาก backend ส่งเป็น PromoItem[] อยู่แล้ว)
@@ -486,7 +490,7 @@ export default function Promo() {
               {visibleRows.map((row, i) => {
                 const now = new Date()
                 const isEpire = now > new Date(row.time);
-                
+
                 return row ? (
                   <tr
                     key={`${row.code}-${i}`}
@@ -598,7 +602,23 @@ export default function Promo() {
                       className={`${styles.rowEnter} ${isHot ? styles.flameRow : ""}`}
                     >
                       <td className={styles.flameCell}>
-                        {isHot && <span className={styles.flameBadge} aria-hidden></span>}
+                        {
+                          isHot && (<div className="flex items-center justify-center">
+                            <span className={styles.flameBadge} aria-hidden>
+                              {r.emoji && (
+                                <img
+                                  src={`/emoji/${r.emoji}.webp`}
+                                  width={30}
+                                  height={30}
+                                  loading="lazy"
+                                  decoding="async"
+                                  style={{ verticalAlign: "-2px" }}
+                                  alt=""
+                                />
+                              )}
+                            </span>
+                          </div>)
+                        }
                         {r.user}
                       </td>
                       <td>{r.code}</td>
