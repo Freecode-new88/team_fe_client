@@ -126,7 +126,7 @@ export default function Promo() {
 
     // === Box 2: add new promo to TOP, then rotation continues as usual ===
     const onPromoCreated = (payload: PromoItem) => {
-      setPromoData(prev => upsertPromos(prev, [payload]));
+      setPromoData(prev => upsertPromos(prev, [payload])); // กันซ้ำ + แทรกบนสุด
       setStart(0);
     };
 
@@ -135,7 +135,7 @@ export default function Promo() {
       const normalized: PromoItem = {
         ...payload,
         user: maskUser({ user: payload.user }),
-        time: payload.time.includes('T') ? payload.time : payload.time.replace(' ', 'T'),
+        time: payload.time.includes("T") ? payload.time : payload.time.replace(" ", "T"),
       };
 
       setClaimData(prev => [normalized, ...prev].slice(0, 5));
@@ -143,33 +143,44 @@ export default function Promo() {
       const k = `${normalized.user}|${normalized.code}|${normalized.time}`;
       setClaimHighlights(old => ({ ...old, [k]: Date.now() + CLAIM_HIGHLIGHT_MS }));
 
-      // if Box 2 has this code and check count 0/1. it's "Available", else mark it "Used"
-      setPromoData(prev => {
-        return prev.map(p => {
+      // sync receiveCount ใน Box 2 ตามโค้ดที่ถูกเคลม
+      setPromoData(prev =>
+        prev.map(p => {
           if (p.code !== normalized.code) return p;
-          // ใช้ค่าจาก payload/normalized โดยตรง
           const nextCount = normalized.receiveCount ?? p.receiveCount;
-          // (เลือก) กันหลุดเกินโควตา/ติดลบ
           const capped =
             typeof p.receiveTotal === "number"
               ? Math.max(0, Math.min(nextCount ?? 0, p.receiveTotal))
               : Math.max(0, nextCount ?? 0);
           return { ...p, receiveCount: capped };
-        });
+        }),
+      );
+    };
+
+    // === Bulk: promo:new (จาก backend ส่งเป็น PromoItem[] อยู่แล้ว)
+    const onPromoNew = (items: PromoItem[]) => {
+      //console.log(items);
+      setPromoData(prev => {
+        const merged = upsertPromos(prev, items);    // กันซ้ำตาม code
+        return merged.slice(0, 6);                 // (ตัวเลือก) จำกัดสูงสุด 100 แถว
       });
     };
 
-    socket.on('promo:created', onPromoCreated);
-    socket.on('claim:created', onClaimCreated); //onClaimCreated
-    socket.on('presence:stats', (data: Record<string, number>) => {
+    const onPresenceStats = (data: Record<string, number>) => {
       const total = Object.values(data).reduce((a, b) => a + b, 0);
-      setLive(total)
-    });
+      setLive(total);
+    };
+
+    socket.on("promo:created", onPromoCreated);
+    socket.on("claim:created", onClaimCreated);
+    socket.on("presence:stats", onPresenceStats);
+    socket.on("promo:new", onPromoNew);
 
     return () => {
-      socket.off('promo:created');
-      socket.off('claim:created');
-      socket.off('presence:stats');
+      socket.off("promo:created", onPromoCreated);
+      socket.off("claim:created", onClaimCreated);
+      socket.off("presence:stats", onPresenceStats);
+      socket.off("promo:new", onPromoNew);
     };
   }, []);
 
@@ -179,8 +190,7 @@ export default function Promo() {
     const poll = async () => {
       const res = await fetchPromoCodes();
       if (!alive || !res.ok) return;
-      console.log(res.data);
-
+      //console.log(res.data);
       setPromoData(prev => upsertPromos(prev, res.data));
     };
     poll();
@@ -476,7 +486,7 @@ export default function Promo() {
               {visibleRows.map((row, i) => {
                 const now = new Date()
                 const isEpire = now > new Date(row.time);
-
+                
                 return row ? (
                   <tr
                     key={`${row.code}-${i}`}
