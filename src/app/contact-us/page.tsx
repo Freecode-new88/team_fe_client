@@ -66,16 +66,24 @@ export default function ContactUsPage() {
 
           <ul className={styles.infoList} ref={listRef}>
             <li>
-              <Image
-                src="/images/tele.png"
-                // ปรับ alt
-                alt="ไอคอนผู้ใช้ Telegram"
-                width={40}
-                height={40}
-                priority
-                draggable="false"
-              />
-              <span>ชื่อผู้ใช้ Telegram</span>
+               <Link
+                href="https://t.me/NEUNG55"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2"
+                aria-label="Open Telegram bot @f168th_bot"
+              >
+                <Image
+                  src="/images/tele.png"
+                  // ปรับ alt
+                  alt="ไอคอนผู้ใช้ Telegram"
+                  width={40}
+                  height={40}
+                  priority
+                  draggable="false"
+                />
+                <span>@NEUNG55</span>
+              </Link>
             </li>
             <li>
               <Image

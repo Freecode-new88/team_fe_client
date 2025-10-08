@@ -57,7 +57,15 @@ export default function Promo() {
   const getSecondsToHourEnd = () => {
     const now = new Date();
     const nextHour = new Date(now);
-    nextHour.setMinutes(60, 0, 0); // ตั้งเป็นนาทีที่ 60 วินาที 0 => ต้นชั่วโมงถัดไป
+
+    //Run Every 30 minutes
+    if (now.getMinutes() < 30) {
+      nextHour.setMinutes(30, 0, 0);
+    } else {
+      nextHour.setHours(now.getHours() + 1, 0, 0, 0);
+    }
+
+    //nextHour.setMinutes(60, 0, 0); // ตั้งเป็นนาทีที่ 60 วินาที 0 => ต้นชั่วโมงถัดไป
     return Math.max(0, Math.floor((nextHour.getTime() - now.getTime()) / 1000));
     /*const nextMinute = new Date(now);
     nextMinute.setSeconds(60, 0); // ตั้งเป็นวินาที 60, มิลลิวินาที 0 => ต้นนาทีถัดไป

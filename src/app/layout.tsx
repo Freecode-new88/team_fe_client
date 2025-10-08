@@ -12,7 +12,7 @@ import { Fab } from "@/components/Fab";
 export const metadata: Metadata = {
   metadataBase: new URL("https://thaibetz.com/"), // ← ใส่โดเมนจริงของคุณ
   title: {
-    default: "แจกโค้ด & เครดิตฟรี F168, MK8 ทุกวัน — ฝาก-ถอนออโต้ — ปลอดภัย",
+    default: "Thaibet - แจกโค้ด & เครดิตฟรี F168, MK8 ทุกวัน — ฝาก-ถอนออโต้ — ปลอดภัย",
     template: "%s | แจกโค้ด & เครดิตฟรี F168, MK8 ทุกวัน — ฝาก-ถอนออโต้ — ปลอดภัย",
   },
   description:
@@ -150,7 +150,7 @@ export default function RootLayout({
   const homeWebPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    name: "แจกโค้ด & เครดิตฟรี F168, MK8 ทุกวัน — ฝาก-ถอนออโต้ — ปลอดภัย",
+    name: "Thaibet - แจกโค้ด & เครดิตฟรี F168, MK8 ทุกวัน — ฝาก-ถอนออโต้ — ปลอดภัย",
     url: "https://thaibetz.com/",
     inLanguage: "th-TH",
     description:
