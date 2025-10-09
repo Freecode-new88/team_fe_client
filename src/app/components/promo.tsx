@@ -56,17 +56,21 @@ export default function Promo() {
   // countdown
   const getSecondsToHourEnd = () => {
     const now = new Date();
-    const nextHour = new Date(now);
+    const next = new Date(now);
+    next.setSeconds(0, 0);
+    const m = now.getMinutes();
+
+    const nextBlockMinute = Math.floor(m / 10) * 10 + 10; //10,20,30,40,50,60
 
     //Run Every 30 minutes
-    if (now.getMinutes() < 30) {
-      nextHour.setMinutes(30, 0, 0);
+    if (nextBlockMinute > 60) {
+      next.setHours(now.getHours() + 1, 0, 0, 0);
     } else {
-      nextHour.setHours(now.getHours() + 1, 0, 0, 0);
+      next.setMinutes(nextBlockMinute, 0, 0);
     }
 
     //nextHour.setMinutes(60, 0, 0); // ตั้งเป็นนาทีที่ 60 วินาที 0 => ต้นชั่วโมงถัดไป
-    return Math.max(0, Math.floor((nextHour.getTime() - now.getTime()) / 1000));
+    return Math.max(0, Math.floor((next.getTime() - now.getTime()) / 1000));
     /*const nextMinute = new Date(now);
     nextMinute.setSeconds(60, 0); // ตั้งเป็นวินาที 60, มิลลิวินาที 0 => ต้นนาทีถัดไป
     return Math.max(0, Math.floor((nextMinute.getTime() - now.getTime()) / 1000));*/
