@@ -78,6 +78,7 @@ export default function Promo() {
 
   const [secondsLeft, setSecondsLeft] = useState(getSecondsToHourEnd());
   const timerRef = useRef<number | null>(null);
+  // Let reach 00:00 then start from 10:00 again
   useEffect(() => {
     timerRef.current = window.setInterval(() => {
       setSecondsLeft((s) => (s <= 1 ? getSecondsToHourEnd() : s - 1));
