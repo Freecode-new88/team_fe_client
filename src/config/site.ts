@@ -17,4 +17,4 @@ export const siteByKey = Object.fromEntries(SITES.map(s => [s.key, s]));
 export const siteOptions = SITES.map(s => ({ value: s.key, label: s.label }));
 
 export const F168lINK = "https://f162288.vip/" // https://f162288.vip/?id=486544302
-export const MK8LINK = "https://www.mk881166.com/?uagt=itsoftware&path=signup"  // https://www.mk881167.net/?af=neung5599
+export const MK8LINK = "https://8bdXmN.short.gy/6NHKeq"  // https://www.mk881166.com/?uagt=itsoftware&path=signup
