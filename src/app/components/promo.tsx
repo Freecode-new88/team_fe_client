@@ -437,7 +437,7 @@ export default function Promo() {
                 รับโค้ดฟรีทุกวัน
               </h2>
             </div>
-            <LeftImageWithGifts count={2} />
+            {/* <LeftImageWithGifts count={6} /> */}
           </div>
           <div className={styles.formStack}>
             <input
