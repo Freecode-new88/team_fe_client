@@ -86,16 +86,24 @@ export default function ContactUsPage() {
               </Link>
             </li>
             <li>
+              <Link
+                href="https://x.com/thaibetz"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2"
+                aria-label="Open X Twitter Thaibet Office"
+              >
               <Image
-                src="/images/line.png"
+                src="/images/x.png"
                 // ปรับ alt
-                alt="ไอคอนผู้ใช้ Line"
+                alt="ไอคอนผู้ใช้ X"
                 width={50}
                 height={50}
                 priority
                 draggable="false"
               />
-              <span>Line Official</span>
+              <span>Thaibet Office</span>
+              </Link>
             </li>
           </ul>
         </div>
