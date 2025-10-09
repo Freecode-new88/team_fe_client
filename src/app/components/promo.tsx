@@ -181,6 +181,7 @@ export default function Promo() {
     const onPresenceStats = (data: Record<string, number>) => {
       const total = Object.values(data).reduce((a, b) => a + b, 0);
       setLive(total);
+      console.log(JSON.stringify(data ?? {}));
     };
 
     socket.on("promo:created", onPromoCreated);

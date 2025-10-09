@@ -28,7 +28,7 @@ export type ServiceResult<T> = ServiceOk<T> | ServiceErr;
 export async function fetchPromoCodes(): Promise<ServiceResult<PromoItem[]>> {
   try {
     const res = await api.get<GetPromoResponse>("/clientpromo/getpromo");
-    console.log("res", res);
+    //console.log("res", res);
     if (!res?.data || !Array.isArray(res.data.data)) {
       return { ok: false, error: "Unexpected response shape" };
     }
