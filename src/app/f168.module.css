@@ -444,14 +444,13 @@
 
 .flameCell {
   position: relative;
-  padding-left: 52px;
 }
 
 .flameBadge {
   position: absolute;
-  left: 3rem;
-  top: 50%;
-  transform: translateY(-50%) rotate(-8deg);
+  right: 220%;
+  top: 0%;
+  transform: translate(10px -50%) rotate(-8deg);
   width: 24px;
   height: 34px;
   background: url("/images/fire.webp") center / contain no-repeat;
@@ -461,28 +460,43 @@
     flame-pop 0.35s ease-out both,
     flame-flicker 1s ease-in-out infinite alternate;
   z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+}
+
+.emojibadge {
+  position: absolute;
+  left: 120%;
+  width: 24px;
+  height: 25px;
+}
+
+.userNameContainer  {
+  position: relative;
+  display: inline-block;
 }
 
 @keyframes flame-pop {
   from {
     opacity: 0;
-    transform: translateY(-50%) scale(0.7) rotate(-8deg);
+    transform: scale(0.7) rotate(-8deg);
   }
 
   to {
     opacity: 1;
-    transform: translateY(-50%) scale(1.0) rotate(-8deg);
+    transform: scale(1.0) rotate(-8deg);
   }
 }
 
 /* subtle flicker vibe */
 @keyframes flame-flicker {
   from {
-    transform: translateY(calc(-50% - 1px)) rotate(-8deg) scale(1.00);
+    transform: rotate(-8deg) scale(1.00);
   }
 
   to {
-    transform: translateY(calc(-50% + 1px)) rotate(-6deg) scale(1.05);
+    transform: rotate(-6deg) scale(1.05);
   }
 }
 
@@ -1082,6 +1096,26 @@
     max-width: 98%;
     margin: 20px auto 0;
   }
+
+  .flameBadge {
+    left: -150%;
+    top: 0%;
+    transform: translate(10px -50%) rotate(-8deg);
+    width: 24px;
+    height: 25px;
+  }
+
+  .emojibadge {
+    position: absolute;
+    left: 100%;
+    top: 10%;
+    width: 24px;
+    height: 25px;
+  }
+
+  .userNameContainer  {
+    left: 7%;
+  }
 }
 
 /* Mobile ≤ 820px */
@@ -1114,9 +1148,23 @@
   }
 
   .flameBadge {
-    left: 1rem;
-    width: 14px;
-    height: 20px;
+    left: -150%;
+    top: 0%;
+    transform: translate(10px -50%) rotate(-8deg);
+    width: 20px;
+    height: 25px;
+  }
+
+  .emojibadge {
+    position: absolute;
+    left: 100%;
+    top: 0%;
+    width: 24px;
+    height: 25px;
+  }
+
+  .userNameContainer  {
+    left: 7%;
   }
 
   .fullBoxNoChrome {
@@ -1172,9 +1220,23 @@
   }
 
   .flameBadge {
-    left: 1.5rem;
+    left: -120%;
+    top: 0%;
+    transform: translate(10px -50%) rotate(-8deg);
     width: 20px;
-    height: 28px;
+    height: 25px;
+  }
+
+  .emojibadge {
+    position: absolute;
+    left: 100%;
+    top: 0%;
+    width: 24px;
+    height: 25px;
+  }
+
+  .userNameContainer  {
+    left: 7%;
   }
 
   .fullBoxNoChrome {
@@ -1240,6 +1302,16 @@
     padding: 0.8rem 0.9rem;
   }
 
+  .recentTable colgroup col:nth-child(5) {
+    display: none;
+    width: 0 !important;
+  }
+
+  .recentTable thead th:nth-child(5),
+  .recentTable tbody td:nth-child(5) {
+    display: none;
+  }
+
   .table thead,
   .table thead * {
     position: static !important;
@@ -1275,9 +1347,22 @@
   }
 
   .flameBadge {
-    left: 0.3rem;
+    left: -90%;
+    top: 0%;
+    transform: translate(10px -50%) rotate(-8deg);
     width: 14px;
     height: 20px;
+  }
+
+  .emojibadge {
+    position: absolute;
+    left: 100%;
+    width: 14px;
+    height: 20px;
+  }
+
+  .userNameContainer  {
+    left: 9%;
   }
 
   .fullBoxNoChrome {
@@ -1405,9 +1490,23 @@
   }
 
   .flameBadge {
-    left: 0.3rem;
+    left: -75%;
+    top: 0%;
+    transform: translate(10px -50%) rotate(-8deg);
     width: 14px;
-    height: 20px;
+    height: 18px;
+  }
+
+  .emojibadge {
+    position: absolute;
+    left: 90%;
+    top:-40%;
+    width: 14px;
+    height: 18px;
+  }
+
+  .userNameContainer  {
+    left: 9%;
   }
 
   .input {

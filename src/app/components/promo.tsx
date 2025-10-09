@@ -437,7 +437,7 @@ export default function Promo() {
                 รับโค้ดฟรีทุกวัน
               </h2>
             </div>
-            <LeftImageWithGifts count={6} />
+            <LeftImageWithGifts count={2} />
           </div>
           <div className={styles.formStack}>
             <input
@@ -609,25 +609,26 @@ export default function Promo() {
                       key={`${r.user}-${r.code}-${r.time}-${i}`}
                       className={`${styles.rowEnter} ${isHot ? styles.flameRow : ""}`}
                     >
-                      <td className={styles.flameCell}>
-                        {
-                          isHot && (<div className="flex items-center justify-center">
-                            <span className={styles.flameBadge} aria-hidden>
-                              {r.emoji && (
-                                <img
-                                  src={`/emoji/${r.emoji}.webp`}
-                                  width={30}
-                                  height={30}
-                                  loading="lazy"
-                                  decoding="async"
-                                  style={{ verticalAlign: "-2px" }}
-                                  alt=""
-                                />
-                              )}
-                            </span>
-                          </div>)
-                        }
-                        {r.user}
+                      <td className={isHot ? styles.flameCell : ''}>
+                        <span className={styles.userNameContainer}>
+                          {
+                            isHot && r.emoji && (
+                              <span className={styles.flameBadge} aria-hidden>
+                                {r.emoji && (
+                                  <img
+                                    src={`/emoji/${r.emoji}.webp`}
+                                    loading="lazy"
+                                    decoding="async"
+                                    style={{ width: '24px', height: '25px' }}
+                                    alt=""
+                                    className={styles.emojibadge}
+                                  />
+                                )}
+                              </span>
+                            )
+                          }
+                          {r.user}
+                        </span>
                       </td>
                       <td>{r.code}</td>
                       <td>ได้รับ {r.point} แต้ม</td>
