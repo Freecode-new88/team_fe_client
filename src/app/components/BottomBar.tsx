@@ -20,6 +20,25 @@ export type MobileBottomBarProps = {
  * Tip: Add padding-bottom to your page container: `pb-20 md:pb-0` so content is not hidden behind the bar.
  */
 export default function MobileBottomBar({ left, right, className }: MobileBottomBarProps) {
+  const handleRegisterClick = () => {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'register_m', {
+        location: 'tab_mk8',
+        link_text: 'สมัคร MK8',
+        link_url: right.href,
+      });
+    }
+  };
+
+  const handleRegisterClickF168 = () => {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'register_f', {
+        location: 'tab_f168',
+        link_text: 'สมัคร F168',
+        link_url: left.href,
+      });
+    }
+  };
   return (
     <div
       className={clsx(
@@ -40,6 +59,7 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
             rel="noopener noreferrer"
             target="_blank"
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
+            onClick={handleRegisterClickF168}
           >
             {/* icon: lightning */}
             <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="currentColor" aria-hidden="true">
@@ -54,6 +74,7 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
             rel="noopener noreferrer"
             target="_blank"
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
+            onClick={handleRegisterClick}
           >
             {/* icon: crown */}
             <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="currentColor" aria-hidden="true">
