@@ -52,6 +52,17 @@ export default function Header() {
           className={`${styles.tab} inline-flex items-center justify-center gap-2 rounded-xl px-0 py-0 no-underline`}
           onClick={handleRegisterClickF168}
         >
+          <div className="inline-block rounded-2xl overflow-hidden border border-gray-300 p-0.5 bg-white/20">
+            <NextImage
+              src="/here/r-arrow.webp"
+              alt=""
+              aria-hidden
+              width={128}
+              height={45}
+              className="block w-10 h-auto rounded-xl object-contain"
+              draggable="false"
+            />
+          </div>
           <NextImage
             src="/images/logo-f168.png"
             alt=""

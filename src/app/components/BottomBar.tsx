@@ -1,6 +1,7 @@
 'use client';
 import Link from "next/link";
 import clsx from "clsx";
+import NextImage from "next/image";
 
 export type MobileBottomBarProps = {
   left: { label: string; href: string };
@@ -62,6 +63,15 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
             onClick={handleRegisterClickF168}
           >
+            <NextImage
+              src="/here/here.gif"
+              alt=""
+              aria-hidden
+              width={128}
+              height={45}
+              className="block w-10 h-auto rounded-xl object-contain"
+              draggable="false"
+            />
             {/* icon: lightning */}
             <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="currentColor" aria-hidden="true">
               <path d="M13 2L3 14h6l-2 8 10-12h-6l2-8z" />
@@ -77,6 +87,15 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
             onClick={handleRegisterClick}
           >
+            <NextImage
+              src="/here/here.gif"
+              alt=""
+              aria-hidden
+              width={128}
+              height={45}
+              className="block w-10 h-auto rounded-xl object-contain"
+              draggable="false"
+            />
             {/* icon: crown */}
             <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="currentColor" aria-hidden="true">
               <path d="M3 7l4 4 5-7 5 7 4-4v10H3V7z" />
