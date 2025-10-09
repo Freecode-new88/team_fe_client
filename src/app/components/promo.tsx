@@ -174,7 +174,7 @@ export default function Promo() {
       //console.log(items);
       setPromoData(prev => {
         const merged = upsertPromos(prev, items);    // กันซ้ำตาม code
-        return merged.slice(0, 6);                 // (ตัวเลือก) จำกัดสูงสุด 100 แถว
+        return merged.slice(0, 6);                   // (ตัวเลือก) จำกัดสูงสุด 100 แถว
       });
     };
 
