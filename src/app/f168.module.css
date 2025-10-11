@@ -453,7 +453,6 @@
   transform: translate(10px -50%) rotate(-8deg);
   width: 24px;
   height: 34px;
-  background: url("/images/fire.webp") center / contain no-repeat;
   pointer-events: none;
   filter: drop-shadow(0 0 6px rgba(245, 80, 91, 0.75));
   animation:

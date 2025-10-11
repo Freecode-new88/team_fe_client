@@ -619,10 +619,19 @@ export default function Promo() {
                         <span className={styles.userNameContainer}>
                           {
                             isHot && r.emoji && (
-                              <span className={styles.flameBadge} aria-hidden>
+                              <span
+                                className={styles.flameBadge}
+                                style={{
+                                  backgroundImage: 'url("https://file.781243555.com/emoji/fire.webp")',
+                                  backgroundPosition: 'center',
+                                  backgroundRepeat: 'no-repeat',
+                                  backgroundSize: 'contain',
+                                }}
+                                aria-hidden={true}
+                              >
                                 {r.emoji && (
                                   <img
-                                    src={`/emoji/${r.emoji}.webp`}
+                                    src={r.emoji}
                                     loading="lazy"
                                     decoding="async"
                                     style={{ width: '24px', height: '25px' }}
