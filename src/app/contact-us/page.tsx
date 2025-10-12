@@ -59,9 +59,9 @@ export default function ContactUsPage() {
           </nav>
           
           {/* ปรับ H1 เน้นคีย์เวิร์ด */}
-          <h1 className={styles.title}><span className={styles.gradient}>ติดต่อเรา: รับโปรโมชั่นและอัปเดตผ่าน Telegram และ Line</span></h1>
+          <h1 className={styles.title}><span className={styles.gradient}>ติดต่อเรา: รับโปรโมชั่นและอัปเดตผ่าน Telegram และ Twitter</span></h1>
           <p className={styles.lead}>
-            มึงสามารถรับโปรโมชั่นรายวันได้ที่กลุ่ม **Telegram** ห้ามพลาดโอกาสในการแจกพ้อยท์ และข่าวสารอัปเดตสำคัญ เข้าร่วมกลุ่มเลย!!
+            คุณสามารถรับโปรโมชั่นรายวันได้ที่กลุ่ม **Telegram** ห้ามพลาดโอกาสในการแจกพอยท์และข่าวสารอัปเดตสำคัญ เข้าร่วมกลุ่มเลย และอย่าลืมติดตามเราทาง **Twitter** ด้วย!!
           </p>
 
           <ul className={styles.infoList} ref={listRef}>
