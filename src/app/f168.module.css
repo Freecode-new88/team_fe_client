@@ -874,6 +874,12 @@
   box-shadow: 0 0 0 3px rgba(18, 194, 233, 0.25);
 }
 
+.captpoint {
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
 /* gradient border + glow same as boxes */
 .modalChrome::before {
   content: "";
