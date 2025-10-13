@@ -1419,7 +1419,127 @@
   }
 }
 
-/* Mobile ≤ 360px */
+/* Mobile ≤ 392px */
+@media (max-width: 392px) {
+  .bannerGrid {
+    grid-template-columns: 1fr;
+    row-gap: 10px;
+    column-gap: 0;
+  }
+
+  .box1,
+  .box2,
+  .box3 {
+    grid-column: 1 / -1;
+    grid-row: auto;
+  }
+
+  .leftBox,
+  .rightBox,
+  .fullBoxNoChrome {
+    width: 100%;
+    height: auto;
+    padding: 0.55rem;
+  }
+
+  .leftBox::after,
+  .rightBox::after,
+  .fullBoxNoChrome::after {
+    inset: -4px;
+    filter: blur(14px);
+  }
+
+  .promoTitle {
+    font-size: 1.25rem;
+    margin: 0 0.5rem;
+    top: 0.5rem;
+  }
+
+  .table {
+    min-width: 300px;
+  }
+
+  .recentTable {
+    min-width: 300px;
+  }
+
+  .recentTable colgroup col:nth-child(5) {
+    display: none;
+    width: 0 !important;
+  }
+
+  .recentTable thead th:nth-child(5),
+  .recentTable tbody td:nth-child(5) {
+    display: none;
+  }
+
+  .table thead th,
+  .table tbody td {
+    padding: 0.6rem 0.5rem;
+    letter-spacing: 0.6px;
+  }
+
+  .table thead tr {
+    font-size: 10px;
+  }
+
+  .table tbody tr {
+    font-size: 10px;
+  }
+
+  .flameBadge {
+    left: -75%;
+    top: 0%;
+    transform: translate(10px -50%) rotate(-8deg);
+    width: 14px;
+    height: 18px;
+  }
+
+  .emojibadge {
+    position: absolute;
+    left: 90%;
+    top:-40%;
+    width: 14px;
+    height: 18px;
+  }
+
+  .userNameContainer  {
+    left: 9%;
+  }
+
+  .input {
+    font-size: 0.9rem;
+    padding: 0.7rem 0.8rem;
+  }
+
+  .button {
+    grid-template-columns: 28px 1fr 28px;
+    padding: 10px 10px;
+    font-size: 0.85rem;
+  }
+
+  .faqButton {
+    padding-left: 60px;
+    min-height: 54px;
+  }
+
+  .faqButton::after {
+    width: 32px;
+    height: 32px;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+  }
+  .faqList li {
+    line-height: 1.4;
+  }
+  .faqWrap {
+    max-width: 95%;
+    margin: 20px auto 0;
+  }
+}
+
+/* Mobile ≤ 375px */
 @media (max-width: 375px) {
   .bannerGrid {
     grid-template-columns: 1fr;
