@@ -1,5 +1,17 @@
+'use client';
 export function Fab() {
   const avatarUrl = "/images/ryan-giggs.jpg";
+
+  const handleFabClick = () => {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "chat_ai", {
+        location: "fab",
+        dest: "telegram_bot",
+        link_url: "https://t.me/f168th_bot",
+        debug_mode: true,
+      });
+    }
+  };
 
   return (
     <div className="fixed bottom-18 sm:bottom-10 right-5 z-50 group">
@@ -8,6 +20,7 @@ export function Fab() {
         target="_blank"
         rel="noopener noreferrer nofollow"
         aria-label="เปิด Telegram: f168th_bot"
+        onClick={handleFabClick}
         className="
           cursor-pointer
           grid h-16 w-16 place-items-center overflow-hidden rounded-full

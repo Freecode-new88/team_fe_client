@@ -53,14 +53,13 @@ function upsertPromos(prev: PromoItem[], incoming: PromoItem[]) {
 export default function Promo() {
   const [start, setStart] = useState(0);
   const [recentStart, setRecentStart] = useState(0);
-  // countdown
+  // countdown Every 15 minutes
   const getSecondsToHourEnd = () => {
     const now = new Date();
     const next = new Date(now);
     next.setSeconds(0, 0);
     const m = now.getMinutes();
-
-    const nextBlockMinute = Math.floor(m / 10) * 10 + 10; //10,20,30,40,50,60
+    const nextBlockMinute = Math.floor(m / 15) * 15 + 15; //15,30,45,60
 
     //Run Every 30 minutes
     if (nextBlockMinute > 60) {
@@ -78,7 +77,7 @@ export default function Promo() {
 
   const [secondsLeft, setSecondsLeft] = useState(getSecondsToHourEnd());
   const timerRef = useRef<number | null>(null);
-  // Let reach 00:00 then start from 10:00 again
+  // Let reach 00:00 then start from 15:00 again
   useEffect(() => {
     timerRef.current = window.setInterval(() => {
       setSecondsLeft((s) => (s <= 1 ? getSecondsToHourEnd() : s - 1));

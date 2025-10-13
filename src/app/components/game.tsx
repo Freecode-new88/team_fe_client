@@ -68,6 +68,46 @@ const games: Games[] = [
   }
 ]
 
+const mk8Events: Record<string, string> = {
+  "daily-deposit-10-any-amount-up-to-2888.webp": "register_m_cnv10",
+  "daily-profit-bonus-slots-fishing-card-games.webp": "register_m_sf01",
+  "daily-turnover-bonus-slots-fishing-card.webp": "register_m_sf03",
+  "first-deposit-bonus-20.webp": "register_m_la20",
+  "lucky-wheel-spin-and-win.webp": "register_m_lk01",
+  "monthly-random-giveaways-bonus.webp": "register_m_bn08",
+  "refer-friends-triple-bonus-1-3-commission.webp": "register_m_nnp01",
+  "register-get-28-8-free-credit.webp": "register_m_km28",
+  "usdt-deposit-bonus-2-percent.webp": "register_m_usdt01",
+};
+
+const f168Events: Record<string, string> = {
+  "all-bank.webp": "register_f_trc",
+  "get-36.webp": "register_f_free36",
+  "get-more-2-percent.webp": "register_f_usdt01",
+  "get-more-10-percent.webp": "register_f_cnv10",
+};
+
+const baseName = (path: string) => path.split("/").pop() ?? path;
+
+function trackAndOpen(imgPath: string, web: "mk8" | "f168") {
+  const file = baseName(imgPath);
+
+  const event =
+    web === "mk8" ? mk8Events[file] : f168Events[file];
+
+  if (typeof window !== "undefined" && (window as any).gtag && event) {
+    (window as any).gtag("event", event, {
+      location: "game_grid",
+      image: file,
+      web,
+      link_url: web === "mk8" ? MK8LINK : F168lINK,
+    });
+  }
+  const url = web === "mk8" ? MK8LINK : F168lINK;
+  const win = window.open(url, "_blank", "noopener,noreferrer");
+  if (win) win.opener = null;
+}
+
 function shuffle<T>(arr: T[]) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -118,11 +158,6 @@ export default function Game() {
     return () => io.disconnect();
   }, [picked.length]);
 
-  function openSafe(url?: string) {
-    if (!url) return;
-    const win = window.open(url, "_blank", "noopener,noreferrer"); // no referrer + no opener
-    if (win) win.opener = null; // extra guard
-  }
 
   return (
 
@@ -148,9 +183,7 @@ export default function Game() {
                 role="button"
                 tabIndex={0}
                 aria-label={item.title}
-                onClick={() => {
-                  if (item.web == "mk8") { openSafe(MK8LINK) } else if (item.web == "f168") { openSafe(F168lINK) }
-                }}
+                onClick={() => trackAndOpen(item.img, item.web as "mk8" | "f168")}
                 className="group relative w-full overflow-hidden rounded-xl shadow transition hover:shadow-lg cursor-pointer"
               >
                 <img
