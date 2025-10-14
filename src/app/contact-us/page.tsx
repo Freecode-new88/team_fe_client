@@ -48,7 +48,7 @@ export default function ContactUsPage() {
     "@context": "https://schema.org",
     "@type": "ContactPage",
     name: "ติดต่อ Thaibet - ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี",
-    url: "https://thaibetz.com/contact",
+    url: "https://thaibetz.com/contact-us/",
     inLanguage: "th-TH",
     description:
       "ติดต่อ Thaibet สำหรับข้อเสนอแนะ แก้ไขข้อมูลโปรโมชัน/โค้ดเครดิตฟรี และการแจ้งปัญหาการใช้งาน",
@@ -62,7 +62,7 @@ export default function ContactUsPage() {
       "@type": "BreadcrumbList",
       itemListElement: [
         { "@type": "ListItem", position: 1, name: "หน้าแรก", item: "https://thaibetz.com/" },
-        { "@type": "ListItem", position: 2, name: "ติดต่อเรา", item: "https://thaibetz.com/contact" }
+        { "@type": "ListItem", position: 2, name: "ติดต่อเรา", item: "https://thaibetz.com/contact-us/" }
       ]
     },
     mainEntity: {
@@ -75,7 +75,7 @@ export default function ContactUsPage() {
           email: "admin@thaibetz.com",
           availableLanguage: ["th"],
           areaServed: "TH",
-          url: "https://thaibetz.com/contact"
+          url: "https://thaibetz.com/contact-us/"
         }
       ],
       sameAs: [

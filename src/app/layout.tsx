@@ -113,7 +113,7 @@ export default function RootLayout({
         "@type": "ContactPoint",
         contactType: "customer support",
         email: "admin@thaibetz.com",
-        url: "https://thaibetz.com/contact",
+        url: "https://thaibetz.com/contact-us/",
         areaServed: "TH",
         availableLanguage: ["th"]
       }
