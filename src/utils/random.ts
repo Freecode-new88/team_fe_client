@@ -49,3 +49,25 @@ const emoji = [
 ];
 
 export const rand0to30 = (): string => emoji[Math.floor(Math.random() * emoji.length)];
+
+
+export const LAST_UPDATED =
+  new Intl.DateTimeFormat('th-TH-u-ca-gregory', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+    timeZone: 'Asia/Bangkok',
+  }).format(new Date());
+
+const dtfDate = new Intl.DateTimeFormat('th-TH-u-ca-gregory', {
+  dateStyle: 'long',
+  timeZone: 'Asia/Bangkok',
+});
+const dtfTime = new Intl.DateTimeFormat('th-TH-u-ca-gregory', {
+  hour: '2-digit',
+  minute: '2-digit',
+  hourCycle: 'h23',
+  timeZone: 'Asia/Bangkok',
+});
+
+export const LAST_UPDATED_DATETIME = `${dtfDate.format(new Date())} เวลา ${dtfTime.format(new Date())}`;

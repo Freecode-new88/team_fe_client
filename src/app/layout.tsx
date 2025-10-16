@@ -195,6 +195,7 @@ export default function RootLayout({
     about: [
       { "@type": "Thing", name: "F168" },
       { "@type": "Thing", name: "MK8" },
+      { "@type": "Thing", name: "โค้ดเครดิตฟรี" },
       { "@type": "Thing", name: "ศูนย์รวมโปรโมชัน" },
       { "@type": "Thing", name: "ศูนย์รวมโค้ดเครดิตฟรี" },
       { "@type": "Thing", name: "โค้ดโปรโมชั่น" },

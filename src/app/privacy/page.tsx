@@ -2,6 +2,7 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import Link from "next/link";
+import { LAST_UPDATED } from "@/utils/random";
 
 export const metadata: Metadata = {
   title: "นโยบายความเป็นส่วนตัว | Thaibet",
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-const LAST_UPDATED = "16 ตุลาคม 2025";
+
 
 export default function PrivacyPage() {
   const jsonLd = {
@@ -47,7 +48,7 @@ export default function PrivacyPage() {
         <header style={{ marginBottom: 24 }}>
           <h1 style={{ margin: 0, fontSize: 32 }}>นโยบายความเป็นส่วนตัว</h1>
           <p style={{ margin: "8px 0", color: "rgba(0,0,0,0.6)" }}>
-            ปรับปรุงล่าสุด: {LAST_UPDATED}
+            ปรับปรุงล่าสุด: 16 ตุลาคม ค.ศ. 2025 เวลา 12:00
           </p>
         </header>
 

@@ -14,7 +14,8 @@ import { SiteKey, siteOptions } from '@/config/site';
 import { showClaimSuccess } from '@/components/ShowClaimSuccess';
 import { Copy, Gift } from 'lucide-react';
 import { getSocket } from '@/services/socket';
-import { maskUser, rand0to30 } from '@/utils/random';
+import { LAST_UPDATED, LAST_UPDATED_DATETIME, maskUser, rand0to30 } from '@/utils/random';
+import LastUpdated from "./LastUpdated";
 
 const LeftImageWithGifts = dynamic(
   () => import("@/components/LeftImageWithGifts").then(m => m.LeftImageWithGifts),
@@ -418,6 +419,9 @@ export default function Promo() {
     <section className={styles.topSection}>
       <div className={styles.sectionHeading}>
         <h1 className={styles.promoTitle}>แจกโค้ด & เครดิตฟรี F168, MK8 ทุกวัน — ฝาก-ถอนออโต้ — ปลอดภัย</h1>
+      </div>
+      <div className="ml-[30px]">
+        <LastUpdated />
       </div>
 
       <div className={styles.bannerGrid}>

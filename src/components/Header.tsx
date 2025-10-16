@@ -30,10 +30,10 @@ export default function Header() {
     <header className={`${styles.header} hidden lg:block`}>
       <div className={styles.logoArea}>
         <Link
-          href={"/"} >
+          href={"/"}  aria-label="กลับไปหน้าแรก Thaibet">
           <NextImage
-            src="/logo01.png"
-            alt="ทิมล่าโปร"
+            src="/thaibet-logo.png"
+            alt="โลโก้ Thaibet"
             width={160}
             height={40}
             className={styles.logo}
