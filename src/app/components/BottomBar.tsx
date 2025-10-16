@@ -65,7 +65,7 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
           >
             <NextImage
               src="/here/here.gif"
-              alt=""
+               alt="ลงทะเบียนรับเครดิตฟรี F168"
               aria-hidden
               width={128}
               height={45}
@@ -89,7 +89,7 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
           >
             <NextImage
               src="/here/here.gif"
-              alt=""
+              alt="ลงทะเบียนรับเครดิตฟรี MK8"
               aria-hidden
               width={128}
               height={45}

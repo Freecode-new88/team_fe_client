@@ -55,7 +55,7 @@ export default function Header() {
           <div className="inline-block rounded-2xl overflow-hidden border border-gray-300 p-0.5 bg-white/20">
             <NextImage
               src="/here/r-arrow.webp"
-              alt=""
+              alt="แจกโค้ด & เครดิตฟรี"
               aria-hidden
               width={128}
               height={45}
@@ -65,7 +65,7 @@ export default function Header() {
           </div>
           <NextImage
             src="/images/logo-f168.png"
-            alt=""
+            alt="สมัคร F168"
             aria-hidden
             width={128}
             height={45}
@@ -84,7 +84,7 @@ export default function Header() {
         >
           <NextImage
             src="/images/logo-mk8.png"
-            alt=""
+            alt="สมัคร MK8"
             aria-hidden
             width={128}
             height={45}

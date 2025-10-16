@@ -41,7 +41,7 @@ export const metadata: Metadata = {
       "ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุเงื่อนไขและช่วงปล่อยสิทธิ์ชัดเจน สมัครใช้งานง่าย ระบบฝาก–ถอนอัตโนมัติ ปลอดภัย โปร่งใส",
     images: [
       {
-        url: "https://thaibetz.com/og/og.png",
+        url: "https://thaibetz.com/og/og.webp",
         width: 1200,
         height: 630,
         alt: "Thaibet – ศูนย์รวมโปร & โค้ดเครดิตฟรี F168/MK8",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
     title: "Thaibet — ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
     description:
       "ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุเงื่อนไขและช่วงปล่อยสิทธิ์ชัดเจน สมัครใช้งานง่าย ระบบฝาก–ถอนอัตโนมัติ ปลอดภัย โปร่งใส",
-    images: ["https://thaibetz.com/og/og.png"],
+    images: ["https://thaibetz.com/og/og.webp"],
   },
   robots: {
     index: true,
@@ -103,7 +103,7 @@ export default function RootLayout({
     slogan: "Thaibet - ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี",
     url: "https://thaibetz.com/",
     logo: "https://thaibetz.com/icons/thaibet-icon-512.png",
-    image: "https://thaibetz.com/og/og.png",
+    image: "https://thaibetz.com/og/og.webp",
     description:
       "Thaibet - ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุเงื่อนไขชัดเจน ระบบฝาก–ถอนอัตโนมัติ ปลอดภัย โปร่งใส",
     foundingDate: "2023-01-01",
@@ -159,7 +159,7 @@ export default function RootLayout({
     isPartOf: { "@type": "WebSite", name: "Thaibet", url: "https://thaibetz.com/" },
     description:
       "ติดตามโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุช่วงปล่อยสิทธิ์และเงื่อนไขชัดเจน พร้อมลิงก์ทางการและคำแนะนำใช้งานอย่างปลอดภัย",
-    primaryImageOfPage: { "@type": "ImageObject", url: "https://thaibetz.com/og/og.png" },
+    primaryImageOfPage: { "@type": "ImageObject", url: "https://thaibetz.com/og/og.webp" },
     publisher: {
       "@type": "Organization",
       name: "Thaibet",

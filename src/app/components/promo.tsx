@@ -634,7 +634,7 @@ export default function Promo() {
                                     loading="lazy"
                                     decoding="async"
                                     style={{ width: '24px', height: '25px' }}
-                                    alt=""
+                                    alt={`ได้รับ ${r.point} แต้มแล้ว`}
                                     className={styles.emojibadge}
                                   />
                                 )}

@@ -152,10 +152,11 @@ export default function ContactUsPage() {
               </li>
 
               <li>
-                <Link
+                <a
                   href="mailto:admin@thaibetz.com"
                   className="inline-flex items-center gap-2"
                   aria-label="ส่งอีเมลถึงฝ่ายสนับสนุน Thaibet"
+                  rel="noopener noreferrer me"
                 >
                   <Image
                     src="/images/email.svg"
@@ -164,8 +165,8 @@ export default function ContactUsPage() {
                     height={42}
                     draggable="false"
                   />
-                  <span>อีเมลฝ่ายสนับสนุน: admin@thaibetz.com</span>
-                </Link>
+                  <span>อีเมลฝ่ายสนับสนุน: admin&#8203;@thaibetz.com</span>
+                </a>
               </li>
 
               <li>
