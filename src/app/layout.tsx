@@ -98,6 +98,7 @@ export default function RootLayout({
   const orgJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": "https://thaibetz.com/#organization",
     name: "Thaibet",
     legalName: "Thaibet",
     slogan: "Thaibet - ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี",
@@ -153,10 +154,14 @@ export default function RootLayout({
   const homeWebPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://thaibetz.com/"
+    },
     name: "Thaibet - ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
     url: "https://thaibetz.com/",
     inLanguage: "th-TH",
-    isPartOf: { "@type": "WebSite", name: "Thaibet", url: "https://thaibetz.com/" },
+    isPartOf: { "@type": "WebSite", "@id": "https://thaibetz.com/#organization", name: "Thaibet", url: "https://thaibetz.com/" },
     description:
       "ติดตามโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุช่วงปล่อยสิทธิ์และเงื่อนไขชัดเจน พร้อมลิงก์ทางการและคำแนะนำใช้งานอย่างปลอดภัย",
     primaryImageOfPage: { "@type": "ImageObject", url: "https://thaibetz.com/og/og.webp" },
@@ -276,7 +281,7 @@ export default function RootLayout({
     ]
   };
   return (
-    <html lang="th">
+    <html lang="th-TH">
       <head>
         <meta name="msvalidate.01" content="1C15A36A3A5BC7B9C3B25F930B875D3C" />
         <meta name="yandex-verification" content="6617f160bacf4988" />
@@ -305,6 +310,28 @@ export default function RootLayout({
             })(window,document,'script','dataLayer','GTM-MMTZHR4T');
           `}
         </Script>
+
+        <Script
+          id="ld-json-home-webpage"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(homeWebPageJsonLd) }}
+        />
+        <Script
+          id="ld-json-organization"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
+        />
+        <Script
+          id="ld-json-website"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+        />
+
+        <Script
+          id="ld-json-faqpage"
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
         {/* Ahrefs Web Analytics */}
         <Script
           src="https://analytics.ahrefs.com/analytics.js"
@@ -336,33 +363,6 @@ export default function RootLayout({
         />
         <Footer />
       </body>
-      <Script
-        id="ld-json-home-webpage"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeWebPageJsonLd) }}
-      />
-      <Script
-        id="ld-json-organization"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
-      />
-      <Script
-        id="ld-json-website"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-      />
-
-      <Script
-        id="ld-json-faqpage"
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-      {/* Ahrefs Web Analytics */}
-      <Script
-        src="https://analytics.ahrefs.com/analytics.js"
-        data-key="A0ew7rDIrELHZli1Z6TB1w"
-        async
-      />
     </html>
   );
 }
