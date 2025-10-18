@@ -137,8 +137,8 @@ export default function CaptchaModal({
             <tr>
               <td>{detail.promo_code}</td>
               {((detail?.min_point ?? 0) !== 0 || (detail?.max_point ?? 0) !== 0)
-                ? <td> {detail!.min_point} - {detail!.max_point} </td>
-                : <td className={styles.captpoint}> {detail!.point} </td>}
+                ? <td style={{color: "green", fontWeight: "bold"}}> {/*detail!.min_point} - {detail!.max_point*/}  ยินดีด้วยลุ้นต่อไป</td>
+                : <td className={styles.captpoint}> ยินดีด้วยลุ้นต่อไป </td>}
               <td>{detail.time.replace("T", " ").slice(0, 16)}</td>
             </tr>
           </tbody>
