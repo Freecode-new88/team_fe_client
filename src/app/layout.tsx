@@ -44,7 +44,7 @@ export const metadata: Metadata = {
         url: "https://thaibetz.com/og/og.webp",
         width: 1200,
         height: 630,
-        alt: "Thaibet – ศูนย์รวมโปร & โค้ดเครดิตฟรี F168/MK8",
+        alt: "Thaibet – โค้ดเครดิตฟรี F168/MK8",
       },
     ],
   },
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@thaibetz",      // ถ้ายังไม่มีแอคเคานต์ทางการ คงไว้ก่อน
     creator: "@thaibetz",
-    title: "Thaibet — ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
+    title: "Thaibet — โค้ดเครดิตฟรีล่าสุดวันนี้ และ โค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
     description:
       "ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุเงื่อนไขและช่วงปล่อยสิทธิ์ชัดเจน สมัครใช้งานง่าย ระบบฝาก–ถอนอัตโนมัติ ปลอดภัย โปร่งใส",
     images: ["https://thaibetz.com/og/og.webp"],
@@ -101,7 +101,7 @@ export default function RootLayout({
     "@id": "https://thaibetz.com/#organization",
     name: "Thaibet",
     legalName: "Thaibet",
-    slogan: "Thaibet - ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี",
+    slogan: "Thaibet - ศูนย์รวมโปรโมชัน และ โค้ดเครดิตฟรี",
     url: "https://thaibetz.com/",
     logo: "https://thaibetz.com/icons/thaibet-icon-512.png",
     image: "https://thaibetz.com/og/og.webp",
