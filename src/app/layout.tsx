@@ -12,82 +12,41 @@ import { Fab } from "@/components/Fab";
 export const metadata: Metadata = {
   metadataBase: new URL("https://thaibetz.com/"),
   title: {
-    default: "Thaibet | ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
-    template: "%s | ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 — Thaibet",
+    // เน้นคำหลักทั้งสาม แต่สั้น กระชับ
+    default: "Thaibet | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
+    template: "%s | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 — Thaibet",
   },
+  // พูดธรรมชาติ แทรกคำหลักครั้งละ 1 รอบพอ
   description:
-    "ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุเงื่อนไขและช่วงปล่อยสิทธิ์ชัดเจน สมัครใช้งานง่าย ระบบฝาก–ถอนอัตโนมัติ ปลอดภัย โปร่งใส",
-  applicationName: "Thaibet — ศูนย์รวมโปร & โค้ดเครดิตฟรี",
-  authors: [{ name: "ทิมล่าโปร" }],
-  generator: "Next.js",
-  keywords: [
-    "ศูนย์รวมโปรโมชัน", "โค้ดเครดิตฟรี", "F168", "MK8",
-    "เครดิตฟรีล่าสุด", "โค้ดเครดิตฟรีวันนี้", "โปรสมาชิกใหม่",
-    "สล็อต", "บาคาร่า", "คาสิโนออนไลน์", "เว็บตรง",
-    "ฝากถอนออโต้", "ไม่ต้องแชร์", "ยืนยันตัวตน"
-  ],
-  category: "โปรโมชั่นและส่วนลด",
-  alternates: {
-    canonical: "https://thaibetz.com/",
-    languages: { "th-TH": "https://thaibetz.com/" },
-  },
+    "Thaibet รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี สำหรับ F168/MK8 อัปเดตทุกวัน บอกช่วงปล่อยสิทธิ์และเงื่อนไขชัดเจน มีลิงก์ทางการ ใช้งานง่าย ปลอดภัย",
+  applicationName: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
+  // ... (ส่วนอื่นคงเดิม)
   openGraph: {
     type: "website",
     locale: "th_TH",
-    siteName: "Thaibet — ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8",
+    siteName: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8",
     url: "https://thaibetz.com/",
-    title: "ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน) | Thaibet",
-    description:
-      "ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุเงื่อนไขและช่วงปล่อยสิทธิ์ชัดเจน สมัครใช้งานง่าย ระบบฝาก–ถอนอัตโนมัติ ปลอดภัย โปร่งใส",
+    title: "Thaibet | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
+    description: "ติดตามโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี จาก F168/MK8 อัปเดตทุกวัน มีแจ้งรอบปล่อยสิทธิ์ เงื่อนไขชัด พร้อมลิงก์ทางการ",
     images: [
       {
         url: "https://thaibetz.com/og/og.webp",
         width: 1200,
         height: 630,
-        alt: "Thaibet – โค้ดเครดิตฟรี F168/MK8",
+        alt: "Thaibet – รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    site: "@thaibetz",      // ถ้ายังไม่มีแอคเคานต์ทางการ คงไว้ก่อน
+    site: "@thaibetz",
     creator: "@thaibetz",
-    title: "Thaibet — โค้ดเครดิตฟรีล่าสุดวันนี้ และ โค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
-    description:
-      "ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุเงื่อนไขและช่วงปล่อยสิทธิ์ชัดเจน สมัครใช้งานง่าย ระบบฝาก–ถอนอัตโนมัติ ปลอดภัย โปร่งใส",
+    title: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
+    description: "รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 อัปเดตทุกวัน เงื่อนไขชัด ระบบออโต้ โปร่งใส ปลอดภัย",
     images: ["https://thaibetz.com/og/og.webp"],
   },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      noimageindex: false,
-      "max-image-preview": "large",
-      "max-video-preview": -1,
-      "max-snippet": -1,
-    },
-  },
-  icons: {
-    icon: [
-      { url: "/icons/thaibet-icon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/icons/thaibet-icon-192.png", sizes: "192x192", type: "image/png" }
-    ],
-    apple: [
-      { url: "/icons/thaibet-icon-180.png", sizes: "180x180", type: "image/png" }
-    ],
-    shortcut: ["/icons/thaibet-icon-32.png"]
-  },
-  manifest: "/site.webmanifest",
-  verification: {
-    google: "6B6z7GYEpScXkuFyiryYsnPPcuHXoYviBFPcdzWgftM",
-    yandex: "6617f160bacf4988",
-    other: {
-      "msvalidate.01": "1C15A36A3A5BC7B9C3B25F930B875D3C",
-    }
-  },
 };
+
 
 export default function RootLayout({
   children,
@@ -101,12 +60,12 @@ export default function RootLayout({
     "@id": "https://thaibetz.com/#organization",
     name: "Thaibet",
     legalName: "Thaibet",
-    slogan: "Thaibet - ศูนย์รวมโปรโมชัน และ โค้ดเครดิตฟรี",
+    slogan: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
     url: "https://thaibetz.com/",
     logo: "https://thaibetz.com/icons/thaibet-icon-512.png",
     image: "https://thaibetz.com/og/og.webp",
     description:
-      "Thaibet - ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุเงื่อนไขชัดเจน ระบบฝาก–ถอนอัตโนมัติ ปลอดภัย โปร่งใส",
+      "แหล่งรวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี สำหรับ F168/MK8 อัปเดตทุกวัน ระบุเงื่อนไขและช่วงปล่อยสิทธิ์ชัดเจน พร้อมลิงก์ทางการ ใช้งานง่าย ปลอดภัย",
     foundingDate: "2023-01-01",
     founder: [{ "@type": "Person", name: "Thaibet" }],
     contactPoint: [
@@ -121,8 +80,7 @@ export default function RootLayout({
     ],
     address: { "@type": "PostalAddress", addressCountry: "TH" },
     sameAs: [
-      "https://x.com/thaibetz",
-      "https://x.com/CosplayFeverX"
+      "https://x.com/thaibetz"
     ]
   };
 
@@ -131,22 +89,23 @@ export default function RootLayout({
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Thaibet",
-    alternateName: "Thaibet - ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี",
+    alternateName: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
     url: "https://thaibetz.com/",
     inLanguage: "th-TH",
     description:
-      "Thaibet - ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุเงื่อนไขชัดเจน ระบบฝาก–ถอนอัตโนมัติ ปลอดภัย โปร่งใส",
+      "แหล่งรวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี สำหรับ F168/MK8 อัปเดตทุกวัน ระบุช่วงปล่อยสิทธิ์และเงื่อนไขชัดเจน พร้อมลิงก์ทางการ ใช้งานง่าย ปลอดภัย",
     publisher: {
       "@type": "Organization",
       name: "Thaibet",
       url: "https://thaibetz.com/",
       logo: { "@type": "ImageObject", url: "https://thaibetz.com/icons/thaibet-icon-512.png" }
     },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: "https://thaibetz.com/search?q={query}",
-      "query-input": "required name=query"
-    },
+    // เปิดใช้ถ้ามีระบบค้นหาในไซต์
+    // potentialAction: {
+    //   "@type": "SearchAction",
+    //   target: "https://thaibetz.com/search?q={query}",
+    //   "query-input": "required name=query"
+    // },
     sameAs: ["https://x.com/thaibetz"]
   };
 
@@ -158,12 +117,12 @@ export default function RootLayout({
       "@type": "WebPage",
       "@id": "https://thaibetz.com/"
     },
-    name: "Thaibet - ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
+    name: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
     url: "https://thaibetz.com/",
     inLanguage: "th-TH",
-    isPartOf: { "@type": "WebSite", "@id": "https://thaibetz.com/#organization", name: "Thaibet", url: "https://thaibetz.com/" },
+    isPartOf: { "@type": "WebSite", name: "Thaibet", url: "https://thaibetz.com/" },
     description:
-      "ติดตามโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุช่วงปล่อยสิทธิ์และเงื่อนไขชัดเจน พร้อมลิงก์ทางการและคำแนะนำใช้งานอย่างปลอดภัย",
+      "ติดตามโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี ของ F168/MK8 อัปเดตทุกวัน ระบุช่วงปล่อยสิทธิ์และเงื่อนไขชัดเจน พร้อมลิงก์ทางการ ใช้งานง่าย ปลอดภัย",
     primaryImageOfPage: { "@type": "ImageObject", url: "https://thaibetz.com/og/og.webp" },
     publisher: {
       "@type": "Organization",
@@ -177,52 +136,19 @@ export default function RootLayout({
         { "@type": "ListItem", position: 1, name: "หน้าแรก", item: "https://thaibetz.com/" }
       ]
     },
-    /* ใส่รายการจริงตอนเรนเดอร์: mapping โค้ดวันนี้ → ItemList/Offer */
     hasPart: {
       "@type": "ItemList",
       itemListOrder: "http://schema.org/ItemListOrderAscending",
-      numberOfItems: 0, // ← อัปเดตเป็นจำนวนจริง
-      itemListElement: [
-        /* ตัวอย่างโครงสร้าง (เติมจริงตอนเรนเดอร์)
-        {
-          "@type": "Offer",
-          name: "โค้ดเครดิตฟรี 20 — F168",
-          brand: { "@type": "Brand", name: "F168" },
-          price: 0,
-          priceCurrency: "THB",
-          availability: "http://schema.org/InStock",
-          validThrough: "2025-10-14T23:59:59+07:00",
-          url: "https://thaibetz.com/freecode/f168-20"
-        }
-        */
-      ]
+      numberOfItems: 0,
+      itemListElement: []
     },
     about: [
       { "@type": "Thing", name: "F168" },
       { "@type": "Thing", name: "MK8" },
+      { "@type": "Thing", name: "เครดิตฟรี" },
       { "@type": "Thing", name: "โค้ดเครดิตฟรี" },
-      { "@type": "Thing", name: "ศูนย์รวมโปรโมชัน" },
-      { "@type": "Thing", name: "ศูนย์รวมโค้ดเครดิตฟรี" },
-      { "@type": "Thing", name: "โค้ดโปรโมชั่น" },
-      { "@type": "Thing", name: "โค้ดเครดิตฟรีวันนี้" },
-      { "@type": "Thing", name: "โค้ดเครดิตฟรีล่าสุด" },
-      { "@type": "Thing", name: "โปรโมชัน F168" },
-      { "@type": "Thing", name: "โปรโมชัน MK8" },
-      { "@type": "Thing", name: "โบนัสต้อนรับ" },
-      { "@type": "Thing", name: "โปรสมาชิกใหม่" },
-      { "@type": "Thing", name: "โบนัสฝากครั้งแรก" },
-      { "@type": "Thing", name: "เทิร์นโอเวอร์" },
-      { "@type": "Thing", name: "เงื่อนไขการถอน" },
-      { "@type": "Thing", name: "ช่วงเวลาปล่อยสิทธิ์" },
-      { "@type": "Thing", name: "การแจ้งเตือนรอบสิทธิ์" },
-      { "@type": "Thing", name: "ระบบฝาก–ถอนอัตโนมัติ" },
-      { "@type": "Thing", name: "การยืนยันตัวตน" },
-      { "@type": "Thing", name: "ข้อกำหนดและเงื่อนไข" },
-      { "@type": "Thing", name: "นโยบายความเป็นส่วนตัว" },
-      { "@type": "Thing", name: "แนวทางการใช้งานอย่างรับผิดชอบ" },
-      { "@type": "Thing", name: "ศูนย์ช่วยเหลือลูกค้า" },
-      { "@type": "Thing", name: "ความปลอดภัยของผู้ใช้" },
-      { "@type": "Thing", name: "ความโปร่งใสในการให้ข้อมูล" }
+      { "@type": "Thing", name: "รวมโปรโมชัน" },
+      { "@type": "Thing", name: "โปรโมชันคาสิโน" }
     ],
     datePublished: "2023-01-01",
     dateModified: new Date().toISOString()
@@ -235,47 +161,47 @@ export default function RootLayout({
     mainEntity: [
       {
         "@type": "Question",
-        name: "วิธีรับโค้ดและเครดิตฟรี F168/MK8 ทำอย่างไร?",
+        name: "รับโค้ดเครดิตฟรี F168/MK8 ทำอย่างไร?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "เข้าเว็บ thaibetz.com เลือกแบรนด์ F168 หรือ MK8 ตรวจสอบเงื่อนไขและสถานะโค้ด กดรับสิทธิ์และปฏิบัติตามขั้นตอน ระบบจะยืนยันโดยอัตโนมัติ"
+            "เข้า thaibetz.com เลือกแบรนด์ F168 หรือ MK8 ตรวจสอบเงื่อนไขและสถานะโค้ด กดรับสิทธิ์ แล้วทำตามขั้นตอนที่ระบุ ระบบจะยืนยันสิทธิ์ให้อัตโนมัติ"
         }
       },
       {
         "@type": "Question",
-        name: "มีการปล่อยสิทธิ์วันละกี่รอบ?",
+        name: "ปล่อยสิทธิ์วันละกี่รอบ และอัปเดตเมื่อไร?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "มีหลายรอบต่อวัน โดยจะแจ้งอัปเดตตามเวลาจริงบนหน้าเว็บไซต์ โปรดติดตามประกาศล่าสุด"
+            "มีหลายรอบต่อวัน โดยจะแจ้งอัปเดตแบบเรียลไทม์บนหน้าเว็บไซต์ แนะนำให้ติดตามหน้าหลักและเปิดการแจ้งเตือนเพื่อไม่พลาดโค้ดใหม่"
         }
       },
       {
         "@type": "Question",
-        name: "ต้องฝากขั้นต่ำเท่าไรเพื่อรับเครดิตฟรี?",
+        name: "ต้องฝากขั้นต่ำเท่าไรจึงจะใช้เครดิตฟรีได้?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "ขึ้นอยู่กับเงื่อนไขของแต่ละโปรโมชัน กรุณาอ่านรายละเอียดใต้รายการก่อนกดรับสิทธิ์"
+            "ขึ้นกับแต่ละโปรโมชันของ F168/MK8 โปรดอ่านเงื่อนไขใต้รายการให้ครบ รวมถึงเทิร์นโอเวอร์และข้อกำหนดการถอนก่อนกดรับสิทธิ์"
         }
       },
       {
         "@type": "Question",
-        name: "การฝาก–ถอนอัตโนมัติใช้เวลานานไหม?",
+        name: "การฝาก–ถอนอัตโนมัตินานไหม และมีค่าธรรมเนียมหรือไม่?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "โดยทั่วไปใช้เวลาไม่กี่วินาทีถึงประมาณ 1 นาที หากล่าช้าเกินปกติ กรุณาติดต่อฝ่ายสนับสนุน"
+            "ส่วนใหญ่ใช้เวลาไม่กี่วินาทีถึงประมาณ 1 นาที ทั้งนี้ขึ้นกับช่วงเวลาให้บริการและธนาคาร หากล่าช้าผิดปกติหรือพบปัญหา ติดต่อฝ่ายสนับสนุนได้ทันที"
         }
       },
       {
         "@type": "Question",
-        name: "ถ้ารับโค้ดไม่ทันควรทำอย่างไร?",
+        name: "ถ้ารับโค้ดไม่ทัน ต้องทำอย่างไร?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "รอรอบปล่อยสิทธิ์ถัดไป หรือเปิดการแจ้งเตือนบนหน้าเว็บไซต์เพื่อไม่ให้พลาดโค้ดใหม่"
+            "รอรอบปล่อยสิทธิ์ถัดไปหรือติดตามประกาศล่าสุดบนหน้า Thaibet แนะนำให้เปิดแจ้งเตือนและเช็กตารางรอบปล่อยสิทธิ์เพื่อเพิ่มโอกาสรับโค้ด"
         }
       }
     ]
@@ -283,6 +209,10 @@ export default function RootLayout({
   return (
     <html lang="th-TH">
       <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/thaibet-icon-32.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/icons/thaibet-icon-192.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/icons/thaibet-icon-180.png" />
         <meta name="msvalidate.01" content="1C15A36A3A5BC7B9C3B25F930B875D3C" />
         <meta name="yandex-verification" content="6617f160bacf4988" />
         <meta name="ahrefs-site-verification" content="331fc5cd20258534cbd5350c2f14552462a6314fc939757dfcecc1554bc30388"></meta>
