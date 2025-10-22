@@ -418,7 +418,9 @@ export default function Promo() {
   return (
     <section className={styles.topSection}>
       <div className={styles.sectionHeading}>
-        <h1 className={styles.promoTitle}>โค้ดและเครดิตฟรี จาก F168/MK8 — อัปเดตทุก 15 นาที</h1>
+        <h1 className={styles.promoTitle}>
+          รวมโปรโมชัน <strong>เครดิตฟรี</strong> และ <strong>โค้ดเครดิตฟรี</strong> F168/MK8 — อัปเดตทุก 15 นาที
+        </h1>
       </div>
       <div className="ml-[30px]">
         <LastUpdated />

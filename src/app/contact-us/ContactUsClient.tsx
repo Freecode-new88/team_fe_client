@@ -127,10 +127,10 @@ export default function ContactUsClient() {
                 </Link>
               </li>
               <li>
-                <a href="mailto:admin@thaibetz.com" rel="noopener noreferrer me">
+                <div>
                   <Image src="/images/email.svg" alt="Email icon" width={42} height={42} />
                   <span>อีเมลฝ่ายสนับสนุน: admin&#8203;@thaibetz.com</span>
-                </a>
+                </div>
               </li>
               <li>
                 <Link href="/privacy">
