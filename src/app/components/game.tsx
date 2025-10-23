@@ -189,12 +189,12 @@ export default function Game() {
               style={{ ["--i" as any]: i }}
             >
               <a
-                href={`/promotion-info/${item.path}`}
+                href={`/promotion-info/${item.path}/`}
                 aria-label={item.title}
                 onClick={(e) => {
                   e.preventDefault(); // ป้องกันไม่ให้เปิดก่อน track เสร็จ
                   trackAndOpen(item.img, item.web as "mk8" | "f168");
-                  window.location.href = `/promotion-info/${item.path}`; // ✅ เปิดในแท็บเดียว
+                  window.location.href = `/promotion-info/${item.path}/`; // ✅ เปิดในแท็บเดียว
                 }}
                 className="group relative w-full overflow-hidden rounded-xl shadow transition hover:shadow-lg cursor-pointer block"
               >
