@@ -139,7 +139,6 @@ export default function ContactUsClient() {
                 </Link>
               </li>
             </ul>
-
             <div className={styles.notice}>
               <p>
                 <strong>ข้อชี้แจง:</strong> Thaibet เป็นเว็บไซต์รวบรวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีเท่านั้น

@@ -225,7 +225,7 @@ export default function PrivacyPage() {
 
           <h2 id="contact">11) ติดต่อเรา</h2>
           <p>
-            อีเมล: <a href="mailto:admin@thaibetz.com">admin@thaibetz.com</a>
+            อีเมล: <b>admin@thaibetz.com</b>
             <br />
             หน้าเว็บติดต่อ:{" "}
             <Link href="/contact-us">thaibetz.com/contact-us</Link>
