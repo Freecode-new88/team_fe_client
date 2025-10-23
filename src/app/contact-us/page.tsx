@@ -3,10 +3,9 @@ import Script from "next/script";
 import ContactUsClient from "./ContactUsClient";
 
 export const metadata: Metadata = {
-  title:
-    "ติดต่อ Thaibet (Contact Us) | ศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี F168/MK8",
+  title: "ติดต่อ Thaibet | ",
   description:
-    "ติดต่อทีมงาน Thaibet เพื่อสอบถามข้อมูลทั่วไป แจ้งปัญหาการใช้งาน หรือเสนอแนะเพิ่มเติม เว็บไซต์ศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีจาก F168 และ MK8 ที่อัปเดตทุกวัน.",
+    "ติดต่อทีมงาน Thaibet เพื่อสอบถามข้อมูลทั่วไป แจ้งปัญหา หรือเสนอแนะเกี่ยวกับโปรโมชันและโค้ดเครดิตฟรีจาก F168 และ MK8.",
   alternates: {
     canonical: "https://thaibetz.com/contact-us/",
   },
@@ -14,16 +13,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "th_TH",
     url: "https://thaibetz.com/contact-us/",
-    siteName: "Thaibet — ศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี F168/MK8",
+    siteName: "Thaibet — ศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี",
     title: "ติดต่อ Thaibet (Contact Us) | Thaibet",
     description:
-      "ช่องทางการติดต่อทีมงาน Thaibet สำหรับสอบถามข้อมูล แจ้งปัญหา หรือข้อเสนอแนะเกี่ยวกับโปรโมชันและโค้ดเครดิตฟรีจากพันธมิตร F168/MK8 อย่างเป็นทางการ.",
+      "ช่องทางติดต่อทีมงาน Thaibet เพื่อสอบถามข้อมูล แจ้งปัญหา หรือข้อเสนอแนะเกี่ยวกับโปรโมชันและโค้ดเครดิตฟรี.",
     images: [
       {
         url: "https://thaibetz.com/og/contact.webp",
         width: 1200,
         height: 630,
-        alt: "ติดต่อ Thaibet — ศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี F168/MK8",
+        alt: "ติดต่อ Thaibet — ศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี",
       },
     ],
   },
@@ -33,15 +32,11 @@ export const metadata: Metadata = {
     creator: "@thaibetz",
     title: "ติดต่อ Thaibet (Contact Us) | Thaibet",
     description:
-      "ช่องทางการติดต่อ Thaibet เพื่อสอบถามข้อมูลทั่วไป แจ้งปัญหาการใช้งาน หรือเสนอแนะเกี่ยวกับโปรโมชันและโค้ดเครดิตฟรีจากพันธมิตร F168/MK8.",
+      "สอบถามข้อมูล แจ้งปัญหา หรือเสนอแนะเพิ่มเติมกับทีมงาน Thaibet ได้ที่นี่.",
     images: ["https://thaibetz.com/og/contact.webp"],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
+  robots: { index: true, follow: true },
 };
-
 export default function ContactPage() {
   const jsonLd = {
     "@context": "https://schema.org",
