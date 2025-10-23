@@ -4,7 +4,7 @@ import Script from "next/script";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "นโยบายความเป็นส่วนตัว | ",
+  title: "นโยบายความเป็นส่วนตัว ",
   description:
     "นโยบายความเป็นส่วนตัวของ Thaibet อธิบายวิธีเก็บ ใช้ และปกป้องข้อมูลส่วนบุคคลของผู้ใช้ตามหลัก PDPA และ GDPR เพื่อความปลอดภัยและความโปร่งใสในการใช้งานเว็บไซต์.",
   keywords: [

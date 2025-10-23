@@ -6,15 +6,15 @@ const nextConfig: NextConfig = {
   images: { unoptimized: true },
   trailingSlash: true,
   allowedDevOrigins: ['app.localhost', '*.mydev.local'],
-  /* async redirects() {
-     return [
-       {
-         source: "/",
-         destination: "/",
-         permanent: false, 
-       },
-     ];
-   },*/
+  async redirects() {
+    return [
+      {
+        source: "/promotion-infomation", 
+        destination: "/",              
+        permanent: true, // true = 308 redirect (SEO-friendly)
+      },
+    ];
+  },
 };
 
 export default nextConfig;
