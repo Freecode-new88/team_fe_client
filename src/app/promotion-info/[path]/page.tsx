@@ -45,11 +45,24 @@ export default async function PromotionInfoPage({ params }: { params: Promise<{ 
           <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 text-transparent bg-clip-text mb-4 leading-tight">
             {promo.title}
           </h1>
+
           {promo.subtitle && (
-            <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto">
+            <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-3">
               {promo.subtitle}
             </p>
           )}
+
+          {/* ✅ วันที่อัปเดตล่าสุด */}
+          <p className="text-sm text-gray-400">
+            อัปเดตล่าสุด:{" "}
+            <time dateTime={new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()}>
+              {new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toLocaleDateString("th-TH", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </time>
+          </p>
         </header>
 
         {/* === Main Image === */}

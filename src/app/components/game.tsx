@@ -190,8 +190,6 @@ export default function Game() {
             >
               <a
                 href={`/promotion-info/${item.path}`}
-                target="_blank"
-                rel="noopener noreferrer"
                 aria-label={item.title}
                 onClick={(e) => {
                   e.preventDefault(); // ป้องกันการเปิดก่อน track เสร็จ
