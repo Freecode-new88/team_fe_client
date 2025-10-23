@@ -419,7 +419,7 @@ export default function Promo() {
     <section className={styles.topSection}>
       <div className={styles.sectionHeading}>
         <h1 className={styles.promoTitle}>
-          รวมโปรโมชัน <strong>เครดิตฟรี</strong> และ <strong>โค้ดเครดิตฟรี</strong> จาก F168 และ MK8 — อัปเดตทุก 15 นาที
+          รวมโปรโมชัน <strong>เครดิตฟรี</strong> และ <strong>โค้ดเครดิตฟรี</strong> F168 และ MK8 — อัปเดตทุก 15 นาที
         </h1>
       </div>
       <div className="ml-[30px]">
