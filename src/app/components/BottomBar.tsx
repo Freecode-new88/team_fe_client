@@ -9,38 +9,17 @@ export type MobileBottomBarProps = {
   className?: string;
 };
 
-/**
- * MobileBottomBar — fixed bottom bar (mobile only) with gradient bg + two CTA buttons
- * Tailwind required. Drop into your layout and add bottom padding to main content to avoid overlap.
- *
- * Usage:
- * <MobileBottomBar
- *   left={{ label: "สมัคร F168", href: "/register-f168" }}
- *   right={{ label: "สมัคร MK8", href: "/register-mk8" }}
- * />
- *
- * Tip: Add padding-bottom to your page container: `pb-20 md:pb-0` so content is not hidden behind the bar.
- */
 export default function MobileBottomBar({ left, right, className }: MobileBottomBarProps) {
-  const handleRegisterClick = () => {
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'register_m', {
-        location: 'tab_mk8',
-        link_text: 'สมัคร MK8',
-        link_url: right.href,
+  // ✅ Track outbound link clicks (GA4 safe event)
+  const handleRegisterClick = (brand: string, href: string) => {
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "outbound_register_click", {
+        brand,
+        destination: href,
       });
     }
   };
 
-  const handleRegisterClickF168 = () => {
-    if (typeof window !== 'undefined' && (window as any).gtag) {
-      (window as any).gtag('event', 'register_f', {
-        location: 'tab_f168',
-        link_text: 'สมัคร F168',
-        link_url: left.href,
-      });
-    }
-  };
   return (
     <div
       className={clsx(
@@ -51,52 +30,52 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
         className
       )}
       role="contentinfo"
-      aria-label="Bottom action bar"
+      aria-label="แถบลิงก์ด่วนสำหรับอุปกรณ์มือถือ"
     >
       <div className="mx-auto max-w-md">
         <div className="flex items-stretch gap-2 text-white text-sm font-semibold">
-          {/* Left button */}
+          {/* Left button: F168 */}
           <Link
             href={left.href}
-            rel="noopener noreferrer"
+            rel="nofollow noopener noreferrer"
             target="_blank"
+            aria-label="สมัครบัญชี F168 อย่างเป็นทางการผ่าน Thaibet"
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
-            onClick={handleRegisterClickF168}
+            onClick={() => handleRegisterClick("F168", left.href)}
           >
             <NextImage
               src="/here/here.gif"
-               alt="ลงทะเบียนรับเครดิตฟรี F168"
+              alt="โลโก้ F168"
               aria-hidden
               width={128}
               height={45}
               className="block w-10 h-auto rounded-xl object-contain"
               draggable="false"
             />
-            {/* icon: lightning */}
             <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="currentColor" aria-hidden="true">
               <path d="M13 2L3 14h6l-2 8 10-12h-6l2-8z" />
             </svg>
             <span className="opacity-90">{left.label}</span>
           </Link>
 
-          {/* Right button */}
+          {/* Right button: MK8 */}
           <Link
             href={right.href}
-            rel="noopener noreferrer"
+            rel="nofollow noopener noreferrer"
             target="_blank"
+            aria-label="สมัครบัญชี MK8 อย่างเป็นทางการผ่าน Thaibet"
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
-            onClick={handleRegisterClick}
+            onClick={() => handleRegisterClick("MK8", right.href)}
           >
             <NextImage
               src="/here/here.gif"
-              alt="ลงทะเบียนรับเครดิตฟรี MK8"
+              alt="โลโก้ MK8"
               aria-hidden
               width={128}
               height={45}
               className="block w-10 h-auto rounded-xl object-contain"
               draggable="false"
             />
-            {/* icon: crown */}
             <svg viewBox="0 0 24 24" className="w-4 h-4 shrink-0" fill="currentColor" aria-hidden="true">
               <path d="M3 7l4 4 5-7 5 7 4-4v10H3V7z" />
             </svg>

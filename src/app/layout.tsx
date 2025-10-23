@@ -12,28 +12,26 @@ import { Fab } from "@/components/Fab";
 export const metadata: Metadata = {
   metadataBase: new URL("https://thaibetz.com/"),
   title: {
-    // เน้นคำหลักทั้งสาม แต่สั้น กระชับ
-    default: "Thaibet | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
-    template: "%s | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 — Thaibet",
+    default: "Thaibet | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
+    template: "%s | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี — Thaibet",
   },
-  // พูดธรรมชาติ แทรกคำหลักครั้งละ 1 รอบพอ
   description:
-    "Thaibet รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี สำหรับ F168/MK8 อัปเดตทุกวัน บอกช่วงปล่อยสิทธิ์และเงื่อนไขชัดเจน มีลิงก์ทางการ ใช้งานง่าย ปลอดภัย",
+    "Thaibet แหล่งรวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี อัปเดตทุกวันอย่างโปร่งใส พร้อมสรุปเงื่อนไข วิธีรับสิทธิ์ และลิงก์ทางการที่เชื่อถือได้",
   applicationName: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
-  // ... (ส่วนอื่นคงเดิม)
   openGraph: {
     type: "website",
     locale: "th_TH",
-    siteName: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8",
+    siteName: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
     url: "https://thaibetz.com/",
-    title: "Thaibet | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
-    description: "ติดตามโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี จาก F168/MK8 อัปเดตทุกวัน มีแจ้งรอบปล่อยสิทธิ์ เงื่อนไขชัด พร้อมลิงก์ทางการ",
+    title: "Thaibet | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
+    description:
+      "รวมโปรโมชันและโค้ดเครดิตฟรีจากหลายแหล่ง อัปเดตทุกวัน บอกช่วงปล่อยสิทธิ์ เงื่อนไขครบ พร้อมแนวทางรับสิทธิ์อย่างปลอดภัย",
     images: [
       {
         url: "https://thaibetz.com/og/og.webp",
         width: 1200,
         height: 630,
-        alt: "Thaibet – รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8",
+        alt: "Thaibet – รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
       },
     ],
   },
@@ -41,8 +39,10 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@thaibetz",
     creator: "@thaibetz",
-    title: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
-    description: "รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 อัปเดตทุกวัน เงื่อนไขชัด ระบบออโต้ โปร่งใส ปลอดภัย",
+    title:
+      "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
+    description:
+      "ติดตามข้อมูลโปรโมชันและโค้ดเครดิตฟรี อัปเดตทุกวัน ตรวจสอบเงื่อนไขจริง พร้อมลิงก์ทางการใช้งานง่าย ปลอดภัย",
     images: ["https://thaibetz.com/og/og.webp"],
   },
 };
@@ -53,19 +53,19 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  /* ✅ JSON-LD: Organization (ทางการ/ครบถ้วน/สอดคล้องแบรนด์) */
+  /* ✅ JSON-LD: Organization (เชิงข้อมูล ไม่ขาย) */
   const orgJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
     "@id": "https://thaibetz.com/#organization",
     name: "Thaibet",
     legalName: "Thaibet",
-    slogan: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
+    slogan: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8",
     url: "https://thaibetz.com/",
     logo: "https://thaibetz.com/icons/thaibet-icon-512.png",
     image: "https://thaibetz.com/og/og.webp",
     description:
-      "แหล่งรวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี สำหรับ F168/MK8 อัปเดตทุกวัน ระบุเงื่อนไขและช่วงปล่อยสิทธิ์ชัดเจน พร้อมลิงก์ทางการ ใช้งานง่าย ปลอดภัย",
+      "Thaibet เป็นศูนย์รวมข้อมูลโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี สำหรับ F168/MK8 อัปเดตทุกวัน พร้อมรายละเอียดเงื่อนไข วิธีเข้าร่วม และแหล่งทางการที่เชื่อถือได้",
     foundingDate: "2023-01-01",
     founder: [{ "@type": "Person", name: "Thaibet" }],
     contactPoint: [
@@ -75,72 +75,73 @@ export default function RootLayout({
         email: "admin@thaibetz.com",
         url: "https://thaibetz.com/contact-us/",
         areaServed: "TH",
-        availableLanguage: ["th"]
-      }
+        availableLanguage: ["th"],
+      },
     ],
     address: { "@type": "PostalAddress", addressCountry: "TH" },
-    sameAs: [
-      "https://x.com/thaibetz"
-    ]
+    sameAs: ["https://x.com/thaibetz"],
   };
 
-  /* ✅ JSON-LD: WebSite (เปิด SearchAction + ใช้แบรนด์ไลน์เดียวกัน) */
+  /* ✅ JSON-LD: WebSite (เปิด SearchAction ได้ถ้ามี search) */
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
     name: "Thaibet",
-    alternateName: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
+    alternateName: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8",
     url: "https://thaibetz.com/",
     inLanguage: "th-TH",
     description:
-      "แหล่งรวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี สำหรับ F168/MK8 อัปเดตทุกวัน ระบุช่วงปล่อยสิทธิ์และเงื่อนไขชัดเจน พร้อมลิงก์ทางการ ใช้งานง่าย ปลอดภัย",
+      "ศูนย์รวมข้อมูลโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี จากแบรนด์ F168 และ MK8 อัปเดตทุกวัน ระบุช่วงเวลาและเงื่อนไขอย่างชัดเจน พร้อมลิงก์ทางการที่ตรวจสอบได้",
     publisher: {
       "@type": "Organization",
       name: "Thaibet",
       url: "https://thaibetz.com/",
-      logo: { "@type": "ImageObject", url: "https://thaibetz.com/icons/thaibet-icon-512.png" }
+      logo: {
+        "@type": "ImageObject",
+        url: "https://thaibetz.com/icons/thaibet-icon-512.png",
+      },
     },
-    // เปิดใช้ถ้ามีระบบค้นหาในไซต์
-    // potentialAction: {
-    //   "@type": "SearchAction",
-    //   target: "https://thaibetz.com/search?q={query}",
-    //   "query-input": "required name=query"
-    // },
-    sameAs: ["https://x.com/thaibetz"]
+    sameAs: ["https://x.com/thaibetz"],
   };
 
-  /* ✅ JSON-LD: CollectionPage (โฮมเป็นหน้ารวม — เหมาะกับศูนย์รวมรายการ) */
+  /* ✅ JSON-LD: CollectionPage (หน้าโฮม = ศูนย์รวมเนื้อหา) */
   const homeWebPageJsonLd = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    "mainEntityOfPage": {
+    mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": "https://thaibetz.com/"
+      "@id": "https://thaibetz.com/",
     },
     name: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
     url: "https://thaibetz.com/",
     inLanguage: "th-TH",
     isPartOf: { "@type": "WebSite", name: "Thaibet", url: "https://thaibetz.com/" },
     description:
-      "ติดตามโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี ของ F168/MK8 อัปเดตทุกวัน ระบุช่วงปล่อยสิทธิ์และเงื่อนไขชัดเจน พร้อมลิงก์ทางการ ใช้งานง่าย ปลอดภัย",
-    primaryImageOfPage: { "@type": "ImageObject", url: "https://thaibetz.com/og/og.webp" },
+      "Thaibet รวมข้อมูลโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี จากแบรนด์ F168/MK8 อัปเดตทุกวัน ให้รายละเอียดวิธีรับสิทธิ์ เงื่อนไข และช่วงเวลาอย่างเป็นทางการ ใช้งานง่ายและปลอดภัย",
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: "https://thaibetz.com/og/og.webp",
+    },
     publisher: {
       "@type": "Organization",
       name: "Thaibet",
       url: "https://thaibetz.com/",
-      logo: { "@type": "ImageObject", url: "https://thaibetz.com/icons/thaibet-icon-512.png" }
+      logo: {
+        "@type": "ImageObject",
+        url: "https://thaibetz.com/icons/thaibet-icon-512.png",
+      },
     },
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "หน้าแรก", item: "https://thaibetz.com/" }
-      ]
+        { "@type": "ListItem", position: 1, name: "หน้าแรก", item: "https://thaibetz.com/" },
+      ],
     },
     hasPart: {
       "@type": "ItemList",
       itemListOrder: "http://schema.org/ItemListOrderAscending",
       numberOfItems: 0,
-      itemListElement: []
+      itemListElement: [],
     },
     about: [
       { "@type": "Thing", name: "F168" },
@@ -148,71 +149,63 @@ export default function RootLayout({
       { "@type": "Thing", name: "เครดิตฟรี" },
       { "@type": "Thing", name: "โค้ดเครดิตฟรี" },
       { "@type": "Thing", name: "รวมโปรโมชัน" },
-      { "@type": "Thing", name: "โปรโมชันคาสิโน" }
+      { "@type": "Thing", name: "โปรโมชั่นคาสิโน" },
     ],
     datePublished: "2023-01-01",
-    dateModified: new Date().toISOString()
+    dateModified: new Date().toISOString(),
   };
 
-  /* ✅ JSON-LD: FAQPage (กระชับ/เป็นทางการ/สอดคล้องแบรนด์) */
+  /* ✅ JSON-LD: FAQPage (โทนข้อมูลจริง ไม่โฆษณา) */
   const faqJsonLd = {
     "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: [
       {
         "@type": "Question",
-        name: "รับโค้ดเครดิตฟรี F168/MK8 ทำอย่างไร?",
+        name: "ดูโปรโมชันและโค้ดเครดิตฟรีของ F168/MK8 ได้ที่ไหน?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "เข้า thaibetz.com เลือกแบรนด์ F168 หรือ MK8 ตรวจสอบเงื่อนไขและสถานะโค้ด กดรับสิทธิ์ แล้วทำตามขั้นตอนที่ระบุ ระบบจะยืนยันสิทธิ์ให้อัตโนมัติ"
-        }
+            "ผู้ใช้สามารถเข้าชม thaibetz.com เพื่อดูรายการโปรโมชันและโค้ดเครดิตฟรีของ F168/MK8 ซึ่งอัปเดตทุกวัน มีข้อมูลเงื่อนไขและช่วงเวลาอย่างละเอียดจากแหล่งทางการ",
+        },
       },
       {
         "@type": "Question",
-        name: "ปล่อยสิทธิ์วันละกี่รอบ และอัปเดตเมื่อไร?",
+        name: "Thaibet อัปเดตโปรโมชันบ่อยแค่ไหน?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "มีหลายรอบต่อวัน โดยจะแจ้งอัปเดตแบบเรียลไทม์บนหน้าเว็บไซต์ แนะนำให้ติดตามหน้าหลักและเปิดการแจ้งเตือนเพื่อไม่พลาดโค้ดใหม่"
-        }
+            "Thaibet อัปเดตข้อมูลโปรโมชันและโค้ดเครดิตฟรีหลายครั้งต่อวัน โดยจะปรับข้อมูลเมื่อมีการเปลี่ยนแปลงจาก F168 หรือ MK8 เพื่อให้ผู้ใช้ได้รับข้อมูลล่าสุดเสมอ",
+        },
       },
       {
         "@type": "Question",
-        name: "ต้องฝากขั้นต่ำเท่าไรจึงจะใช้เครดิตฟรีได้?",
+        name: "สามารถเช็กเงื่อนไขการใช้โค้ดเครดิตฟรีได้จากที่ไหน?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "ขึ้นกับแต่ละโปรโมชันของ F168/MK8 โปรดอ่านเงื่อนไขใต้รายการให้ครบ รวมถึงเทิร์นโอเวอร์และข้อกำหนดการถอนก่อนกดรับสิทธิ์"
-        }
+            "แต่ละรายการใน Thaibet จะมีสรุปเงื่อนไขการใช้สิทธิ์และรายละเอียดที่เกี่ยวข้อง เพื่อให้ผู้ใช้เข้าใจและตัดสินใจได้ง่ายก่อนเข้าร่วมโปรโมชัน",
+        },
       },
       {
         "@type": "Question",
-        name: "การฝาก–ถอนอัตโนมัตินานไหม และมีค่าธรรมเนียมหรือไม่?",
+        name: "Thaibet เป็นเว็บไซต์อย่างเป็นทางการของ F168/MK8 หรือไม่?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "ส่วนใหญ่ใช้เวลาไม่กี่วินาทีถึงประมาณ 1 นาที ทั้งนี้ขึ้นกับช่วงเวลาให้บริการและธนาคาร หากล่าช้าผิดปกติหรือพบปัญหา ติดต่อฝ่ายสนับสนุนได้ทันที"
-        }
+            "Thaibet ไม่ใช่ผู้ให้บริการโดยตรง แต่เป็นแหล่งรวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีจาก F168 และ MK8 เพื่อให้ผู้ใช้งานเข้าถึงข้อมูลจริงจากแหล่งทางการได้สะดวกยิ่งขึ้น",
+        },
       },
-      {
-        "@type": "Question",
-        name: "ถ้ารับโค้ดไม่ทัน ต้องทำอย่างไร?",
-        acceptedAnswer: {
-          "@type": "Answer",
-          text:
-            "รอรอบปล่อยสิทธิ์ถัดไปหรือติดตามประกาศล่าสุดบนหน้า Thaibet แนะนำให้เปิดแจ้งเตือนและเช็กตารางรอบปล่อยสิทธิ์เพื่อเพิ่มโอกาสรับโค้ด"
-        }
-      }
-    ]
+    ],
   };
   return (
     <html lang="th-TH">
       <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/thaibet-icon-32.png" />
         <link rel="icon" type="image/png" sizes="192x192" href="/icons/thaibet-icon-192.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/icons/thaibet-icon-180.png" />
+        <meta name="theme-color" content="#ffffff" />
         <meta name="msvalidate.01" content="1C15A36A3A5BC7B9C3B25F930B875D3C" />
         <meta name="yandex-verification" content="6617f160bacf4988" />
         <meta name="ahrefs-site-verification" content="331fc5cd20258534cbd5350c2f14552462a6314fc939757dfcecc1554bc30388"></meta>
@@ -268,6 +261,17 @@ export default function RootLayout({
           data-key="A0ew7rDIrELHZli1Z6TB1w"
           strategy="afterInteractive"
           async
+        />
+        <Script id="ld-json-keyword" type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "DefinedTerm",
+              "name": "โค้ดเครดิตฟรี",
+              "inDefinedTermSet": "https://thaibetz.com/",
+              "description": "คำหลักที่ใช้สำหรับโปรโมชันและสิทธิ์รับโค้ดเครดิตฟรีในเว็บไซต์ Thaibet"
+            })
+          }}
         />
       </head>
       <body style={{ margin: '0px' }}>

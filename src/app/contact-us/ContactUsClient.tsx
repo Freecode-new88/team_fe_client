@@ -13,17 +13,14 @@ export default function ContactUsClient() {
   useEffect(() => {
     const el = qrRef.current;
     if (!el) return;
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            el.classList.add(styles.qrVisible);
-            io.unobserve(el);
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          el.classList.add(styles.qrVisible);
+          io.unobserve(el);
+        }
+      });
+    }, { threshold: 0.2 });
     io.observe(el);
     return () => io.disconnect();
   }, []);
@@ -34,17 +31,14 @@ export default function ContactUsClient() {
     if (!root) return;
     const items = Array.from(root.querySelectorAll('li')) as HTMLElement[];
     items.forEach((li, i) => li.style.setProperty('--i', String(i)));
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((e) => {
-          if (e.isIntersecting) {
-            (e.target as HTMLElement).classList.add(styles.infoVisible);
-            io.unobserve(e.target);
-          }
-        });
-      },
-      { threshold: 0.2 }
-    );
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          (e.target as HTMLElement).classList.add(styles.infoVisible);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
     items.forEach((li) => io.observe(li));
     return () => io.disconnect();
   }, []);
@@ -58,7 +52,7 @@ export default function ContactUsClient() {
     url: "https://thaibetz.com/contact-us/",
     inLanguage: "th-TH",
     description:
-      "ช่องทางการติดต่อทีมงาน Thaibet สำหรับการแจ้งปัญหา เสนอแนะ และสอบถามข้อมูลเพิ่มเติมเกี่ยวกับโปรโมชันและโค้ดเครดิตฟรี",
+      "หน้าติดต่อทีมงาน Thaibet สำหรับสอบถามข้อมูลทั่วไป เสนอแนะ หรือแจ้งปัญหาเกี่ยวกับเนื้อหาโปรโมชันและโค้ดเครดิตฟรีจากพันธมิตร F168 และ MK8.",
     publisher: {
       "@type": "Organization",
       "@id": "https://thaibetz.com/#organization",
@@ -88,6 +82,7 @@ export default function ContactUsClient() {
       ],
       sameAs: ["https://x.com/thaibetz", "https://t.me/NEUNG55"],
     },
+    datePublished: "2023-01-01",
     dateModified: new Date().toISOString(),
   };
 
@@ -109,40 +104,42 @@ export default function ContactUsClient() {
 
             <p className={styles.lead}>
               ช่องทางอย่างเป็นทางการสำหรับติดต่อ Thaibet — แจ้งปัญหา เสนอแนะ
-              หรือขอแก้ไขข้อมูลโปรโมชันและโค้ดเครดิตฟรีจากพันธมิตร F168 และ MK8
-              ทีมงานพร้อมให้ข้อมูลอย่างโปร่งใสและอัปเดตทุกวัน
+              หรือสอบถามข้อมูลเพิ่มเติมเกี่ยวกับโปรโมชันและโค้ดเครดิตฟรีจากพันธมิตร F168 และ MK8
+              ทีมงานยินดีให้ข้อมูลและอัปเดตข่าวสารอย่างโปร่งใส
             </p>
 
             <ul className={styles.infoList} ref={listRef}>
               <li>
                 <Link href="https://t.me/NEUNG55" target="_blank" rel="noopener noreferrer me">
-                  <Image src="/images/tele.png" alt="Telegram icon" width={40} height={40} priority />
+                  <Image src="/images/tele.png" alt="Telegram ติดต่อ Thaibet" width={40} height={40} priority />
                   <span>Telegram: @NEUNG55</span>
                 </Link>
               </li>
               <li>
                 <Link href="https://x.com/thaibetz" target="_blank" rel="noopener noreferrer me">
-                  <Image src="/images/x.png" alt="X (Twitter) icon" width={50} height={50} priority />
+                  <Image src="/images/x.png" alt="X (Twitter) ติดต่อ Thaibet" width={50} height={50} priority />
                   <span>X (Twitter): @thaibetz</span>
                 </Link>
               </li>
               <li>
                 <div>
-                  <Image src="/images/email.svg" alt="Email icon" width={42} height={42} />
+                  <Image src="/images/email.svg" alt="ไอคอนอีเมล Thaibet" width={42} height={42} />
                   <span>อีเมลฝ่ายสนับสนุน: admin&#8203;@thaibetz.com</span>
                 </div>
               </li>
               <li>
                 <Link href="/privacy">
-                  <Image src="/images/privacy.svg" alt="Privacy icon" width={42} height={42} />
+                  <Image src="/images/privacy.svg" alt="ไอคอนนโยบายความเป็นส่วนตัว" width={42} height={42} />
                   <span>นโยบายความเป็นส่วนตัว</span>
                 </Link>
               </li>
             </ul>
+
             <div className={styles.notice}>
               <p>
                 <strong>ข้อชี้แจง:</strong> Thaibet เป็นเว็บไซต์รวบรวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีเท่านั้น
-                ไม่ได้ให้บริการเกมหรือธุรกรรมใด ๆ โปรดตรวจสอบเงื่อนไขของผู้ให้บริการต้นทางก่อนทำรายการ
+                ไม่มีการให้บริการเกมหรือธุรกรรมทางการเงินใด ๆ
+                โปรดตรวจสอบเงื่อนไขของผู้ให้บริการต้นทางก่อนใช้งานจริง.
               </p>
             </div>
           </div>
@@ -151,7 +148,7 @@ export default function ContactUsClient() {
             <div className={styles.qrCard} ref={qrRef} data-motion="drop">
               <Image
                 src="/images/TGQR.png"
-                alt="QR code ติดต่อ Thaibet ทาง Telegram"
+                alt="QR code ติดต่อ Thaibet ทาง Telegram (Official)"
                 width={320}
                 height={320}
                 priority
