@@ -105,7 +105,7 @@ const baseName = (path: string) => path.split("/").pop() ?? path;
 function trackAndOpen(imgPath: string, web: "mk8" | "f168") {
   const file = baseName(imgPath);
 
-  const event =  web === "mk8" ? mk8Events[file] : f168Events[file];
+  const event = web === "mk8" ? mk8Events[file] : f168Events[file];
 
   if (typeof window !== "undefined" && (window as any).gtag && event) {
     (window as any).gtag("event", event, {
@@ -192,9 +192,9 @@ export default function Game() {
                 href={`/promotion-info/${item.path}`}
                 aria-label={item.title}
                 onClick={(e) => {
-                  e.preventDefault(); // ป้องกันการเปิดก่อน track เสร็จ
+                  e.preventDefault(); // ป้องกันไม่ให้เปิดก่อน track เสร็จ
                   trackAndOpen(item.img, item.web as "mk8" | "f168");
-                  window.open(`/promotion-info/${item.path}`, "_blank");
+                  window.location.href = `/promotion-info/${item.path}`; // ✅ เปิดในแท็บเดียว
                 }}
                 className="group relative w-full overflow-hidden rounded-xl shadow transition hover:shadow-lg cursor-pointer block"
               >
