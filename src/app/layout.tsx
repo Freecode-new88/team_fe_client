@@ -10,7 +10,10 @@ import { F168lINK, MK8LINK } from "@/config/site";
 import { Fab } from "@/components/Fab";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://thaibetz.com/"),
+  metadataBase: new URL("https://thaibetz.com"),
+  alternates: {
+    canonical: "/",
+  },
   title: {
     default: "Thaibet | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
     template: "%s | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี — Thaibet",
@@ -22,7 +25,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "th_TH",
     siteName: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
-    url: "https://thaibetz.com/",
+    url: "https://thaibetz.com",
     title: "Thaibet | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
     description:
       "รวมโปรโมชันและโค้ดเครดิตฟรีจากหลายแหล่ง อัปเดตทุกวัน บอกช่วงปล่อยสิทธิ์ เงื่อนไขครบ พร้อมแนวทางรับสิทธิ์อย่างปลอดภัย",

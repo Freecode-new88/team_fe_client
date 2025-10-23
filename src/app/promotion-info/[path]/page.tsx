@@ -3,28 +3,39 @@ import type { Metadata } from "next";
 import { promotionList } from "@/promotions/list";
 import { F168lINK, MK8LINK } from "@/config/site";
 
+const baseUrl = "https://thaibetz.com";
 // ✅ For static export (required)
 export async function generateStaticParams() {
   return promotionList.map((promo) => ({ path: promo.path }));
 }
 
-// ✅ SEO metadata
-export async function generateMetadata({ params }: { params: Promise<{ path: string }> }): Promise<Metadata> {
-  const { path } = await params; // ✅ ต้อง await ก่อน
+// ✅ SEO metadata (with canonical)
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ path: string }>;
+}): Promise<Metadata> {
+  const { path } = await params;
   const promo = promotionList.find((p) => p.path === path);
 
   if (!promo) {
     return { title: "ไม่พบโปรโมชัน | Thaibet" };
   }
 
+  const canonicalUrl = `${baseUrl}/promotion-info/${promo.path}/`;
+
   return {
-    title: `${promo.title}`,
+    title: promo.title,
     description: promo.subtitle,
     keywords: promo.keywords.join(", "),
     openGraph: {
       title: promo.title,
       description: promo.subtitle,
       images: promo.imgs,
+      url: canonicalUrl,
+    },
+    alternates: {
+      canonical: canonicalUrl, // ✅ canonical added here
     },
   };
 }
