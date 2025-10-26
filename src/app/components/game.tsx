@@ -1,5 +1,6 @@
 'use client'
 import { useEffect, useMemo, useRef, useState } from 'react';
+import Image from "next/image";
 import styles from '../f168.module.css'
 import { F168lINK, MK8LINK } from '@/config/site';
 
@@ -94,10 +95,10 @@ const mk8Events: Record<string, string> = {
 
 const f168Events: Record<string, string> = {
   "daily-bonus.avif": "pro_f_daily_bonus",
-  "get-188.avif": "pro_f_free188",
-  "get-more-2-percent.avif": "pro_f_usdt01",
-  "get-more-10-percent.avif": "pro_f_cnv10",
-  "last-number-lucky.avif": "pro_f_lucky"
+  "get-188": "pro_f_free188",
+  "get-more-2-percent": "pro_f_usdt01",
+  "get-more-10-percent": "pro_f_cnv10",
+  "last-number-lucky": "pro_f_lucky"
 };
 
 const baseName = (path: string) => path.split("/").pop() ?? path;
@@ -198,12 +199,15 @@ export default function Game() {
                 }}
                 className="group relative w-full overflow-hidden rounded-xl shadow transition hover:shadow-lg cursor-pointer block"
               >
-                <img
+                <Image
                   src={item.img}
                   alt={item.title}
-                  draggable="false"
+                  draggable={false}
                   loading="lazy"
+                  width={372} 
+                  height={198}
                   className="w-full h-auto block transform-gpu transition duration-300 ease-out group-hover:scale-105"
+                  unoptimized={false}
                 />
                 {/* hover overlay */}
                 <div

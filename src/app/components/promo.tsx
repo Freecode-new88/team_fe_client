@@ -435,6 +435,8 @@ export default function Promo() {
               alt="ภาพประกอบโปรโมชัน"
               className={styles.pokerArt}
               draggable="false"
+              loading="lazy"
+              decoding="async"
             />
 
             {/* ป้าย Live มุมขวาบน */}

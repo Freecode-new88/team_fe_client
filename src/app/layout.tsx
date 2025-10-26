@@ -204,77 +204,87 @@ export default function RootLayout({
   return (
     <html lang="th-TH">
       <head>
+        {/* ✅ Favicon & Icons */}
         <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any" />
         <link rel="icon" type="image/png" sizes="32x32" href="/icons/thaibet-icon-32.png" />
         <link rel="icon" type="image/png" sizes="192x192" href="/icons/thaibet-icon-192.png" />
         <link rel="apple-touch-icon" sizes="180x180" href="/icons/thaibet-icon-180.png" />
         <meta name="theme-color" content="#ffffff" />
+
+        {/* ✅ Verification */}
         <meta name="msvalidate.01" content="1C15A36A3A5BC7B9C3B25F930B875D3C" />
         <meta name="yandex-verification" content="6617f160bacf4988" />
-        <meta name="ahrefs-site-verification" content="331fc5cd20258534cbd5350c2f14552462a6314fc939757dfcecc1554bc30388"></meta>
-        {/* GA4 ตามที่ให้มา */}
+        <meta name="ahrefs-site-verification" content="331fc5cd20258534cbd5350c2f14552462a6314fc939757dfcecc1554bc30388" />
+
+        {/* ✅ Preconnect for faster script/fonts loading */}
+        <link rel="preconnect" href="https://www.googletagmanager.com" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" />
+
+        {/* ✅ Font Preload (ลด LCP) */}
+        <link
+          rel="preload"
+          as="style"
+          href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap"
+        />
+
+        {/* ✅ JSON-LD (สามารถรวม script เดียว ลด blocking) */}
+        <Script
+          id="ld-json-all"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify([
+              homeWebPageJsonLd,
+              orgJsonLd,
+              websiteJsonLd,
+              faqJsonLd,
+              {
+                "@context": "https://schema.org",
+                "@type": "DefinedTerm",
+                "name": "โค้ดเครดิตฟรี",
+                "inDefinedTermSet": "https://thaibetz.com/",
+                "description": "คำหลักที่ใช้สำหรับโปรโมชันและสิทธิ์รับโค้ดเครดิตฟรีในเว็บไซต์ Thaibet"
+              }
+            ])
+          }}
+        />
+
+        {/* ✅ Analytics moved to lazy load to reduce INP */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-95DWKD4J5C"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="ga4-init" strategy="afterInteractive">
+        <Script id="ga4-init" strategy="lazyOnload">
           {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            window.gtag = gtag;
-            gtag('js', new Date());
-            gtag('config', 'G-95DWKD4J5C'); // ใช้ออโต้ page_view
-          `}
-        </Script>
-        {/* GTM - HEAD */}
-        <Script id="gtm-head" strategy="afterInteractive">
-          {`
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','GTM-MMTZHR4T');
-          `}
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      window.gtag = gtag;
+      gtag('js', new Date());
+      gtag('config', 'G-95DWKD4J5C');
+    `}
         </Script>
 
-        <Script
-          id="ld-json-home-webpage"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(homeWebPageJsonLd) }}
-        />
-        <Script
-          id="ld-json-organization"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(orgJsonLd) }}
-        />
-        <Script
-          id="ld-json-website"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
-        />
+        {/* ✅ GTM (lazy load instead of afterInteractive) */}
+        <Script id="gtm-head" strategy="lazyOnload">
+          {`
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-MMTZHR4T');
+    `}
+        </Script>
 
-        <Script
-          id="ld-json-faqpage"
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-        />
-        {/* Ahrefs Web Analytics */}
+        {/* ✅ Ahrefs Analytics lazy */}
         <Script
           src="https://analytics.ahrefs.com/analytics.js"
           data-key="A0ew7rDIrELHZli1Z6TB1w"
-          strategy="afterInteractive"
-          async
-        />
-        <Script id="ld-json-keyword" type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "DefinedTerm",
-              "name": "โค้ดเครดิตฟรี",
-              "inDefinedTermSet": "https://thaibetz.com/",
-              "description": "คำหลักที่ใช้สำหรับโปรโมชันและสิทธิ์รับโค้ดเครดิตฟรีในเว็บไซต์ Thaibet"
-            })
-          }}
+          strategy="lazyOnload"
         />
       </head>
       <body style={{ margin: '0px' }}>
