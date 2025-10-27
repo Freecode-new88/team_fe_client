@@ -22,7 +22,7 @@ export async function generateMetadata({
     return { title: "ไม่พบโปรโมชัน | Thaibet" };
   }
 
-  const canonicalUrl = `${baseUrl}/promotion-info/${promo.path}/`;
+  const canonicalUrl = `${baseUrl}promotion-info/${promo.path}/`;
 
   return {
     title: promo.title,
