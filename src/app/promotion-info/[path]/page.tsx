@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { promotionList } from "@/promotions/list";
 import { F168lINK, MK8LINK } from "@/config/site";
 
-const baseUrl = "https://thaibetz.com";
+const baseUrl = "https://thaibetz.com/";
 // ✅ For static export (required)
 export async function generateStaticParams() {
   return promotionList.map((promo) => ({ path: promo.path }));

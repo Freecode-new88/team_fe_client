@@ -173,7 +173,7 @@ export default function PrivacyPage() {
           <h2 id="contact">9) ติดต่อเรา</h2>
           <p>
             อีเมล: <b>admin@thaibetz.com</b><br />
-            หน้าเว็บติดต่อ: <Link href="/contact-us">thaibetz.com/contact-us</Link>
+            หน้าเว็บติดต่อ: <Link href="/contact-us/">thaibetz.com/contact-us</Link>
           </p>
 
           <p style={{ fontSize: 14, color: "rgba(0,0,0,0.7)" }}>

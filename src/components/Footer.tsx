@@ -12,9 +12,9 @@ export default function Footer() {
       </div>
 
       <nav className={styles.right} aria-label="Footer navigation">
-        <Link href="/about-us" className={styles.link}>เกี่ยวกับเรา</Link>
-        <Link href="/contact-us" className={styles.link}>ติดต่อเรา</Link>
-        <Link href="/privacy" className={styles.link}>นโยบายความเป็นส่วนตัว</Link>
+        <Link href="/about-us/" className={styles.link}>เกี่ยวกับเรา</Link>
+        <Link href="/contact-us/" className={styles.link}>ติดต่อเรา</Link>
+        <Link href="/privacy/" className={styles.link}>นโยบายความเป็นส่วนตัว</Link>
       </nav>
     </footer>
   );
