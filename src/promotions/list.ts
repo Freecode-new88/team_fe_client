@@ -344,7 +344,7 @@ export const promotionList: PromotionItem[] = [
     </p>
     <p class="mt-4">
       อ่านรายละเอียดเพิ่มเติมได้ที่
-      <a href="/promotion-info/daily-turnover-bonus-15888/" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-cyan-300 underline underline-offset-4">
+      <a href="${F168lINK}" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-cyan-300 underline underline-offset-4">
         Thaibet — เทิร์นรายวันโบนัสสูงสุด 15,888 บาท รับได้ทุกวัน
       </a>
     </p>
@@ -486,7 +486,7 @@ export const promotionList: PromotionItem[] = [
     </p>
     <p class="mt-4">
       อ่านรายละเอียดเพิ่มเติมได้ที่
-      <a href="/promotion-info/usdt-deposit-bonus-2percent/" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-cyan-300 underline underline-offset-4">
+      <a href="${F168lINK}" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-cyan-300 underline underline-offset-4">
         Thaibet — ฝาก USDT รับเพิ่ม 2% ทุกยอดฝาก ไม่มีจำกัด
       </a>
     </p>
@@ -622,7 +622,7 @@ export const promotionList: PromotionItem[] = [
     </p>
     <p class="mt-4">
       อ่านรายละเอียดเพิ่มเติมได้ที่
-      <a href="/promotion-info/daily-deposit-bonus-10percent/" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-cyan-300 underline underline-offset-4">
+      <a href="${F168lINK}" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-cyan-300 underline underline-offset-4">
         Thaibet — ฝากทุกวัน รับเพิ่ม 10% สูงสุด 2,888 บาท
       </a>
     </p>

@@ -25,7 +25,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   // หน้า static หลัก
   const baseRoutes = [
-    { path: "/", changeFrequency: "daily" as const, priority: 1.0 },
+    { path: baseUrl, changeFrequency: "daily" as const, priority: 1.0 },
     { path: "/about-us/", changeFrequency: "weekly" as const, priority: 0.7 },
     { path: "/contact-us/", changeFrequency: "monthly" as const, priority: 0.6 },
     { path: "/privacy/", changeFrequency: "monthly" as const, priority: 0.5 },
