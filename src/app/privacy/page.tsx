@@ -18,12 +18,12 @@ export const metadata: Metadata = {
     "Analytics",
   ],
   alternates: {
-    canonical: "https://thaibetz.com/privacy",
+    canonical: "https://thaibetz.com/privacy/",
   },
   openGraph: {
     type: "article",
     locale: "th_TH",
-    url: "https://thaibetz.com/privacy",
+    url: "https://thaibetz.com/privacy/",
     siteName: "Thaibet — ศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี",
     title: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaibet",
     description:
@@ -53,9 +53,9 @@ export default function PrivacyPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "@id": "https://thaibetz.com/privacy",
+    "@id": "https://thaibetz.com/privacy/",
     name: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaibet",
-    url: "https://thaibetz.com/privacy",
+    url: "https://thaibetz.com/privacy/",
     inLanguage: "th-TH",
     description:
       "เอกสารนโยบายความเป็นส่วนตัวของ Thaibet อธิบายการเก็บ ใช้ และคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้งาน รวมถึงการใช้คุกกี้และเครื่องมือวิเคราะห์ข้อมูล ตามหลัก PDPA และ GDPR.",
