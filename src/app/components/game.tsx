@@ -8,43 +8,43 @@ type Games = { img: string; title: string; web: string, path: string }
 
 const games: Games[] = [
   {
-    "img": "/images/mk8/refer-friends-triple-bonus-1-3-commission.jpg",
+    "img": "/images/mk8/refer-friends-triple-bonus-1-3-commission.webp",
     "title": "ชวนเพื่อน รับโบนัส 3 ต่อ ค่าคอมมิชันสูงสุด 1.3%",
     "web": "mk8",
     "path": "refer-friends-triple-bonus-1-3-commission"
   },
   {
-    "img": "/images/mk8/daily-profit-bonus-slots-fishing-card-games.jpg",
+    "img": "/images/mk8/daily-profit-bonus-slots-fishing-card-games.webp",
     "title": "โบนัสกำไรรายวัน",
     "web": "mk8",
     "path": "daily-profit-bonus-slots-fishing-card-games"
   },
   {
-    "img": "/images/mk8/first-deposit-bonus-20.jpg",
+    "img": "/images/mk8/first-deposit-bonus-20.webp",
     "title": "ฝากครั้งแรก รับเพิ่ม 188",
     "web": "mk8",
     "path": "first-deposit-bonus-188"
   },
   {
-    "img": "/images/mk8/lucky-wheel-spin-and-win.jpg",
+    "img": "/images/mk8/lucky-wheel-spin-and-win.webp",
     "title": "วงล้อนำโชค ลุ้นรางวัลทุกวัน",
     "web": "mk8",
     "path": "lucky-wheel-spin-and-win"
   },
   {
-    "img": "/images/mk8/monthly-random-giveaways-bonus.jpg",
+    "img": "/images/mk8/monthly-random-giveaways-bonus.webp",
     "title": "สุ่มแจกทุกเดือน สำหรับสมาชิก (รายเดือน/พิเศษ/ลับ)",
     "web": "mk8",
     "path": "monthly-random-giveaways-bonus"
   },
   {
-    "img": "/images/mk8/register-get-28-8-free-credit.jpg",
+    "img": "/images/mk8/register-get-28-8-free-credit.webp",
     "title": "สมัครใหม่ รับเครดิตฟรี 28.8 บาท",
     "web": "mk8",
     "path": "register-get-28-8-free-credit"
   },
   {
-    "img": "/images/mk8/usdt-deposit-bonus-2-percent.jpg",
+    "img": "/images/mk8/usdt-deposit-bonus-2-percent.webp",
     "title": "ฝาก USDT รับเพิ่ม 2%",
     "web": "mk8",
     "path": "usdt-deposit-bonus-2-percent"
@@ -82,15 +82,15 @@ const games: Games[] = [
 ]
 
 const mk8Events: Record<string, string> = {
-  "daily-deposit-10-any-amount-up-to-2888.jpg": "pro_m_cnv10",
-  "daily-profit-bonus-slots-fishing-card-games.jpg": "pro_m_sf01",
-  "daily-turnover-bonus-slots-fishing-card.jpg": "pro_m_sf03",
-  "first-deposit-bonus-20.jpg": "pro_m_la20",
-  "lucky-wheel-spin-and-win.jpg": "pro_m_lk01",
-  "monthly-random-giveaways-bonus.jpg": "pro_m_bn08",
-  "refer-friends-triple-bonus-1-3-commission.jpg": "pro_m_nnp01",
-  "register-get-28-8-free-credit.jpg": "pro_m_km28",
-  "usdt-deposit-bonus-2-percent.jpg": "pro_m_usdt01",
+  "daily-deposit-10-any-amount-up-to-2888.webp": "pro_m_cnv10",
+  "daily-profit-bonus-slots-fishing-card-games.webp": "pro_m_sf01",
+  "daily-turnover-bonus-slots-fishing-card.webp": "pro_m_sf03",
+  "first-deposit-bonus-20.webp": "pro_m_la20",
+  "lucky-wheel-spin-and-win.webp": "pro_m_lk01",
+  "monthly-random-giveaways-bonus.webp": "pro_m_bn08",
+  "refer-friends-triple-bonus-1-3-commission.webp": "pro_m_nnp01",
+  "register-get-28-8-free-credit.webp": "pro_m_km28",
+  "usdt-deposit-bonus-2-percent.webp": "pro_m_usdt01",
 };
 
 const f168Events: Record<string, string> = {
