@@ -13,7 +13,7 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
   // ✅ Track outbound link clicks (GA4 safe event)
   const handleRegisterClick = (brand: string, href: string) => {
     if (typeof window !== "undefined" && (window as any).gtag) {
-      (window as any).gtag("event", "outbound_register_click", {
+      (window as any).gtag("event", "outbound_r_click", {
         brand,
         destination: href,
       });
@@ -37,7 +37,7 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
           {/* Left button: F168 */}
           <Link
             href={left.href}
-            rel="nofollow noopener noreferrer"
+            rel="nofollow sponsored noopener noreferrer"
             target="_blank"
             aria-label="สมัครบัญชี F168 อย่างเป็นทางการผ่าน Thaibet"
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
@@ -61,7 +61,7 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
           {/* Right button: MK8 */}
           <Link
             href={right.href}
-            rel="nofollow noopener noreferrer"
+            rel="nofollow sponsored noopener noreferrer"
             target="_blank"
             aria-label="สมัครบัญชี MK8 อย่างเป็นทางการผ่าน Thaibet"
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
