@@ -6,11 +6,11 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "นโยบายความเป็นส่วนตัว ",
   description:
-    "นโยบายความเป็นส่วนตัวของ Thaibet อธิบายวิธีเก็บ ใช้ และปกป้องข้อมูลส่วนบุคคลของผู้ใช้ตามหลัก PDPA และ GDPR เพื่อความปลอดภัยและความโปร่งใสในการใช้งานเว็บไซต์.",
+    "นโยบายความเป็นส่วนตัวของ Thaideal อธิบายวิธีเก็บ ใช้ และปกป้องข้อมูลส่วนบุคคลของผู้ใช้ตามหลัก PDPA และ GDPR เพื่อความปลอดภัยและความโปร่งใสในการใช้งานเว็บไซต์.",
   keywords: [
     "นโยบายความเป็นส่วนตัว",
     "Privacy Policy",
-    "Thaibet",
+    "Thaideal",
     "PDPA",
     "GDPR",
     "คุ้มครองข้อมูลส่วนบุคคล",
@@ -18,33 +18,33 @@ export const metadata: Metadata = {
     "Analytics",
   ],
   alternates: {
-    canonical: "https://thaibetz.com/privacy/",
+    canonical: "https://thaideal.co/privacy/",
   },
   openGraph: {
     type: "article",
     locale: "th_TH",
-    url: "https://thaibetz.com/privacy/",
-    siteName: "Thaibet — ศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี",
-    title: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaibet",
+    url: "https://thaideal.co/privacy/",
+    siteName: "Thaideal — ศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี",
+    title: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaideal",
     description:
-      "Thaibet ให้ความสำคัญกับการคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้งาน โดยปฏิบัติตามหลัก PDPA และ GDPR อย่างเคร่งครัด เพื่อให้การใช้งานเว็บไซต์ปลอดภัยและโปร่งใส.",
+      "Thaideal ให้ความสำคัญกับการคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้งาน โดยปฏิบัติตามหลัก PDPA และ GDPR อย่างเคร่งครัด เพื่อให้การใช้งานเว็บไซต์ปลอดภัยและโปร่งใส.",
     images: [
       {
-        url: "https://thaibetz.com/og/og.webp",
+        url: "https://thaideal.co/og/og.webp",
         width: 1200,
         height: 630,
-        alt: "Thaibet — นโยบายความเป็นส่วนตัว",
+        alt: "Thaideal — นโยบายความเป็นส่วนตัว",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    site: "@thaibetz",
-    creator: "@thaibetz",
-    title: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaibet",
+    site: "@thaideal",
+    creator: "@thaideal",
+    title: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaideal",
     description:
-      "อ่านนโยบายความเป็นส่วนตัวของ Thaibet เพื่อเข้าใจแนวทางการเก็บ ใช้ และคุ้มครองข้อมูลส่วนบุคคลของคุณ ตามกฎหมาย PDPA และ GDPR.",
-    images: ["https://thaibetz.com/og/og.webp"],
+      "อ่านนโยบายความเป็นส่วนตัวของ Thaideal เพื่อเข้าใจแนวทางการเก็บ ใช้ และคุ้มครองข้อมูลส่วนบุคคลของคุณ ตามกฎหมาย PDPA และ GDPR.",
+    images: ["https://thaideal.co/og/og.webp"],
   },
   robots: { index: true, follow: true },
 };
@@ -53,17 +53,17 @@ export default function PrivacyPage() {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebPage",
-    "@id": "https://thaibetz.com/privacy/",
-    name: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaibet",
-    url: "https://thaibetz.com/privacy/",
+    "@id": "https://thaideal.co/privacy/",
+    name: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaideal",
+    url: "https://thaideal.co/privacy/",
     inLanguage: "th-TH",
     description:
-      "เอกสารนโยบายความเป็นส่วนตัวของ Thaibet อธิบายการเก็บ ใช้ และคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้งาน รวมถึงการใช้คุกกี้และเครื่องมือวิเคราะห์ข้อมูล ตามหลัก PDPA และ GDPR.",
+      "เอกสารนโยบายความเป็นส่วนตัวของ Thaideal อธิบายการเก็บ ใช้ และคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้งาน รวมถึงการใช้คุกกี้และเครื่องมือวิเคราะห์ข้อมูล ตามหลัก PDPA และ GDPR.",
     isPartOf: {
       "@type": "WebSite",
-      "@id": "https://thaibetz.com/#website",
-      name: "Thaibet",
-      url: "https://thaibetz.com/",
+      "@id": "https://thaideal.co/#website",
+      name: "Thaideal",
+      url: "https://thaideal.co/",
     },
     about: [
       { "@type": "Thing", name: "นโยบายความเป็นส่วนตัว" },
@@ -75,12 +75,12 @@ export default function PrivacyPage() {
     ],
     publisher: {
       "@type": "Organization",
-      "@id": "https://thaibetz.com/#organization",
-      name: "Thaibet",
-      url: "https://thaibetz.com/",
+      "@id": "https://thaideal.co/#organization",
+      name: "Thaideal",
+      url: "https://thaideal.co/",
       logo: {
         "@type": "ImageObject",
-        url: "https://thaibetz.com/icons/thaibet-icon-512.png",
+        url: "https://thaideal.co/icons/thaibet-icon-512.png",
       },
     },
     datePublished: "2023-01-01",
@@ -101,12 +101,12 @@ export default function PrivacyPage() {
 
         <section style={{ display: "grid", gap: 16 }}>
           <p>
-            Thaibet (“เรา”) ให้ความสำคัญกับความเป็นส่วนตัวของผู้ใช้ (“คุณ”)
+            Thaideal (“เรา”) ให้ความสำคัญกับความเป็นส่วนตัวของผู้ใช้ (“คุณ”)
             เอกสารนี้อธิบายประเภทข้อมูลที่เราเก็บ วิธีใช้ ปกป้อง และแบ่งปันข้อมูล
             รวมถึงสิทธิของคุณตามกฎหมาย PDPA (ประเทศไทย)
             และหลักการ GDPR (สหภาพยุโรป)
             หากคุณใช้งานเว็บไซต์{" "}
-            <Link href="https://thaibetz.com/">thaibetz.com</Link>{" "}
+            <Link href="https://thaideal.co/">thaideal.co</Link>{" "}
             ถือว่าคุณยอมรับนโยบายนี้.
           </p>
 
@@ -172,12 +172,12 @@ export default function PrivacyPage() {
 
           <h2 id="contact">9) ติดต่อเรา</h2>
           <p>
-            อีเมล: <b>admin@thaibetz.com</b><br />
-            หน้าเว็บติดต่อ: <Link href="/contact-us/">thaibetz.com/contact-us</Link>
+            อีเมล: <b>admin@thaideal.co</b><br />
+            หน้าเว็บติดต่อ: <Link href="/contact-us/">thaideal.co/contact-us</Link>
           </p>
 
           <p style={{ fontSize: 14, color: "rgba(0,0,0,0.7)" }}>
-            Thaibet ดำเนินการตามหลัก PDPA และ GDPR เพื่อคุ้มครองข้อมูลของผู้ใช้ทุกคน.
+            Thaideal ดำเนินการตามหลัก PDPA และ GDPR เพื่อคุ้มครองข้อมูลของผู้ใช้ทุกคน.
           </p>
         </section>
       </main>

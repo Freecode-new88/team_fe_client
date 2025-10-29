@@ -84,12 +84,12 @@ export default function AboutUsPage() {
 
             <h1 className={styles.title}>
               <span className={styles.gradient}>
-                Thaibet | ศูนย์รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี
+                Thaideal | ศูนย์รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี
               </span>
             </h1>
 
             <p className={styles.lead}>
-              Thaibet เป็นศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีจากแบรนด์ยอดนิยม
+              Thaideal เป็นศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีจากแบรนด์ยอดนิยม
               โดยมุ่งเน้นการรวบรวม ตรวจสอบความถูกต้องของข้อมูล และสรุปเงื่อนไขอย่างโปร่งใส
               เพื่อให้ผู้ใช้ตัดสินใจได้อย่างมีข้อมูล
             </p>
@@ -102,7 +102,7 @@ export default function AboutUsPage() {
           <div className={styles.topRight}>
             <Image
               src="/images/about1.webp"
-              alt="Thaibet ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี"
+              alt="Thaideal ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี"
               width={720}
               height={560}
               className={styles.heroImg}
@@ -131,7 +131,7 @@ export default function AboutUsPage() {
           <div className={styles.chooseLeft}>
             <Image
               src="/images/about.webp"
-              alt="เหตุผลที่ผู้ใช้เลือก Thaibet"
+              alt="เหตุผลที่ผู้ใช้เลือก Thaideal"
               width={700}
               height={560}
               className={styles.heroImg}
@@ -141,7 +141,7 @@ export default function AboutUsPage() {
 
           <div className={styles.chooseRight}>
             <h2 className={styles.title}>
-              <span className={styles.gradient}>เหตุผลที่ผู้ใช้เลือก Thaibet</span>
+              <span className={styles.gradient}>เหตุผลที่ผู้ใช้เลือก Thaideal</span>
             </h2>
 
             <ul className={styles.features} ref={featsRef}>
@@ -153,7 +153,7 @@ export default function AboutUsPage() {
 
             <div className={styles.notice}>
               <p>
-                <strong>ข้อชี้แจง:</strong> Thaibet เป็นผู้ให้ข้อมูลเท่านั้น
+                <strong>ข้อชี้แจง:</strong> Thaideal เป็นผู้ให้ข้อมูลเท่านั้น
                 ไม่ได้ให้บริการเกมหรือธุรกรรมการเงิน
               </p>
               <p>
@@ -171,17 +171,17 @@ export default function AboutUsPage() {
           __html: JSON.stringify({
             "@context": "https://schema.org",
             "@type": "AboutPage",
-            mainEntityOfPage: { "@type": "WebPage", "@id": "https://thaibetz.com/about-us/" },
-            name: "เกี่ยวกับ Thaibet — ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี",
+            mainEntityOfPage: { "@type": "WebPage", "@id": "https://thaideal.co/about-us/" },
+            name: "เกี่ยวกับ Thaideal — ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี",
             description:
-              "Thaibet เป็นศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีจากแบรนด์ยอดนิยม พร้อมสรุปเงื่อนไขและช่องทางติดต่ออย่างโปร่งใส",
+              "Thaideal เป็นศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีจากแบรนด์ยอดนิยม พร้อมสรุปเงื่อนไขและช่องทางติดต่ออย่างโปร่งใส",
             publisher: {
               "@type": "Organization",
-              name: "Thaibet",
-              url: "https://thaibetz.com/",
+              name: "Thaideal",
+              url: "https://thaideal.co/",
               logo: {
                 "@type": "ImageObject",
-                url: "https://thaibetz.com/icons/thaibet-icon-512.png",
+                url: "https://thaideal.co/icons/thaibet-icon-512.png",
               },
             },
             inLanguage: "th-TH",

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { promotionList } from "@/promotions/list";
 import { F168lINK, MK8LINK } from "@/config/site";
 
-const baseUrl = "https://thaibetz.com/";
+const baseUrl = "https://thaideal.co/";
 // ✅ For static export (required)
 export async function generateStaticParams() {
   return promotionList.map((promo) => ({ path: promo.path }));
@@ -19,7 +19,7 @@ export async function generateMetadata({
   const promo = promotionList.find((p) => p.path === path);
 
   if (!promo) {
-    return { title: "ไม่พบโปรโมชัน | Thaibet" };
+    return { title: "ไม่พบโปรโมชัน | Thaideal" };
   }
 
   const canonicalUrl = `${baseUrl}promotion-info/${promo.path}/`;

@@ -19,10 +19,10 @@ export default function Header() {
   return (
     <header className={`${styles.header} hidden lg:block`} role="banner">
       <div className={styles.logoArea}>
-        <Link href="/" aria-label="กลับไปหน้าแรก Thaibet">
+        <Link href="/" aria-label="กลับไปหน้าแรก Thaideal">
           <NextImage
-            src="/thaibet-logo.webp"
-            alt="Thaibet | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)"
+            src="/images/logo/thaideal-logo.webp"
+            alt="Thaideal | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)"
             width={180}
             height={45}
             className={styles.logo}
@@ -38,14 +38,14 @@ export default function Header() {
           href={F168lINK}
           rel="nofollow noopener noreferrer"
           target="_blank"
-          aria-label="สมัครสมาชิก F168 อย่างเป็นทางการผ่าน Thaibet"
+          aria-label="สมัครสมาชิก F168 อย่างเป็นทางการผ่าน Thaideal"
           className={`${styles.tab} inline-flex items-center justify-center gap-2 rounded-xl px-0 py-0 no-underline`}
           onClick={() => handleRegisterClick("F168", F168lINK)}
         >
           <div className="inline-block rounded-2xl overflow-hidden border border-gray-300 p-0.5 bg-white/20">
             <NextImage
               src="/here/r-arrow.webp"
-              alt="Thaibet รวมโปรโมชันและโค้ดเครดิตฟรี F168"
+              alt="Thaideal รวมโปรโมชันและโค้ดเครดิตฟรี F168"
               aria-hidden
               width={128}
               height={45}
@@ -70,7 +70,7 @@ export default function Header() {
           href={MK8LINK}
           rel="nofollow noopener noreferrer"
           target="_blank"
-          aria-label="สมัครสมาชิก MK8 อย่างเป็นทางการผ่าน Thaibet"
+          aria-label="สมัครสมาชิก MK8 อย่างเป็นทางการผ่าน Thaideal"
           className={`${styles.tab} inline-flex items-center justify-center gap-2 rounded-xl px-0 py-0 no-underline`}
           onClick={() => handleRegisterClick("MK8", MK8LINK)}
         >

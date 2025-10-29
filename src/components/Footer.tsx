@@ -8,7 +8,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer} aria-label="Site footer">
       <div className={styles.left}>
-        <strong>Thaibet</strong> | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน) © {year}. สงวนลิขสิทธิ์ทั้งหมด.
+        <strong>Thaideal</strong> | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน) © {year}. สงวนลิขสิทธิ์ทั้งหมด.
       </div>
 
       <nav className={styles.right} aria-label="Footer navigation">

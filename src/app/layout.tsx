@@ -10,43 +10,43 @@ import { F168lINK, MK8LINK } from "@/config/site";
 import { Fab } from "@/components/Fab";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://thaibetz.com/"),
+  metadataBase: new URL("https://thaideal.co/"),
   alternates: {
     canonical: "/",
   },
   title: {
-    default: "Thaibet | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
-    template: "%s | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี — Thaibet",
+    default: "Thaideal | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
+    template: "%s | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี — Thaideal",
   },
   description:
-    "Thaibet แหล่งรวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี อัปเดตทุกวันอย่างโปร่งใส พร้อมสรุปเงื่อนไข วิธีรับสิทธิ์ และลิงก์ทางการที่เชื่อถือได้",
-  applicationName: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
+    "Thaideal แหล่งรวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี อัปเดตทุกวันอย่างโปร่งใส พร้อมสรุปเงื่อนไข วิธีรับสิทธิ์ และลิงก์ทางการที่เชื่อถือได้",
+  applicationName: "Thaideal — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
   openGraph: {
     type: "website",
     locale: "th_TH",
-    siteName: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
-    url: "https://thaibetz.com/",
-    title: "Thaibet | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
+    siteName: "Thaideal — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
+    url: "https://thaideal.co/",
+    title: "Thaideal | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
     description:
       "รวมโปรโมชันและโค้ดเครดิตฟรีจากหลายแหล่ง อัปเดตทุกวัน บอกช่วงปล่อยสิทธิ์ เงื่อนไขครบ พร้อมแนวทางรับสิทธิ์อย่างปลอดภัย",
     images: [
       {
-        url: "https://thaibetz.com/og/og.webp",
+        url: "https://thaideal.co/og/og.webp",
         width: 1200,
         height: 630,
-        alt: "Thaibet – รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
+        alt: "Thaideal – รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    site: "@thaibetz",
-    creator: "@thaibetz",
+    site: "@thaideal",
+    creator: "@thaideal",
     title:
-      "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
+      "Thaideal — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
     description:
       "ติดตามข้อมูลโปรโมชันและโค้ดเครดิตฟรี อัปเดตทุกวัน ตรวจสอบเงื่อนไขจริง พร้อมลิงก์ทางการใช้งานง่าย ปลอดภัย",
-    images: ["https://thaibetz.com/og/og.webp"],
+    images: ["https://thaideal.co/og/og.webp"],
   },
 };
 
@@ -60,51 +60,51 @@ export default function RootLayout({
   const orgJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://thaibetz.com/#organization",
-    name: "Thaibet",
-    legalName: "Thaibet",
-    slogan: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8",
-    url: "https://thaibetz.com/",
-    logo: "https://thaibetz.com/icons/thaibet-icon-512.png",
-    image: "https://thaibetz.com/og/og.webp",
+    "@id": "https://thaideal.co/#organization",
+    name: "Thaideal",
+    legalName: "Thaideal",
+    slogan: "Thaideal — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8",
+    url: "https://thaideal.co/",
+    logo: "https://thaideal.co/icons/thaibet-icon-512.png",
+    image: "https://thaideal.co/og/og.webp",
     description:
-      "Thaibet เป็นศูนย์รวมข้อมูลโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี สำหรับ F168/MK8 อัปเดตทุกวัน พร้อมรายละเอียดเงื่อนไข วิธีเข้าร่วม และแหล่งทางการที่เชื่อถือได้",
+      "Thaideal เป็นศูนย์รวมข้อมูลโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี สำหรับ F168/MK8 อัปเดตทุกวัน พร้อมรายละเอียดเงื่อนไข วิธีเข้าร่วม และแหล่งทางการที่เชื่อถือได้",
     foundingDate: "2023-01-01",
-    founder: [{ "@type": "Person", name: "Thaibet" }],
+    founder: [{ "@type": "Person", name: "Thaideal" }],
     contactPoint: [
       {
         "@type": "ContactPoint",
         contactType: "customer support",
-        email: "admin@thaibetz.com",
-        url: "https://thaibetz.com/contact-us/",
+        email: "admin@thaideal.co",
+        url: "https://thaideal.co/contact-us/",
         areaServed: "TH",
         availableLanguage: ["th"],
       },
     ],
     address: { "@type": "PostalAddress", addressCountry: "TH" },
-    sameAs: ["https://x.com/thaibetz"],
+    sameAs: ["https://x.com/thaideal"],
   };
 
   /* ✅ JSON-LD: WebSite (เปิด SearchAction ได้ถ้ามี search) */
   const websiteJsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Thaibet",
-    alternateName: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8",
-    url: "https://thaibetz.com/",
+    name: "Thaideal",
+    alternateName: "Thaideal — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8",
+    url: "https://thaideal.co/",
     inLanguage: "th-TH",
     description:
       "ศูนย์รวมข้อมูลโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี จากแบรนด์ F168 และ MK8 อัปเดตทุกวัน ระบุช่วงเวลาและเงื่อนไขอย่างชัดเจน พร้อมลิงก์ทางการที่ตรวจสอบได้",
     publisher: {
       "@type": "Organization",
-      name: "Thaibet",
-      url: "https://thaibetz.com/",
+      name: "Thaideal",
+      url: "https://thaideal.co/",
       logo: {
         "@type": "ImageObject",
-        url: "https://thaibetz.com/icons/thaibet-icon-512.png",
+        url: "https://thaideal.co/icons/thaibet-icon-512.png",
       },
     },
-    sameAs: ["https://x.com/thaibetz"],
+    sameAs: ["https://x.com/thaideal"],
   };
 
   /* ✅ JSON-LD: CollectionPage (หน้าโฮม = ศูนย์รวมเนื้อหา) */
@@ -113,31 +113,31 @@ export default function RootLayout({
     "@type": "CollectionPage",
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": "https://thaibetz.com/",
+      "@id": "https://thaideal.co/",
     },
-    name: "Thaibet — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
-    url: "https://thaibetz.com/",
+    name: "Thaideal — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
+    url: "https://thaideal.co/",
     inLanguage: "th-TH",
-    isPartOf: { "@type": "WebSite", name: "Thaibet", url: "https://thaibetz.com/" },
+    isPartOf: { "@type": "WebSite", name: "Thaideal", url: "https://thaideal.co/" },
     description:
-      "Thaibet รวมข้อมูลโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี จากแบรนด์ F168/MK8 อัปเดตทุกวัน ให้รายละเอียดวิธีรับสิทธิ์ เงื่อนไข และช่วงเวลาอย่างเป็นทางการ ใช้งานง่ายและปลอดภัย",
+      "Thaideal รวมข้อมูลโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี จากแบรนด์ F168/MK8 อัปเดตทุกวัน ให้รายละเอียดวิธีรับสิทธิ์ เงื่อนไข และช่วงเวลาอย่างเป็นทางการ ใช้งานง่ายและปลอดภัย",
     primaryImageOfPage: {
       "@type": "ImageObject",
-      url: "https://thaibetz.com/og/og.webp",
+      url: "https://thaideal.co/og/og.webp",
     },
     publisher: {
       "@type": "Organization",
-      name: "Thaibet",
-      url: "https://thaibetz.com/",
+      name: "Thaideal",
+      url: "https://thaideal.co/",
       logo: {
         "@type": "ImageObject",
-        url: "https://thaibetz.com/icons/thaibet-icon-512.png",
+        url: "https://thaideal.co/icons/thaibet-icon-512.png",
       },
     },
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "หน้าแรก", item: "https://thaibetz.com/" },
+        { "@type": "ListItem", position: 1, name: "หน้าแรก", item: "https://thaideal.co/" },
       ],
     },
     hasPart: {
@@ -169,16 +169,16 @@ export default function RootLayout({
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "ผู้ใช้สามารถเข้าชม thaibetz.com เพื่อดูรายการโปรโมชันและโค้ดเครดิตฟรีของ F168/MK8 ซึ่งอัปเดตทุกวัน มีข้อมูลเงื่อนไขและช่วงเวลาอย่างละเอียดจากแหล่งทางการ",
+            "ผู้ใช้สามารถเข้าชม thaideal.co เพื่อดูรายการโปรโมชันและโค้ดเครดิตฟรีของ F168/MK8 ซึ่งอัปเดตทุกวัน มีข้อมูลเงื่อนไขและช่วงเวลาอย่างละเอียดจากแหล่งทางการ",
         },
       },
       {
         "@type": "Question",
-        name: "Thaibet อัปเดตโปรโมชันบ่อยแค่ไหน?",
+        name: "Thaideal อัปเดตโปรโมชันบ่อยแค่ไหน?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Thaibet อัปเดตข้อมูลโปรโมชันและโค้ดเครดิตฟรีหลายครั้งต่อวัน โดยจะปรับข้อมูลเมื่อมีการเปลี่ยนแปลงจาก F168 หรือ MK8 เพื่อให้ผู้ใช้ได้รับข้อมูลล่าสุดเสมอ",
+            "Thaideal อัปเดตข้อมูลโปรโมชันและโค้ดเครดิตฟรีหลายครั้งต่อวัน โดยจะปรับข้อมูลเมื่อมีการเปลี่ยนแปลงจาก F168 หรือ MK8 เพื่อให้ผู้ใช้ได้รับข้อมูลล่าสุดเสมอ",
         },
       },
       {
@@ -187,16 +187,16 @@ export default function RootLayout({
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "แต่ละรายการใน Thaibet จะมีสรุปเงื่อนไขการใช้สิทธิ์และรายละเอียดที่เกี่ยวข้อง เพื่อให้ผู้ใช้เข้าใจและตัดสินใจได้ง่ายก่อนเข้าร่วมโปรโมชัน",
+            "แต่ละรายการใน Thaideal จะมีสรุปเงื่อนไขการใช้สิทธิ์และรายละเอียดที่เกี่ยวข้อง เพื่อให้ผู้ใช้เข้าใจและตัดสินใจได้ง่ายก่อนเข้าร่วมโปรโมชัน",
         },
       },
       {
         "@type": "Question",
-        name: "Thaibet เป็นเว็บไซต์อย่างเป็นทางการของ F168/MK8 หรือไม่?",
+        name: "Thaideal เป็นเว็บไซต์อย่างเป็นทางการของ F168/MK8 หรือไม่?",
         acceptedAnswer: {
           "@type": "Answer",
           text:
-            "Thaibet ไม่ใช่ผู้ให้บริการโดยตรง แต่เป็นแหล่งรวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีจาก F168 และ MK8 เพื่อให้ผู้ใช้งานเข้าถึงข้อมูลจริงจากแหล่งทางการได้สะดวกยิ่งขึ้น",
+            "Thaideal ไม่ใช่ผู้ให้บริการโดยตรง แต่เป็นแหล่งรวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีจาก F168 และ MK8 เพื่อให้ผู้ใช้งานเข้าถึงข้อมูลจริงจากแหล่งทางการได้สะดวกยิ่งขึ้น",
         },
       },
     ],
@@ -247,8 +247,8 @@ export default function RootLayout({
                 "@context": "https://schema.org",
                 "@type": "DefinedTerm",
                 "name": "โค้ดเครดิตฟรี",
-                "inDefinedTermSet": "https://thaibetz.com/",
-                "description": "คำหลักที่ใช้สำหรับโปรโมชันและสิทธิ์รับโค้ดเครดิตฟรีในเว็บไซต์ Thaibet"
+                "inDefinedTermSet": "https://thaideal.co",
+                "description": "คำหลักที่ใช้สำหรับโปรโมชันและสิทธิ์รับโค้ดเครดิตฟรีในเว็บไซต์ Thaideal"
               }
             ])
           }}
@@ -256,7 +256,7 @@ export default function RootLayout({
 
         {/* ✅ Analytics moved to lazy load to reduce INP */}
         <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-95DWKD4J5C"
+          src="https://www.googletagmanager.com/gtag/js?id=G-GKZCJB90H9"
           strategy="lazyOnload"
         />
         <Script id="ga4-init" strategy="lazyOnload">
@@ -265,11 +265,11 @@ export default function RootLayout({
       function gtag(){dataLayer.push(arguments);}
       window.gtag = gtag;
       gtag('js', new Date());
-      gtag('config', 'G-95DWKD4J5C');
+      gtag('config', 'G-GKZCJB90H9');
     `}
         </Script>
 
-        {/* ✅ GTM (lazy load instead of afterInteractive) */}
+        {/* ✅ GTM (lazy load instead of afterInteractive) 
         <Script id="gtm-head" strategy="lazyOnload">
           {`
       (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -278,17 +278,17 @@ export default function RootLayout({
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
       })(window,document,'script','dataLayer','GTM-MMTZHR4T');
     `}
-        </Script>
+        </Script>*/}
 
-        {/* ✅ Ahrefs Analytics lazy */}
+        {/* ✅ Ahrefs Analytics lazy 
         <Script
           src="https://analytics.ahrefs.com/analytics.js"
           data-key="A0ew7rDIrELHZli1Z6TB1w"
           strategy="lazyOnload"
-        />
+        />*/}
       </head>
       <body style={{ margin: '0px' }}>
-        {/* GTM - BODY (noscript) */}
+        {/* GTM - BODY (noscript) 
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-MMTZHR4T"
@@ -296,7 +296,7 @@ export default function RootLayout({
             width="0"
             style={{ display: "none", visibility: "hidden" }}
           />
-        </noscript>
+        </noscript>*/}
 
         {/* <Preloader /> */}
         <Header />

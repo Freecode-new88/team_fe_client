@@ -39,7 +39,7 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
             href={left.href}
             rel="nofollow sponsored noopener noreferrer"
             target="_blank"
-            aria-label="สมัครบัญชี F168 อย่างเป็นทางการผ่าน Thaibet"
+            aria-label="สมัครบัญชี F168 อย่างเป็นทางการผ่าน Thaideal"
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
             onClick={() => handleRegisterClick("F168", left.href)}
           >
@@ -63,7 +63,7 @@ export default function MobileBottomBar({ left, right, className }: MobileBottom
             href={right.href}
             rel="nofollow sponsored noopener noreferrer"
             target="_blank"
-            aria-label="สมัครบัญชี MK8 อย่างเป็นทางการผ่าน Thaibet"
+            aria-label="สมัครบัญชี MK8 อย่างเป็นทางการผ่าน Thaideal"
             className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-white/0 hover:bg-white/10 active:bg-white/20 backdrop-blur-sm transition-colors px-3 py-2 ring-1 ring-white/30"
             onClick={() => handleRegisterClick("MK8", right.href)}
           >

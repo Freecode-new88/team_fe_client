@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 export const dynamic = "force-static"; // ✅ สำหรับ static export
 
-const baseUrl = "https://thaibetz.com";
+const baseUrl = "https://thaideal.co";
 
 // รวม path โปรโมชันทั้งหมด
 const promotionPaths = [

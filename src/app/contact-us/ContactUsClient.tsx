@@ -46,41 +46,41 @@ export default function ContactUsClient() {
   const contactJsonLd = {
     "@context": "https://schema.org",
     "@type": "ContactPage",
-    "@id": "https://thaibetz.com/contact-us/",
-    mainEntityOfPage: { "@type": "WebPage", "@id": "https://thaibetz.com/contact-us/" },
-    name: "ติดต่อ Thaibet (Contact Us)",
-    url: "https://thaibetz.com/contact-us/",
+    "@id": "https://thaideal.co/contact-us/",
+    mainEntityOfPage: { "@type": "WebPage", "@id": "https://thaideal.co/contact-us/" },
+    name: "ติดต่อ Thaideal (Contact Us)",
+    url: "https://thaideal.co/contact-us/",
     inLanguage: "th-TH",
     description:
-      "หน้าติดต่อทีมงาน Thaibet สำหรับสอบถามข้อมูลทั่วไป เสนอแนะ หรือแจ้งปัญหาเกี่ยวกับเนื้อหาโปรโมชันและโค้ดเครดิตฟรีจากพันธมิตร F168 และ MK8.",
+      "หน้าติดต่อทีมงาน Thaideal สำหรับสอบถามข้อมูลทั่วไป เสนอแนะ หรือแจ้งปัญหาเกี่ยวกับเนื้อหาโปรโมชันและโค้ดเครดิตฟรีจากพันธมิตร F168 และ MK8.",
     publisher: {
       "@type": "Organization",
-      "@id": "https://thaibetz.com/#organization",
-      name: "Thaibet",
-      url: "https://thaibetz.com/",
-      logo: { "@type": "ImageObject", url: "https://thaibetz.com/icons/thaibet-icon-512.png" },
+      "@id": "https://thaideal.co/#organization",
+      name: "Thaideal",
+      url: "https://thaideal.co/",
+      logo: { "@type": "ImageObject", url: "https://thaideal.co/icons/thaibet-icon-512.png" },
     },
     breadcrumb: {
       "@type": "BreadcrumbList",
       itemListElement: [
-        { "@type": "ListItem", position: 1, name: "หน้าแรก", item: "https://thaibetz.com/" },
-        { "@type": "ListItem", position: 2, name: "ติดต่อเรา", item: "https://thaibetz.com/contact-us/" },
+        { "@type": "ListItem", position: 1, name: "หน้าแรก", item: "https://thaideal.co/" },
+        { "@type": "ListItem", position: 2, name: "ติดต่อเรา", item: "https://thaideal.co/contact-us/" },
       ],
     },
     mainEntity: {
       "@type": "Organization",
-      name: "Thaibet",
+      name: "Thaideal",
       contactPoint: [
         {
           "@type": "ContactPoint",
           contactType: "customer support",
-          email: "admin@thaibetz.com",
+          email: "admin@thaideal.co",
           availableLanguage: ["th"],
           areaServed: "TH",
-          url: "https://thaibetz.com/contact-us/",
+          url: "https://thaideal.co/contact-us/",
         },
       ],
-      sameAs: ["https://x.com/thaibetz", "https://t.me/NEUNG55"],
+      sameAs: ["https://x.com/thaideal", "https://t.me/NEUNG55"],
     },
     datePublished: "2023-01-01",
     dateModified: new Date().toISOString(),
@@ -88,7 +88,7 @@ export default function ContactUsClient() {
 
   return (
     <>
-      <section className={styles.hero} aria-label="ช่องทางการติดต่อ Thaibet">
+      <section className={styles.hero} aria-label="ช่องทางการติดต่อ Thaideal">
         <div className={styles.contactcontainer}>
           <div className={styles.left}>
             <nav className={styles.breadcrumb} aria-label="เส้นทางหน้าเว็บ">
@@ -99,11 +99,11 @@ export default function ContactUsClient() {
             </nav>
 
             <h1 className={styles.title}>
-              <span className={styles.gradient}>ติดต่อ Thaibet</span>
+              <span className={styles.gradient}>ติดต่อ Thaideal</span>
             </h1>
 
             <p className={styles.lead}>
-              ช่องทางอย่างเป็นทางการสำหรับติดต่อ Thaibet — แจ้งปัญหา เสนอแนะ
+              ช่องทางอย่างเป็นทางการสำหรับติดต่อ Thaideal — แจ้งปัญหา เสนอแนะ
               หรือสอบถามข้อมูลเพิ่มเติมเกี่ยวกับโปรโมชันและโค้ดเครดิตฟรีจากพันธมิตร F168 และ MK8
               ทีมงานยินดีให้ข้อมูลและอัปเดตข่าวสารอย่างโปร่งใส
             </p>
@@ -111,20 +111,20 @@ export default function ContactUsClient() {
             <ul className={styles.infoList} ref={listRef}>
               <li>
                 <Link href="https://t.me/NEUNG55" target="_blank" rel="noopener noreferrer me">
-                  <Image src="/images/tele.png" alt="Telegram ติดต่อ Thaibet" width={40} height={40} priority />
+                  <Image src="/images/tele.png" alt="Telegram ติดต่อ Thaideal" width={40} height={40} priority />
                   <span>Telegram: @NEUNG55</span>
                 </Link>
               </li>
               <li>
-                <Link href="https://x.com/thaibetz" target="_blank" rel="noopener noreferrer me">
-                  <Image src="/images/x.png" alt="X (Twitter) ติดต่อ Thaibet" width={50} height={50} priority />
-                  <span>X (Twitter): @thaibetz</span>
+                <Link href="https://x.com/thaideal" target="_blank" rel="noopener noreferrer me">
+                  <Image src="/images/x.png" alt="X (Twitter) ติดต่อ Thaideal" width={50} height={50} priority />
+                  <span>X (Twitter): @thaideal</span>
                 </Link>
               </li>
               <li>
                 <div>
-                  <Image src="/images/email.svg" alt="ไอคอนอีเมล Thaibet" width={42} height={42} />
-                  <span>อีเมลฝ่ายสนับสนุน: admin&#8203;@thaibetz.com</span>
+                  <Image src="/images/email.svg" alt="ไอคอนอีเมล Thaideal" width={42} height={42} />
+                  <span>อีเมลฝ่ายสนับสนุน: admin&#8203;@thaideal.co</span>
                 </div>
               </li>
               <li>
@@ -137,7 +137,7 @@ export default function ContactUsClient() {
 
             <div className={styles.notice}>
               <p>
-                <strong>ข้อชี้แจง:</strong> Thaibet เป็นเว็บไซต์รวบรวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีเท่านั้น
+                <strong>ข้อชี้แจง:</strong> Thaideal เป็นเว็บไซต์รวบรวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีเท่านั้น
                 ไม่มีการให้บริการเกมหรือธุรกรรมทางการเงินใด ๆ
                 โปรดตรวจสอบเงื่อนไขของผู้ให้บริการต้นทางก่อนใช้งานจริง.
               </p>
@@ -148,7 +148,7 @@ export default function ContactUsClient() {
             <div className={styles.qrCard} ref={qrRef} data-motion="drop">
               <Image
                 src="/images/TGQR.png"
-                alt="QR code ติดต่อ Thaibet ทาง Telegram (Official)"
+                alt="QR code ติดต่อ Thaideal ทาง Telegram (Official)"
                 width={320}
                 height={320}
                 priority

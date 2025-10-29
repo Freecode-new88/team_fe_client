@@ -117,7 +117,7 @@ export const promotionList: PromotionItem[] = [
     <p class="mt-4">
       อ่านรายละเอียดเพิ่มเติมได้ที่
       <a href="${F168lINK}" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-cyan-300 underline underline-offset-4">
-        Thaibet — โปรฝากครั้งแรก F168 รับโบนัส 20% สูงสุด 188 บาท
+        Thaideal — โปรฝากครั้งแรก F168 รับโบนัส 20% สูงสุด 188 บาท
       </a>
     </p>
   </div>
@@ -229,7 +229,7 @@ export const promotionList: PromotionItem[] = [
     <p class="mt-4">
       อ่านรายละเอียดเพิ่มเติมได้ที่ 
       <a href="${F168lINK}" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-cyan-300 underline underline-offset-4">
-        Thaibet — เลขท้ายสล็อตนำโชค F168 รับได้ทุกวัน สูงสุด 28,888 บาท
+        Thaideal — เลขท้ายสล็อตนำโชค F168 รับได้ทุกวัน สูงสุด 28,888 บาท
       </a>
     </p>
   </div>
@@ -345,7 +345,7 @@ export const promotionList: PromotionItem[] = [
     <p class="mt-4">
       อ่านรายละเอียดเพิ่มเติมได้ที่
       <a href="${F168lINK}" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-cyan-300 underline underline-offset-4">
-        Thaibet — เทิร์นรายวันโบนัสสูงสุด 15,888 บาท รับได้ทุกวัน
+        Thaideal — เทิร์นรายวันโบนัสสูงสุด 15,888 บาท รับได้ทุกวัน
       </a>
     </p>
   </div>
@@ -487,7 +487,7 @@ export const promotionList: PromotionItem[] = [
     <p class="mt-4">
       อ่านรายละเอียดเพิ่มเติมได้ที่
       <a href="${F168lINK}" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-cyan-300 underline underline-offset-4">
-        Thaibet — ฝาก USDT รับเพิ่ม 2% ทุกยอดฝาก ไม่มีจำกัด
+        Thaideal — ฝาก USDT รับเพิ่ม 2% ทุกยอดฝาก ไม่มีจำกัด
       </a>
     </p>
   </div>
@@ -623,7 +623,7 @@ export const promotionList: PromotionItem[] = [
     <p class="mt-4">
       อ่านรายละเอียดเพิ่มเติมได้ที่
       <a href="${F168lINK}" target="_blank" rel="noopener noreferrer" class="text-pink-400 hover:text-cyan-300 underline underline-offset-4">
-        Thaibet — ฝากทุกวัน รับเพิ่ม 10% สูงสุด 2,888 บาท
+        Thaideal — ฝากทุกวัน รับเพิ่ม 10% สูงสุด 2,888 บาท
       </a>
     </p>
   </div>
