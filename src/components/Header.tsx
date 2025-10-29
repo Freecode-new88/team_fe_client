@@ -21,7 +21,7 @@ export default function Header() {
       <div className={styles.logoArea}>
         <Link href="/" aria-label="กลับไปหน้าแรก Thaibet">
           <NextImage
-            src="/thaibet-logo.png"
+            src="/thaibet-logo.webp"
             alt="Thaibet | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)"
             width={180}
             height={45}

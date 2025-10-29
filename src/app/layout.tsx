@@ -298,7 +298,7 @@ export default function RootLayout({
           />
         </noscript>
 
-        <Preloader />
+        {/* <Preloader /> */}
         <Header />
         {children}
         { /* <ScrollUp /> */}
