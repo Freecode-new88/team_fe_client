@@ -18,8 +18,15 @@ const sortByObjectIdAsc = <T extends { _id?: string }>(arr: T[]) =>
     [...arr].sort((a, b) => (a._id ?? "").localeCompare(b._id ?? ""));
 
 const formatTime = (iso?: string) => {
-    if (!iso) return "";
-    return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+  if (!iso) return "";
+  const d = new Date(iso);
+  const hh = String(d.getHours()).padStart(2, "0");
+  const mm = String(d.getMinutes()).padStart(2, "0");
+  const ss = String(d.getSeconds()).padStart(2, "0");
+  const DD = String(d.getDate()).padStart(2, "0");
+  const MM = String(d.getMonth() + 1).padStart(2, "0");
+  const YYYY = d.getFullYear();
+  return `${hh}:${mm}:${ss} ${DD}:${MM}:${YYYY}`;
 };
 
 const ChatRoomBox: React.FC = () => {
