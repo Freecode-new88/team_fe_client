@@ -1,5 +1,6 @@
 import { colors } from "@/utils/color";
 import React, { useState, useRef, useEffect } from "react";
+import { toast } from "react-toastify";
 import { io, Socket } from "socket.io-client";
 
 interface ChatMessage {
@@ -27,6 +28,12 @@ const formatTime = (iso?: string) => {
     const MM = String(d.getMonth() + 1).padStart(2, "0");
     const YYYY = d.getFullYear();
     return `${hh}:${mm}:${ss} ${DD}:${MM}:${YYYY}`;
+};
+
+const extractUrls = (text: string) => {
+    const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
+    const found = text.match(urlRegex) || [];
+    return [...new Set(found.map(s => s.trim()))];
 };
 
 const ChatRoomBox: React.FC = () => {
@@ -65,6 +72,12 @@ const ChatRoomBox: React.FC = () => {
         const text = message;
         setMessage("");
 
+        const inputUrls = extractUrls(text);
+
+        if (inputUrls.length > 0) {
+            toast.warn("ไม่สามารถส่งลิงก์ได้");
+            return;
+        }
         try {
             const res = await fetch(`${BE_API}/v1/chats`, {
                 method: "POST",

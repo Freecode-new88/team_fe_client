@@ -8,6 +8,7 @@ import MobileBottomBar from "./components/BottomBar";
 import Footer from "@/components/Footer";
 import { F168lINK, MK8LINK } from "@/config/site";
 import { Fab } from "@/components/Fab";
+import { ToastContainer } from "react-toastify";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://thaideal.co/"),
@@ -309,6 +310,7 @@ export default function RootLayout({
           right={{ label: "สมัคร MK8", href: MK8LINK }}
         />
         <Footer />
+        <ToastContainer />
       </body>
     </html>
   );

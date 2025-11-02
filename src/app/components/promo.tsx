@@ -436,7 +436,7 @@ export default function Promo() {
         <div className={`${styles.box1} ${styles.leftBox}`}>
           <div className="relative">
             <img
-              src="/images/left1.jpg"
+              src="/images/left1434.jpg"
               alt="ภาพประกอบโปรโมชัน"
               className={styles.pokerArt}
               draggable="false"
