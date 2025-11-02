@@ -141,11 +141,10 @@ const ChatRoomBox: React.FC = () => {
         });
 
         socket.on("chat:new", (incoming: ChatMessage) => {
-            // มี _id จริงจาก server เสมอ
             if (!incoming?._id) return;
 
             setChat((prev) => {
-                // ถ้าเคยมีข้อความนี้ด้วย tempId (จับคู่จาก user+msg) ให้แทนที่
+                // หา temp ที่ตรง user+msg
                 const idxTemp = prev.findIndex(
                     (m) =>
                         m._id?.startsWith("temp-") &&
@@ -153,17 +152,22 @@ const ChatRoomBox: React.FC = () => {
                         m.msg === incoming.msg
                 );
 
+                const ensureColor = (m: ChatMessage): ChatMessage => ({
+                    ...m,
+                    color: m.color || colors[Math.floor(Math.random() * colors.length)],
+                });
+
                 if (idxTemp !== -1) {
                     const updated = [...prev];
-                    updated[idxTemp] = { ...incoming, color: colors[Math.floor(Math.random() * colors.length)] }; // แทนที่ด้วยของจริง (_id จริง)
+                    // ใช้สีจาก incoming ถ้ามี ไม่งั้นสุ่ม
+                    updated[idxTemp] = ensureColor(incoming);
                     return updated;
                 }
 
-                // ถ้าไม่มี temp ให้เช็กกันซ้ำด้วย _id
-                const exists = prev.some((m) => m._id === incoming._id);
-                if (exists) return prev;
+                // กันซ้ำด้วย _id
+                if (prev.some((m) => m._id === incoming._id)) return prev;
 
-                const updated = [...prev, incoming];
+                const updated = [...prev, ensureColor(incoming)];
                 if (updated.length > 200) updated.shift();
                 return updated;
             });
