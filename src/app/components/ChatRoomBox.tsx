@@ -42,6 +42,7 @@ const ChatRoomBox: React.FC = () => {
     const [message, setMessage] = useState("");
     const [chat, setChat] = useState<ChatMessage[]>([]);
     const chatRef = useRef<HTMLDivElement>(null);
+    const didInitRef = useRef(false);
 
     // ===== Socket =====
     const socketRef = useRef<Socket | null>(null);
@@ -197,6 +198,15 @@ const ChatRoomBox: React.FC = () => {
         };
     }, []);
 
+    const scrollToBottom = (smooth = false) => {
+        const el = chatRef.current;
+        if (!el) return;
+        // รอให้อัพเดต DOM เสร็จก่อนค่อยเลื่อน
+        requestAnimationFrame(() =>
+            el.scrollTo({ top: el.scrollHeight, behavior: smooth ? "smooth" : "auto" })
+        );
+    };
+
     useEffect(() => {
         const ac = new AbortController();
 
@@ -221,6 +231,10 @@ const ChatRoomBox: React.FC = () => {
                 // เรียงเก่าก่อนใหม่ แล้วตัดเหลือ 50
                 const ordered = sortByObjectIdAsc(withColor).slice(-50);
                 setChat(ordered);
+                if (!didInitRef.current) {
+                    didInitRef.current = true;
+                    scrollToBottom(false);
+                }
             } catch (err) {
                 if ((err as any)?.name !== "AbortError") {
                     console.error("[chat] load initial messages error:", err);
