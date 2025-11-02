@@ -18,15 +18,15 @@ const sortByObjectIdAsc = <T extends { _id?: string }>(arr: T[]) =>
     [...arr].sort((a, b) => (a._id ?? "").localeCompare(b._id ?? ""));
 
 const formatTime = (iso?: string) => {
-  if (!iso) return "";
-  const d = new Date(iso);
-  const hh = String(d.getHours()).padStart(2, "0");
-  const mm = String(d.getMinutes()).padStart(2, "0");
-  const ss = String(d.getSeconds()).padStart(2, "0");
-  const DD = String(d.getDate()).padStart(2, "0");
-  const MM = String(d.getMonth() + 1).padStart(2, "0");
-  const YYYY = d.getFullYear();
-  return `${hh}:${mm}:${ss} ${DD}:${MM}:${YYYY}`;
+    if (!iso) return "";
+    const d = new Date(iso);
+    const hh = String(d.getHours()).padStart(2, "0");
+    const mm = String(d.getMinutes()).padStart(2, "0");
+    const ss = String(d.getSeconds()).padStart(2, "0");
+    const DD = String(d.getDate()).padStart(2, "0");
+    const MM = String(d.getMonth() + 1).padStart(2, "0");
+    const YYYY = d.getFullYear();
+    return `${hh}:${mm}:${ss} ${DD}:${MM}:${YYYY}`;
 };
 
 const ChatRoomBox: React.FC = () => {
@@ -60,19 +60,7 @@ const ChatRoomBox: React.FC = () => {
         //const now = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
 
         const tempId = `temp-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-        /* const optimisticMsg: ChatMessage = {
-             _id: tempId,      // temp _id ฝั่ง client เท่านั้น
-             user: username,
-             msg: message,
-             time: now,
-             color,
-         };
- 
-         setChat((prev) => {
-             const updated = [...prev, optimisticMsg];
-             if (updated.length > 200) updated.shift();
-             return updated;
-         });*/
+
 
         const text = message;
         setMessage("");
@@ -167,7 +155,7 @@ const ChatRoomBox: React.FC = () => {
 
                 if (idxTemp !== -1) {
                     const updated = [...prev];
-                    updated[idxTemp] = { ...incoming }; // แทนที่ด้วยของจริง (_id จริง)
+                    updated[idxTemp] = { ...incoming, color: colors[Math.floor(Math.random() * colors.length)] }; // แทนที่ด้วยของจริง (_id จริง)
                     return updated;
                 }
 
@@ -197,7 +185,6 @@ const ChatRoomBox: React.FC = () => {
 
         (async () => {
             try {
-                // ปรับพารามฯ ให้ตรงกับ API จริงของคุณได้
                 const res = await fetch(`${BE_API}/v1/chats?limit=50`, {
                     method: "GET",
                     credentials: "include",
@@ -208,8 +195,14 @@ const ChatRoomBox: React.FC = () => {
 
                 const data: ChatMessage[] = await res.json();
 
-                // เรียงให้เก่าก่อนใหม่ (ตาม _id หากไม่มี createdAt)
-                const ordered = sortByObjectIdAsc(data).slice(-50);
+                // 👇 เติมสีแบบสุ่มถ้าไม่มี color
+                const withColor = data.map((m) => ({
+                    ...m,
+                    color: m.color || colors[Math.floor(Math.random() * colors.length)],
+                }));
+
+                // เรียงเก่าก่อนใหม่ แล้วตัดเหลือ 50
+                const ordered = sortByObjectIdAsc(withColor).slice(-50);
                 setChat(ordered);
             } catch (err) {
                 if ((err as any)?.name !== "AbortError") {
