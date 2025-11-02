@@ -16,6 +16,7 @@ import { Copy, Gift } from 'lucide-react';
 import { getSocket } from '@/services/socket';
 import { maskUser, rand0to30 } from '@/utils/random';
 import LastUpdated from "./LastUpdated";
+const ChatRoomBox = dynamic(() => import("./ChatRoomBox"), { ssr: false });
 
 const LeftImageWithGifts = dynamic(
   () => import("@/components/LeftImageWithGifts").then(m => m.LeftImageWithGifts),
@@ -109,6 +110,7 @@ export default function Promo() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [verifying, setVerifying] = useState(false);
   const [live, setLive] = useState(0);
+  const [now, setNow] = useState<number>(0);
   const [verifiedDetail, setVerifiedDetail] = useState<{
     promo_code: string;
     point: number;
@@ -152,7 +154,7 @@ export default function Promo() {
         emoji: rand0to30()
       };
 
-      setClaimData(prev => [normalized, ...prev].slice(0, 5));
+      setClaimData(prev => [normalized, ...prev].slice(0, 8));
 
       const k = `${normalized.user}|${normalized.code}|${normalized.time}`;
       setClaimHighlights(old => ({ ...old, [k]: Date.now() + CLAIM_HIGHLIGHT_MS }));
@@ -233,7 +235,7 @@ export default function Promo() {
         user: maskUser({ user: it.user })
       }));
 
-      setClaimData(masked.slice(0, 5));
+      setClaimData(masked.slice(0, 8));
       sessionStorage.setItem(CLAIMS_BOOTSTRAPPED_KEY, '1');
     })();
 
@@ -243,7 +245,6 @@ export default function Promo() {
   // prune expired highlights every 1s
   useEffect(() => {
     const id = setInterval(() => {
-      const now = Date.now();
       setClaimHighlights((old) => {
         let changed = false;
         const next: Record<string, number> = {};
@@ -255,6 +256,10 @@ export default function Promo() {
       });
     }, 1000);
     return () => clearInterval(id);
+  }, [now]);
+
+  useEffect(() => {
+    setNow(Date.now());
   }, []);
 
   /* computed views */
@@ -577,92 +582,104 @@ export default function Promo() {
             {timeNode}
           </div>
         </div>
+      </div>
+      {/* Box 3 */}
+      <div className="grid grid-cols-12 gap-4 w-full p-1 md:p-6">
+        {/* Left: Table */}
+        <div className="col-span-12 md:col-span-6">
+          <div className="relative overflow-x-auto rounded-xl bg-black/60 backdrop-blur-sm p-2 sm:p-3 md:p-4">
+            {/* Title for Table */}
+            <h2 className="text-lg font-bold mb-2 bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-rose-500 bg-clip-text text-transparent">
+              📊 โค้ดที่ใช้ล่าสุด
+            </h2>
 
+            <table className="w-full border-collapse table-fixed text-center text-cyan-400 text-xs sm:text-sm md:text-base">
+              <colgroup>
+                {[
+                  { width: "18%" },
+                  { width: "18%" },
+                  { width: "16%" },
+                  { width: "14%" },
+                  { width: "18%" },
+                ].map((s, i) => (
+                  <col key={i} style={s} />
+                ))}
+              </colgroup>
 
-        {/* Box 3 */}
-        <div
-          className={`${styles.box3} ${styles.fullBoxNoChrome} ${box3Changed ? `${styles.panelPulse} ${styles.panelPop}` : ""
-            }`}
-        >
-          <table className={`${styles.table} ${styles.recentTable}`}>
-            <colgroup>
-              {[
-                { width: "18%" },
-                { width: "18%" },
-                { width: "16%" },
-                { width: "14%" },
-                { width: "18%" },
-              ].map((s, i) => (
-                <col key={i} style={s} />
-              ))}
-            </colgroup>
+              <thead>
+                <tr className="text-white uppercase font-bold border-b-2 border-fuchsia-400 text-[10px] sm:text-xs md:text-sm lg:text-base">
+                  <th className="py-2 sm:py-3">ผู้ใช้</th>
+                  <th className="py-2 sm:py-3">โค้ด</th>
+                  <th className="py-2 sm:py-3">แต้ม</th>
+                  <th className="py-2 sm:py-3">เว็บไซต์</th>
+                  <th className="py-2 sm:py-3">เวลา</th>
+                </tr>
+              </thead>
 
-            <thead>
-              <tr>
-                <th>ผู้ใช้</th>
-                <th>โค้ด</th>
-                <th>แต้ม</th>
-                <th>เว็บไซต์</th>
-                <th>เวลา</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {claimData.length === 0
-                ? new Array(RECENT_VISIBLE).fill(null).map((_, i) => (
-                  <tr key={`recent-filler-${i}`} className={styles.fillerRow}>
-                    <td colSpan={5} />
-                  </tr>
-                ))
-                : claimData.map((r, i) => {
-                  const k = `${r.user}|${r.code}|${r.time}`;
-                  const isHot = claimHighlights[k] && claimHighlights[k] > Date.now();
-                  return (
-                    <tr
-                      key={`${r.user}-${r.code}-${r.time}-${i}`}
-                      className={`${styles.rowEnter} ${isHot ? styles.flameRow : ""}`}
-                    >
-                      <td className={isHot ? styles.flameCell : ''}>
-                        <span className={styles.userNameContainer}>
-                          {
-                            isHot && r.emoji && (
-                              <span
-                                className={styles.flameBadge}
-                                style={{
-                                  backgroundImage: 'url("https://file.781243555.com/emoji/fire.webp")',
-                                  backgroundPosition: 'center',
-                                  backgroundRepeat: 'no-repeat',
-                                  backgroundSize: 'contain',
-                                }}
-                                aria-hidden={true}
-                              >
-                                {r.emoji && (
-                                  <img
-                                    src={r.emoji}
-                                    loading="lazy"
-                                    decoding="async"
-                                    style={{ width: '24px', height: '25px' }}
-                                    alt={`ได้รับ ${r.point} แต้มแล้ว`}
-                                    className={styles.emojibadge}
-                                  />
-                                )}
-                              </span>
-                            )
-                          }
-                          {r.user}
-                        </span>
+              <tbody>
+                {claimData.length === 0
+                  ? new Array(RECENT_VISIBLE).fill(null).map((_, i) => (
+                    <tr key={`recent-filler-${i}`}>
+                      <td colSpan={5} className="py-3 text-transparent">
+                        •
                       </td>
-                      <td>{r.code}</td>
-                      <td>ได้รับ {r.point} แต้ม</td>
-                      <td>{r.site}</td>
-                      <td>{onlyTime(r.time)}</td>
                     </tr>
-                  );
-                })}
-            </tbody>
-          </table>
+                  ))
+                  : claimData.map((r, i) => {
+                    const k = `${r.user}|${r.code}|${r.time}`;
+                    const isHot =
+                      claimHighlights[k] && claimHighlights[k] > Date.now();
+                    return (
+                      <tr
+                        key={`${r.user}-${r.code}-${r.time}-${i}`}
+                        className={`transition-all duration-500 border-b border-cyan-500/60 
+                  ${isHot ? "bg-orange-900/20 animate-pulse" : ""}`}
+                      >
+                        <td className="relative py-2 sm:py-3 px-1 sm:px-2 text-white font-medium text-left text-[10px] sm:text-xs md:text-sm">
+                          <div className="flex items-center gap-1 sm:gap-2">
+                            {isHot && r.emoji && (
+                              <div className="relative w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0">
+                                <img
+                                  src="https://file.781243555.com/emoji/fire.webp"
+                                  alt="fire"
+                                  className="absolute inset-0 w-full h-full object-contain filter drop-shadow-[0_0_6px_rgba(245,80,91,0.75)]"
+                                />
+                                <img
+                                  src={r.emoji}
+                                  alt={`ได้รับ ${r.point} แต้มแล้ว`}
+                                  className="absolute left-4 sm:left-5 w-5 sm:w-6 h-5 sm:h-6 object-contain"
+                                />
+                              </div>
+                            )}
+                            <span>{r.user}</span>
+                          </div>
+                        </td>
+                        <td className="py-2 sm:py-3 text-[10px] sm:text-xs md:text-sm">
+                          {r.code}
+                        </td>
+                        <td className="py-2 sm:py-3 text-[10px] sm:text-xs md:text-sm">
+                          ได้รับ {r.point} แต้ม
+                        </td>
+                        <td className="py-2 sm:py-3 text-[10px] sm:text-xs md:text-sm">
+                          {r.site}
+                        </td>
+                        <td className="py-2 sm:py-3 text-[10px] sm:text-xs md:text-sm">
+                          {onlyTime(r.time)}
+                        </td>
+                      </tr>
+                    );
+                  })}
+              </tbody>
+            </table>
+          </div>
         </div>
 
+        {/* Right: Chat Room */}
+        <div className="col-span-12 md:col-span-6">
+          <div className="relative h-full">
+            <ChatRoomBox />
+          </div>
+        </div>
       </div>
 
       {/* Captcha / claim modal */}

@@ -443,7 +443,8 @@
 }
 
 .flameCell {
-  position: relative;
+  position: relative; /* ให้ cell เป็นจุดอ้างอิง */
+  padding-left: 2rem; /* เว้นที่ไว้สำหรับไฟ */
 }
 
 .flameBadge {
