@@ -8,6 +8,7 @@ interface ChatMessage {
     msg: string;
     time: string;
     color: string;
+    createdAt: string;
 }
 
 const BE_API = "https://chat.sexfotzen.com";
@@ -15,6 +16,11 @@ const SOCKET_PATH = "/socket.io";
 
 const sortByObjectIdAsc = <T extends { _id?: string }>(arr: T[]) =>
     [...arr].sort((a, b) => (a._id ?? "").localeCompare(b._id ?? ""));
+
+const formatTime = (iso?: string) => {
+    if (!iso) return "";
+    return new Date(iso).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+};
 
 const ChatRoomBox: React.FC = () => {
     const [username, setUsername] = useState<string | null>(null);
@@ -241,7 +247,7 @@ const ChatRoomBox: React.FC = () => {
                                         {item.user}
                                         {username && item.user === username && " (Me)"}
                                     </span>
-                                    <span className="text-gray-500 text-xs">{item.time}</span>
+                                    <span className="text-gray-500 text-xs"> {formatTime(item?.createdAt)}</span>
                                 </div>
                                 <div className="text-gray-200 text-sm sm:text-base break-words whitespace-pre-wrap leading-relaxed">
                                     {highlightMessage(item.msg)}
