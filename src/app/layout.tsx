@@ -281,12 +281,12 @@ export default function RootLayout({
     `}
         </Script>*/}
 
-        {/* ✅ Ahrefs Analytics lazy 
+        {/* ✅ Ahrefs Analytics lazy */}
         <Script
           src="https://analytics.ahrefs.com/analytics.js"
-          data-key="A0ew7rDIrELHZli1Z6TB1w"
+          data-key="wU5GkV8gO2jtwxj7Hi8X8A"
           strategy="lazyOnload"
-        />*/}
+        />
       </head>
       <body style={{ margin: '0px' }}>
         {/* GTM - BODY (noscript) 

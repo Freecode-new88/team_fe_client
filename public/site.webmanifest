@@ -1,7 +1,7 @@
 {
-  "name": "Thaideal — ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี",
+  "name": "Thaideal — ฐานข้อมูลโปรโมชันและโค้ดเครดิตฟรี",
   "short_name": "Thaideal",
-  "description": "ศูนย์รวมโปรโมชันและโค้ดเครดิตฟรี F168/MK8 อัปเดตรายวัน ระบุเงื่อนไขชัดเจน ระบบฝาก–ถอนอัตโนมัติ ปลอดภัย โปร่งใส",
+  "description": "ศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรีจาก F168/MK8 จัดหมวดหมู่และอัปเดตเป็นประจำ ระบุเงื่อนไขและขั้นตอนการรับสิทธิ์อย่างชัดเจน เพื่อการตรวจสอบและเปรียบเทียบข้อมูลของผู้ใช้",
   "id": "https://thaideal.co/",
   "start_url": "/",
   "scope": "/",
@@ -13,49 +13,41 @@
   "lang": "th-TH",
   "dir": "ltr",
   "icons": [
-    {
-      "src": "/icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "/icons/icon-192-maskable.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "maskable"
-    },
-    {
-      "src": "/icons/icon-512-maskable.png",
-      "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "maskable"
-    }
+    { "src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/icon-192-maskable.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/icons/icon-512-maskable.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ],
   "shortcuts": [
     {
-      "name": "ดูโค้ดวันนี้",
+      "name": "ดูข้อมูลโค้ดที่อัปเดตวันนี้",
       "short_name": "โค้ดวันนี้",
       "url": "/?today=1",
-      "icons": [
-        { "src": "/icons/shortcut-codes.png", "sizes": "96x96", "type": "image/png" }
-      ]
+      "icons": [{ "src": "/icons/shortcut-codes.png", "sizes": "96x96", "type": "image/png" }]
     },
     {
-      "name": "วิธีรับสิทธิ์",
-      "short_name": "How-to",
+      "name": "ขั้นตอนและเงื่อนไขการรับสิทธิ์",
+      "short_name": "วิธีรับสิทธิ์",
       "url": "/how-to-claim",
-      "icons": [
-        { "src": "/icons/shortcut-howto.png", "sizes": "96x96", "type": "image/png" }
-      ]
+      "icons": [{ "src": "/icons/shortcut-howto.png", "sizes": "96x96", "type": "image/png" }]
     }
   ],
-  "categories": ["utilities", "shopping"],
+  "categories": ["news", "reference", "utilities"],
+  "screenshots": [
+    {
+      "src": "/screenshots/home-1080x1920.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "หน้ารวมข้อมูลโปรโมชัน"
+    },
+    {
+      "src": "/screenshots/detail-1920x1080.png",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "หน้ารายละเอียดเงื่อนไข"
+    }
+  ],
   "prefer_related_applications": false
 }
