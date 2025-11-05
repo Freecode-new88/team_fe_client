@@ -30,11 +30,19 @@ const formatTime = (iso?: string) => {
     return `${hh}:${mm}:${ss} ${DD}:${MM}:${YYYY}`;
 };
 
+
+
 const extractUrls = (text: string) => {
     const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
     const found = text.match(urlRegex) || [];
     return [...new Set(found.map(s => s.trim()))];
 };
+
+function hasForbidden(text: string) {
+    const words = ["otp", "เบอร์", "สนใจ", "ไอดี", "ไลน์", "line", "id", "รับเงิน"];
+    const t = text.toLowerCase();
+    return words.some(w => t.includes(w.toLowerCase()));
+}
 
 const ChatRoomBox: React.FC = () => {
     const [username, setUsername] = useState<string | null>(null);
@@ -79,6 +87,12 @@ const ChatRoomBox: React.FC = () => {
             toast.warn("ไม่สามารถส่งลิงก์ได้");
             return;
         }
+
+        if (hasForbidden(text)) {
+            toast.warn("ข้อความมีคำต้องห้าม");
+            return;
+        }
+
         try {
             const res = await fetch(`${BE_API}/v1/chats`, {
                 method: "POST",
