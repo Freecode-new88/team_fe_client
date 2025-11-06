@@ -43,7 +43,7 @@ function hasForbidden(text: string) {
     const t = text.toLowerCase();
     return words.some(w => t.includes(w.toLowerCase()));
 }
-
+const forbiddenWords = ["otp", "เบอร์", "สนใจ", "ไอดี", "ไลน์", "line", "id", "รับเงิน", "ทัก", "สน", "ปล่อย", "@"];
 const ChatRoomBox: React.FC = () => {
     const [username, setUsername] = useState<string | null>(null);
     const [tempName, setTempName] = useState("");
@@ -58,7 +58,15 @@ const ChatRoomBox: React.FC = () => {
     // ✅ โหลด username จาก localStorage
     useEffect(() => {
         const saved = localStorage.getItem("chat_username");
-        if (saved) setUsername(saved);
+        if (saved) {
+            const blocked = forbiddenWords.some(w =>
+                saved.toLowerCase().includes(w.toLowerCase())
+            );
+            if (blocked) {
+                return localStorage.clear()
+            }
+            setUsername(saved);
+        }
     }, []);
 
     // ✅ Scroll auto เฉพาะถ้าอยู่ท้าย
@@ -123,7 +131,7 @@ const ChatRoomBox: React.FC = () => {
             handleSend();
         }
     };
-    const forbiddenWords = ["otp", "เบอร์", "สนใจ", "ไอดี", "ไลน์", "line", "id", "รับเงิน", "ทัก", "สน", "ปล่อย", "@"];
+
     const saveUsername = () => {
         const name = (tempName || "").trim();
         if (!name) return setUsername("");
