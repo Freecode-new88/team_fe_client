@@ -39,7 +39,7 @@ const extractUrls = (text: string) => {
 };
 
 function hasForbidden(text: string) {
-    const words = ["otp", "เบอร์", "สนใจ", "ไอดี", "ไลน์", "line", "id", "รับเงิน"];
+    const words = ["otp", "เบอร์", "สนใจ", "ไอดี", "ไลน์", "line", "id", "รับเงิน", "ทัก", "สน", "ปล่อย"];
     const t = text.toLowerCase();
     return words.some(w => t.includes(w.toLowerCase()));
 }
