@@ -214,7 +214,7 @@ export default function RootLayout({
 
         {/* ✅ Verification */}
         <meta name="msvalidate.01" content="1C15A36A3A5BC7B9C3B25F930B875D3C" />
-        <meta name="yandex-verification" content="6617f160bacf4988" />
+        <meta name="yandex-verification" content="d4d6f898304da230" />
         <meta name="ahrefs-site-verification" content="331fc5cd20258534cbd5350c2f14552462a6314fc939757dfcecc1554bc30388" />
 
         {/* ✅ Preconnect for faster script/fonts loading */}
@@ -232,7 +232,6 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap"
         />
-
         {/* ✅ JSON-LD (สามารถรวม script เดียว ลด blocking) */}
         <Script
           id="ld-json-all"
@@ -254,7 +253,6 @@ export default function RootLayout({
             ])
           }}
         />
-
         {/* ✅ Analytics moved to lazy load to reduce INP */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-GKZCJB90H9"
@@ -270,17 +268,6 @@ export default function RootLayout({
     `}
         </Script>
 
-        {/* ✅ GTM (lazy load instead of afterInteractive) 
-        <Script id="gtm-head" strategy="lazyOnload">
-          {`
-      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-      })(window,document,'script','dataLayer','GTM-MMTZHR4T');
-    `}
-        </Script>*/}
-
         {/* ✅ Ahrefs Analytics lazy */}
         <Script
           src="https://analytics.ahrefs.com/analytics.js"
@@ -289,21 +276,10 @@ export default function RootLayout({
         />
       </head>
       <body style={{ margin: '0px' }}>
-        {/* GTM - BODY (noscript) 
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-MMTZHR4T"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>*/}
-
         {/* <Preloader /> */}
         <Header />
         {children}
         { /* <ScrollUp /> */}
-
         <Fab />
         <MobileBottomBar
           left={{ label: "สมัคร F168", href: F168lINK }}
