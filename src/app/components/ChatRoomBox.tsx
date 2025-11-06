@@ -123,11 +123,23 @@ const ChatRoomBox: React.FC = () => {
             handleSend();
         }
     };
-
+    const forbiddenWords = ["otp", "เบอร์", "สนใจ", "ไอดี", "ไลน์", "line", "id", "รับเงิน", "ทัก", "สน", "ปล่อย", "@"];
     const saveUsername = () => {
-        if (!tempName.trim()) return;
-        localStorage.setItem("chat_username", tempName.trim());
-        setUsername(tempName.trim());
+        const name = (tempName || "").trim();
+        if (!name) return setUsername("");
+
+        // block if it contains any forbidden word (case-insensitive)
+        const blocked = forbiddenWords.some(w =>
+            name.toLowerCase().includes(w.toLowerCase())
+        );
+        if (blocked) {
+            setUsername("");
+            toast.warn("ข้อความมีคำต้องห้าม");
+            return
+        }; // (optionally show an error here)
+
+        localStorage.setItem("chat_username", name);
+        setUsername(name);
     };
 
     // ✅ ฟังก์ชัน highlight mentions / hashtags
