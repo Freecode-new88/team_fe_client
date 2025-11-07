@@ -2,14 +2,15 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { promotionList } from "@/promotions/list";
 import { F168lINK, MK8LINK } from "@/config/site";
+import Link from "next/link";
 
 const baseUrl = "https://thaideal.co/";
-// ✅ For static export (required)
+
 export async function generateStaticParams() {
   return promotionList.map((promo) => ({ path: promo.path }));
 }
 
-// ✅ SEO metadata (with canonical)
+// ✅ SEO metadata + canonical
 export async function generateMetadata({
   params,
 }: {
@@ -17,57 +18,109 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { path } = await params;
   const promo = promotionList.find((p) => p.path === path);
+  if (!promo) return { title: "ไม่พบโปรโมชั่น | Thaideal" };
 
-  if (!promo) {
-    return { title: "ไม่พบโปรโมชัน | Thaideal" };
-  }
-
-  const canonicalUrl = `${baseUrl}promotion-info/${promo.path}/`;
+  const canonical = `${baseUrl}promotion-info/${promo.path}/`;
 
   return {
-    title: promo.title,
+    title: `${promo.title} | โปรโมชั่น ${promo.category?.[0] || ""} ${promo.web?.toUpperCase()}`,
     description: promo.subtitle,
     keywords: promo.keywords.join(", "),
     openGraph: {
       title: promo.title,
       description: promo.subtitle,
+      url: canonical,
       images: promo.imgs,
-      url: canonicalUrl,
     },
-    alternates: {
-      canonical: canonicalUrl, // ✅ canonical added here
-    },
+    alternates: { canonical },
   };
 }
 
-// ✅ Main Page
-export default async function PromotionInfoPage({ params }: { params: Promise<{ path: string }> }) {
-  const { path } = await params; // ✅ ต้อง await ก่อน
+export default async function PromotionInfoPage({
+  params,
+}: {
+  params: Promise<{ path: string }>;
+}) {
+  const { path } = await params;
   const promo = promotionList.find((p) => p.path === path);
-
   if (!promo) notFound();
 
   return (
-    <main className="min-h-screen bg-[url('/images/game.jpg')] bg-cover bg-center bg-no-repeat py-12 px-4 md:px-8 lg:px-16 text-white">
-      <div className="max-w-5xl mx-auto bg-black/70 backdrop-blur-sm rounded-2xl border border-cyan-400/40 shadow-2xl p-6 md:p-10">
+    <main
+      className="min-h-screen bg-[url('/images/game.jpg')] bg-cover bg-center bg-no-repeat py-10 px-4 md:px-8 lg:px-16 text-white"
+      itemScope
+      itemType="https://schema.org/Promotion"
+    >
+      <meta itemProp="url" content={`${baseUrl}promotion-info/${promo.path}/`} />
+      <meta itemProp="name" content={promo.title} />
+      <meta itemProp="description" content={promo.subtitle} />
 
+      <article
+        className="max-w-5xl mx-auto bg-black/70 backdrop-blur-sm rounded-2xl border border-cyan-400/40 shadow-xl p-6 md:p-10"
+        itemScope
+        itemType="https://schema.org/Offer"
+      >
+        <nav
+          aria-label="breadcrumb"
+          className="text-[13px] sm:text-sm font-medium text-gray-300 mb-5"
+          itemScope
+          itemType="https://schema.org/BreadcrumbList"
+        >
+          <ol className="flex flex-wrap items-center gap-1 sm:gap-2">
+            {/* 🔹 หน้าแรก */}
+            <li
+              itemProp="itemListElement"
+              itemScope
+              itemType="https://schema.org/ListItem"
+              className="flex items-center gap-1"
+            >
+              <Link
+                href="/"
+                itemProp="item"
+                className="text-cyan-400 hover:text-cyan-300 transition-colors underline-offset-2 hover:underline"
+              >
+                <span itemProp="name">หน้าหลัก</span>
+              </Link>
+              <meta itemProp="position" content="1" />
+              <span className="text-gray-500 px-1">›</span>
+            </li>
+            {/* 🔹 หน้ารายละเอียดโปรโมชั่น */}
+            <li
+              itemProp="itemListElement"
+              itemScope
+              itemType="https://schema.org/ListItem"
+              aria-current="page"
+              className="text-white drop-shadow-sm"
+            >
+              <span itemProp="name">{promo.title}</span>
+              <meta itemProp="position" content="3" />
+            </li>
+          </ol>
+        </nav>
         {/* === Header === */}
-        <header className="text-center mb-10">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extrabold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 text-transparent bg-clip-text mb-4 leading-tight">
+        <header className="text-center mb-8">
+          <h1
+            className="text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent mb-3"
+            itemProp="name"
+          >
             {promo.title}
           </h1>
-
           {promo.subtitle && (
-            <p className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto mb-3">
+            <p
+              className="text-gray-300 text-base md:text-lg max-w-2xl mx-auto"
+              itemProp="description"
+            >
               {promo.subtitle}
             </p>
           )}
-
-          {/* ✅ วันที่อัปเดตล่าสุด */}
-          <p className="text-sm text-gray-400">
-            อัปเดตล่าสุด:{" "}
-            <time dateTime={new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()}>
-              {new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toLocaleDateString("th-TH", {
+          <p className="text-sm text-gray-400 mt-2">
+            อัปเดตล่าสุด:
+            <time
+              dateTime={new Date().toISOString()}
+              itemProp="priceValidUntil"
+            >
+              {" "}
+              {new Date().toLocaleDateString("th-TH", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
@@ -81,60 +134,70 @@ export default async function PromotionInfoPage({ params }: { params: Promise<{ 
           <div className="w-full mb-8">
             <img
               src={promo.imgs[0]}
-              alt={promo.title}
-              className="w-full h-auto rounded-xl border border-cyan-400/30 shadow-lg hover:scale-[1.02] transition-transform duration-300"
-              loading="lazy"
+              alt={`โปรโมชั่น ${promo.title}`}
+              width={1200}
+              height={675}
+              decoding="async"
+              loading="eager"
+              className="w-full h-auto rounded-xl border border-cyan-400/30 shadow-lg object-cover"
             />
           </div>
         )}
 
         {/* === Description === */}
-        <article
+        <section
           className="prose prose-invert max-w-none text-gray-200 leading-relaxed prose-headings:text-cyan-300 prose-strong:text-pink-400"
           dangerouslySetInnerHTML={{ __html: promo.description }}
         />
 
-        {/* === Promotion Info Cards === */}
-        <section className="mt-12">
-          <h2 className="text-center text-2xl font-bold mb-6 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">
+        {/* === Promotion Info === */}
+        <section
+          className="mt-10"
+          aria-label="รายละเอียดโปรโมชั่น"
+          itemScope
+          itemType="https://schema.org/Offer"
+        >
+          <h2 className="text-center text-2xl font-bold mb-5 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">
             รายละเอียดโปรโมชั่น
           </h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center">
-            <div className="bg-gradient-to-r from-cyan-800/50 to-cyan-600/30 p-4 rounded-lg border border-cyan-400/40">
-              <span className="block text-cyan-300 font-semibold text-lg">อัตราโบนัส</span>
-              <span className="text-white text-xl font-bold">{promo.bonusRate || "-"}</span>
-            </div>
-            <div className="bg-gradient-to-r from-purple-800/50 to-purple-600/30 p-4 rounded-lg border border-purple-400/40">
-              <span className="block text-purple-300 font-semibold text-lg">โบนัสสูงสุด</span>
-              <span className="text-white text-xl font-bold">{promo.maxBonus ?? "-"} บาท</span>
-            </div>
-            <div className="bg-gradient-to-r from-pink-800/50 to-pink-600/30 p-4 rounded-lg border border-pink-400/40">
-              <span className="block text-pink-300 font-semibold text-lg">ฝากขั้นต่ำ</span>
-              <span className="text-white text-xl font-bold">{promo.minDeposit ?? "-"} บาท</span>
-            </div>
-            <div className="bg-gradient-to-r from-cyan-800/50 to-blue-600/30 p-4 rounded-lg border border-cyan-400/40">
-              <span className="block text-cyan-300 font-semibold text-lg">เทิร์นโอเวอร์</span>
-              <span className="text-white text-xl font-bold">{promo.turnover || "-"}</span>
-            </div>
-            <div className="bg-gradient-to-r from-purple-800/50 to-pink-600/30 p-4 rounded-lg border border-purple-400/40 col-span-full">
-              <span className="block text-purple-300 font-semibold text-lg mb-1">หมวดหมู่</span>
-              <span className="text-white text-lg font-bold">{promo.category?.join(", ") || "-"}</span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-center text-base">
+            {[
+              ["อัตราโบนัส", promo.bonusRate, "cyan"],
+              ["โบนัสสูงสุด", promo.maxBonus ? `${promo.maxBonus} บาท` : "-", "purple"],
+              ["ฝากขั้นต่ำ", promo.minDeposit ? `${promo.minDeposit} บาท` : "-", "pink"],
+              ["เทิร์นโอเวอร์", promo.turnover || "-", "cyan"],
+            ].map(([label, value, color]) => (
+              <div
+                key={label}
+                className={`bg-gradient-to-r from-${color}-800/40 to-${color}-600/20 p-4 rounded-xl border border-${color}-400/40`}
+              >
+                <span className={`block text-${color}-300 font-semibold`}>{label}</span>
+                <strong className="text-white text-xl">{value}</strong>
+              </div>
+            ))}
+
+            <div className="bg-gradient-to-r from-purple-800/40 to-pink-600/20 p-4 rounded-xl border border-purple-400/40 col-span-full">
+              <span className="block text-purple-300 font-semibold mb-1">หมวดหมู่</span>
+              <strong className="text-white">{promo.category?.join(", ") || "-"}</strong>
             </div>
           </div>
         </section>
 
-        {/* === Keyword Section === */}
-        {promo.keywords && promo.keywords.length > 0 && (
-          <section className="mt-12">
-            <h3 className="text-center text-xl font-bold mb-4 bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
+        {/* === Keywords === */}
+        {promo.keywords?.length > 0 && (
+          <section
+            className="mt-10 text-center"
+            aria-label="คีย์เวิร์ดที่เกี่ยวข้อง"
+          >
+            <h3 className="text-xl font-bold mb-3 bg-gradient-to-r from-pink-400 via-purple-400 to-cyan-400 bg-clip-text text-transparent">
               คีย์เวิร์ดที่เกี่ยวข้อง
             </h3>
             <div className="flex flex-wrap justify-center gap-2 text-sm">
               {promo.keywords.map((kw) => (
                 <span
                   key={kw}
-                  className="bg-black/50 border border-cyan-400/30 text-cyan-200 px-3 py-1 rounded-full hover:bg-cyan-600/30 transition-colors"
+                  className="px-3 py-1 rounded-full bg-black/40 border border-cyan-400/30 text-cyan-200 hover:bg-cyan-600/30 transition"
                 >
                   #{kw}
                 </span>
@@ -144,19 +207,18 @@ export default async function PromotionInfoPage({ params }: { params: Promise<{ 
         )}
 
         {/* === CTA Button === */}
-        <div className="text-center mt-16 mb-32">
+        <section className="text-center mt-12">
           <a
-            href={promo.web == "f168" ? F168lINK : MK8LINK}
-            target="_blank" rel="noopener noreferrer"
-            className="inline-block text-lg font-bold px-8 py-3 rounded-xl
-                       bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400
-                       hover:from-cyan-400 hover:via-purple-500 hover:to-pink-500
-                       transition-all duration-300 shadow-lg hover:scale-105"
+            href={promo.web === "f168" ? F168lINK : MK8LINK}
+            target="_blank"
+            rel="nofollow noopener noreferrer"
+            aria-label="ไปยังเว็บไซต์สำหรับรับโปรโมชั่นเพิ่มเติม"
+            className="inline-block text-lg font-bold px-8 py-3 rounded-xl bg-gradient-to-r from-pink-500 via-purple-500 to-cyan-400 hover:from-cyan-400 hover:via-purple-500 hover:to-pink-500 transition-all duration-300 shadow-lg hover:scale-105"
           >
             📘 ข้อมูลเพิ่มเติม
           </a>
-        </div>
-      </div>
+        </section>
+      </article>
     </main>
   );
 }

@@ -5,18 +5,10 @@ const nextConfig: NextConfig = {
   output: "export",
   images: { unoptimized: true },
   trailingSlash: true,
-  swcMinify: true,
 
-  // ✅ `allowedDevOrigins` is NOT a valid Next.js config key
-
-  async redirects() {
-    return [
-      {
-        source: "/promotion-infomation",
-        destination: "/",
-        permanent: true, // true = 308 redirect (SEO-friendly)
-      },
-    ];
+  // ✅ Clean build – Turbopack already handles minification and SWC transforms
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
   },
 };
 

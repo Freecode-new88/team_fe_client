@@ -69,12 +69,7 @@ export default function Promo() {
     } else {
       next.setMinutes(nextBlockMinute, 0, 0);
     }
-
-    //nextHour.setMinutes(60, 0, 0); // ตั้งเป็นนาทีที่ 60 วินาที 0 => ต้นชั่วโมงถัดไป
     return Math.max(0, Math.floor((next.getTime() - now.getTime()) / 1000));
-    /*const nextMinute = new Date(now);
-    nextMinute.setSeconds(60, 0); // ตั้งเป็นวินาที 60, มิลลิวินาที 0 => ต้นนาทีถัดไป
-    return Math.max(0, Math.floor((nextMinute.getTime() - now.getTime()) / 1000));*/
   };
 
   const [secondsLeft, setSecondsLeft] = useState(getSecondsToHourEnd());
@@ -418,7 +413,6 @@ export default function Promo() {
     </strong>
   );
 
-
   /* ---------- render ---------- */
   return (
     <section className={styles.topSection}>
@@ -438,10 +432,11 @@ export default function Promo() {
             <img
               src="/images/left1434.jpg"
               alt="ภาพประกอบโปรโมชัน"
-              className={styles.pokerArt}
-              draggable="false"
+              width={500}
+              height={500}
               loading="lazy"
               decoding="async"
+              className={`${styles.pokerArt} w-full h-auto object-cover rounded-xl`}
             />
 
             {/* ป้าย Live มุมขวาบน */}

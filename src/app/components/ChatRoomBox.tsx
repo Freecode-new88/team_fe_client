@@ -1,370 +1,294 @@
+'use client';
 import { colors } from "@/utils/color";
 import React, { useState, useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import { io, Socket } from "socket.io-client";
 
 interface ChatMessage {
-    _id?: string;   // ใช้ _id จาก BE
-    user: string;
-    msg: string;
-    time: string;
-    color: string;
-    createdAt: string;
+  _id?: string;
+  user: string;
+  msg: string;
+  time: string;
+  color: string;
+  createdAt: string;
 }
 
 const BE_API = "https://chat.sexfotzen.com";
 const SOCKET_PATH = "/socket.io";
 
+/* ---------- ✅ Word filtering ---------- */
+const words = [
+  "otp", "เบอร์", "สนใจ", "ไอดี", "ไลน์",
+  "line", "id", "รับเงิน", "ทัก", "สน", "ปล่อย"
+];
+const forbiddenWords = [...words, "@"]; // รวมพิเศษ
+
+const hasForbidden = (text: string) =>
+  words.some(w => text.toLowerCase().includes(w.toLowerCase()));
+
+/* ---------- ✅ Helpers ---------- */
 const sortByObjectIdAsc = <T extends { _id?: string }>(arr: T[]) =>
-    [...arr].sort((a, b) => (a._id ?? "").localeCompare(b._id ?? ""));
+  [...arr].sort((a, b) => (a._id ?? "").localeCompare(b._id ?? ""));
 
 const formatTime = (iso?: string) => {
-    if (!iso) return "";
-    const d = new Date(iso);
-    const hh = String(d.getHours()).padStart(2, "0");
-    const mm = String(d.getMinutes()).padStart(2, "0");
-    const ss = String(d.getSeconds()).padStart(2, "0");
-    const DD = String(d.getDate()).padStart(2, "0");
-    const MM = String(d.getMonth() + 1).padStart(2, "0");
-    const YYYY = d.getFullYear();
-    return `${hh}:${mm}:${ss} ${DD}:${MM}:${YYYY}`;
+  if (!iso) return "";
+  const d = new Date(iso);
+  return d.toLocaleTimeString("th-TH", { hour12: false });
 };
-
-
 
 const extractUrls = (text: string) => {
-    const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
-    const found = text.match(urlRegex) || [];
-    return [...new Set(found.map(s => s.trim()))];
+  const urlRegex = /(https?:\/\/[^\s]+|www\.[^\s]+)/gi;
+  const found = text.match(urlRegex) || [];
+  return [...new Set(found.map(s => s.trim()))];
 };
 
-function hasForbidden(text: string) {
-    const words = ["otp", "เบอร์", "สนใจ", "ไอดี", "ไลน์", "line", "id", "รับเงิน", "ทัก", "สน", "ปล่อย"];
-    const t = text.toLowerCase();
-    return words.some(w => t.includes(w.toLowerCase()));
-}
-const forbiddenWords = ["otp", "เบอร์", "สนใจ", "ไอดี", "ไลน์", "line", "id", "รับเงิน", "ทัก", "สน", "ปล่อย", "@"];
+/* ---------- ✅ Component ---------- */
 const ChatRoomBox: React.FC = () => {
-    const [username, setUsername] = useState<string | null>(null);
-    const [tempName, setTempName] = useState("");
-    const [message, setMessage] = useState("");
-    const [chat, setChat] = useState<ChatMessage[]>([]);
-    const chatRef = useRef<HTMLDivElement>(null);
-    const didInitRef = useRef(false);
+  const [username, setUsername] = useState<string | null>(null);
+  const [tempName, setTempName] = useState("");
+  const [message, setMessage] = useState("");
+  const [chat, setChat] = useState<ChatMessage[]>([]);
+  const chatRef = useRef<HTMLDivElement>(null);
+  const socketRef = useRef<Socket | null>(null);
+  const userScrollUpRef = useRef(false); // ✅ flag ถ้า user scroll ขึ้น
 
-    // ===== Socket =====
-    const socketRef = useRef<Socket | null>(null);
+  /* ---------- Load username ---------- */
+  useEffect(() => {
+    const saved = localStorage.getItem("chat_username");
+    if (saved && !forbiddenWords.some(w => saved.toLowerCase().includes(w)))
+      setUsername(saved);
+  }, []);
 
-    // ✅ โหลด username จาก localStorage
-    useEffect(() => {
-        const saved = localStorage.getItem("chat_username");
-        if (saved) {
-            const blocked = forbiddenWords.some(w =>
-                saved.toLowerCase().includes(w.toLowerCase())
-            );
-            if (blocked) {
-                return localStorage.clear()
-            }
-            setUsername(saved);
-        }
-    }, []);
+  /* ---------- Scroll detect ---------- */
+  useEffect(() => {
+    const el = chatRef.current;
+    if (!el) return;
 
-    // ✅ Scroll auto เฉพาะถ้าอยู่ท้าย
-    useEffect(() => {
-        const el = chatRef.current;
-        if (!el) return;
-        const isNearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 200;
-        if (isNearBottom) el.scrollTo({ top: el.scrollHeight, behavior: "smooth" });
-    }, [chat]);
-
-    const handleSend = async () => {
-        if (!message.trim() || !username) return;
-
-        const color = colors[Math.floor(Math.random() * colors.length)];
-        //const now = new Date().toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-
-        const tempId = `temp-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-
-
-        const text = message;
-        setMessage("");
-
-        const inputUrls = extractUrls(text);
-
-        if (inputUrls.length > 0) {
-            toast.warn("ไม่สามารถส่งลิงก์ได้");
-            return;
-        }
-
-        if (hasForbidden(text)) {
-            toast.warn("ข้อความมีคำต้องห้าม");
-            return;
-        }
-
-        try {
-            const res = await fetch(`${BE_API}/v1/chats`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-                body: JSON.stringify({
-                    user: username,
-                    msg: text,
-                    color,
-                }),
-            });
-
-            if (!res.ok) {
-                throw new Error(`POST /v1/chats failed: ${res.status}`);
-            }
-            //setMessage("");
-            // รอ BE broadcast "chat:new" พร้อม _id จริง แล้วค่อยแทนที่ข้อความ temp
-        } catch (e) {
-            console.error(e);
-            setChat(prev => prev.filter(m => m._id !== tempId)); // ลบตัว temp ออก
-            setMessage(text); // คืนข้อความกลับอินพุต (ทางเลือก)
-        }
+    const handleScroll = () => {
+      const isBottom =
+        el.scrollHeight - el.scrollTop - el.clientHeight < 80;
+      userScrollUpRef.current = !isBottom;
     };
 
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-        if (e.key === "Enter" && !e.shiftKey) {
-            e.preventDefault();
-            handleSend();
-        }
+    el.addEventListener("scroll", handleScroll, { passive: true });
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  /* ---------- Scroll only when bottom ---------- */
+  useEffect(() => {
+    const el = chatRef.current;
+    if (!el) return;
+    if (!userScrollUpRef.current) {
+      requestAnimationFrame(() =>
+        el.scrollTo({ top: el.scrollHeight, behavior: "smooth" })
+      );
+    }
+  }, [chat]);
+
+  /* ---------- Send message ---------- */
+  const handleSend = async () => {
+    if (!message.trim() || !username) return;
+
+    const text = message.trim();
+    setMessage("");
+
+    if (extractUrls(text).length > 0) return toast.warn("❌ ห้ามส่งลิงก์");
+    if (hasForbidden(text)) return toast.warn("❌ ข้อความมีคำต้องห้าม");
+
+    try {
+      const res = await fetch(`${BE_API}/v1/chats`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          user: username,
+          msg: text,
+          color: colors[Math.floor(Math.random() * colors.length)],
+        }),
+      });
+      if (!res.ok) throw new Error("send failed");
+    } catch (err) {
+      toast.error("❌ ส่งข้อความไม่สำเร็จ");
+      setMessage(text);
+    }
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if (e.key === "Enter" && !e.shiftKey) {
+      e.preventDefault();
+      handleSend();
+    }
+  };
+
+  const saveUsername = () => {
+    const name = tempName.trim();
+    if (!name) return toast.warn("กรุณาใส่ชื่อก่อน");
+    if (forbiddenWords.some(w => name.toLowerCase().includes(w))) {
+      toast.warn("ชื่อมีคำต้องห้าม");
+      return;
+    }
+    localStorage.setItem("chat_username", name);
+    setUsername(name);
+  };
+
+  /* ---------- Highlight mentions ---------- */
+  const highlightMessage = (text: string) => {
+    const parts = text.split(/(\s+)/);
+    return parts.map((p, i) => {
+      if (p.startsWith("@"))
+        return <span key={i} className="text-cyan-400 font-semibold">{p}</span>;
+      if (p.startsWith("#"))
+        return <span key={i} className="text-fuchsia-400 font-semibold">{p}</span>;
+      return p;
+    });
+  };
+
+  /* ---------- Socket setup ---------- */
+  useEffect(() => {
+    const socket = io(BE_API, {
+      path: SOCKET_PATH,
+      transports: ["websocket"],
+      withCredentials: true,
+    });
+    socketRef.current = socket;
+
+    socket.on("connect", () => console.log("[socket] connected:", socket.id));
+    socket.on("disconnect", () => console.log("[socket] disconnected"));
+
+    socket.on("chat:new", (incoming: ChatMessage) => {
+      if (!incoming?._id) return;
+      setChat(prev => {
+        if (prev.some(m => m._id === incoming._id)) return prev;
+        const next = [...prev, incoming];
+        if (next.length > 200) next.shift();
+        return next;
+      });
+    });
+
+    return () => {
+      socket.disconnect();
+      socketRef.current = null;
     };
+  }, []);
 
-    const saveUsername = () => {
-        const name = (tempName || "").trim();
-        if (!name) return setUsername("");
-
-        // block if it contains any forbidden word (case-insensitive)
-        const blocked = forbiddenWords.some(w =>
-            name.toLowerCase().includes(w.toLowerCase())
-        );
-        if (blocked) {
-            setUsername("");
-            toast.warn("ข้อความมีคำต้องห้าม");
-            return
-        }; // (optionally show an error here)
-
-        localStorage.setItem("chat_username", name);
-        setUsername(name);
-    };
-
-    // ✅ ฟังก์ชัน highlight mentions / hashtags
-    const highlightMessage = (text: string) => {
-        const parts = text.split(/(\s+)/);
-        return parts.map((part, i) => {
-            if (part.startsWith("@")) {
-                return (
-                    <span key={i} className="text-cyan-400 font-semibold">
-                        {part}
-                    </span>
-                );
-            } else if (part.startsWith("#")) {
-                return (
-                    <span key={i} className="text-fuchsia-400 font-semibold">
-                        {part}
-                    </span>
-                );
-            }
-            return part;
+  /* ---------- Load old messages ---------- */
+  useEffect(() => {
+    const ac = new AbortController();
+    (async () => {
+      try {
+        const res = await fetch(`${BE_API}/v1/chats?limit=50`, {
+          method: "GET",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          signal: ac.signal,
         });
-    };
-
-
-    useEffect(() => {
-        const socket = io(BE_API, { path: SOCKET_PATH, transports: ["websocket"], withCredentials: true });
-        socketRef.current = socket;
-
-        socket.on("connect", () => {
-            console.log("[socket] connected:", { id: socket.id, url: BE_API, path: SOCKET_PATH });
-        });
-
-        socket.on("disconnect", (reason) => {
-            console.warn("[socket] disconnected:", { reason });
-        });
-
-        socket.on("connect_error", (err) => {
-            console.error("[socket] connect_error:", { message: err.message, name: err.name, data: (err as any)?.data });
-        });
-
-        socket.on("chat:new", (incoming: ChatMessage) => {
-            if (!incoming?._id) return;
-
-            setChat((prev) => {
-                // หา temp ที่ตรง user+msg
-                const idxTemp = prev.findIndex(
-                    (m) =>
-                        m._id?.startsWith("temp-") &&
-                        m.user === incoming.user &&
-                        m.msg === incoming.msg
-                );
-
-                const ensureColor = (m: ChatMessage): ChatMessage => ({
-                    ...m,
-                    color: m.color || colors[Math.floor(Math.random() * colors.length)],
-                });
-
-                if (idxTemp !== -1) {
-                    const updated = [...prev];
-                    // ใช้สีจาก incoming ถ้ามี ไม่งั้นสุ่ม
-                    updated[idxTemp] = ensureColor(incoming);
-                    return updated;
-                }
-
-                // กันซ้ำด้วย _id
-                if (prev.some((m) => m._id === incoming._id)) return prev;
-
-                const updated = [...prev, ensureColor(incoming)];
-                if (updated.length > 200) updated.shift();
-                return updated;
-            });
-        });
-
-        /* socket.on("chat:history", (list: ChatMessage[]) => {
-             setChat(list.slice(-200));
-         });*/
-
-        return () => {
-            socket.removeAllListeners();
-            socket.disconnect();
-            socketRef.current = null;
-        };
-    }, []);
-
-    const scrollToBottom = (smooth = false) => {
-        const el = chatRef.current;
-        if (!el) return;
-        // รอให้อัพเดต DOM เสร็จก่อนค่อยเลื่อน
+        if (!res.ok) throw new Error("load fail");
+        const data: ChatMessage[] = await res.json();
+        const ordered = sortByObjectIdAsc(data).slice(-50);
+        setChat(ordered);
+        // ✅ Scroll bottom only first load
         requestAnimationFrame(() =>
-            el.scrollTo({ top: el.scrollHeight, behavior: smooth ? "smooth" : "auto" })
+          chatRef.current?.scrollTo({ top: chatRef.current.scrollHeight })
         );
-    };
+      } catch (err) {
+        if ((err as any)?.name !== "AbortError")
+          console.error("[chat] init fail:", err);
+      }
+    })();
+    return () => ac.abort();
+  }, []);
 
-    useEffect(() => {
-        const ac = new AbortController();
+  /* ---------- UI ---------- */
+  return (
+    <section
+      aria-label="ห้องพูดคุยสด แจกโค้ดและสนทนา"
+      className="relative h-full flex flex-col"
+    >
+      <h2 className="text-lg font-bold mb-2 text-white leading-snug">
+        💬 ห้องพูดคุยสด และ แจกโค้ด 🔥
+      </h2>
 
-        (async () => {
-            try {
-                const res = await fetch(`${BE_API}/v1/chats?limit=50`, {
-                    method: "GET",
-                    credentials: "include",
-                    headers: { "Content-Type": "application/json" },
-                    signal: ac.signal,
-                });
-                if (!res.ok) throw new Error(`GET /v1/chats failed: ${res.status}`);
-
-                const data: ChatMessage[] = await res.json();
-
-                // 👇 เติมสีแบบสุ่มถ้าไม่มี color
-                const withColor = data.map((m) => ({
-                    ...m,
-                    color: m.color || colors[Math.floor(Math.random() * colors.length)],
-                }));
-
-                // เรียงเก่าก่อนใหม่ แล้วตัดเหลือ 50
-                const ordered = sortByObjectIdAsc(withColor).slice(-50);
-                setChat(ordered);
-                if (!didInitRef.current) {
-                    didInitRef.current = true;
-                    scrollToBottom(false);
-                }
-            } catch (err) {
-                if ((err as any)?.name !== "AbortError") {
-                    console.error("[chat] load initial messages error:", err);
-                }
-            }
-        })();
-
-        return () => ac.abort();
-    }, []);
-
-    return (
-        <div className="relative h-full flex flex-col">
-            {/* Title */}
-            <h2 className="text-lg font-bold mb-2 text-[#ffffff]">
-                💬 ห้องพูดคุยสด และ แจกโค้ด 🔥
-            </h2>
-
-            {/* Chat Content */}
+      {/* Chat List */}
+      <div
+        ref={chatRef}
+        className="flex-1 overflow-y-auto max-h-[430px] p-3 rounded-lg border border-fuchsia-400/40 bg-black/50 mb-3 scroll-smooth"
+      >
+        {chat.length === 0 ? (
+          <p className="text-gray-400 text-center text-sm mt-12">
+            ขณะนี้ยังไม่มีข้อความ 💬
+          </p>
+        ) : (
+          chat.map((item, i) => (
             <div
-                ref={chatRef}
-                className="flex-1 max-h-[430px] overflow-y-auto p-3 border border-fuchsia-400/40 rounded-lg bg-black/50 mb-3"
+              key={item._id ?? `temp-${i}`}
+              className="flex items-start gap-2 mb-3"
             >
-                {chat.length === 0 ? (
-                    <p className="text-gray-400 text-sm sm:text-base text-center mt-12">
-                        ขณะนี้ยังไม่มีข้อความ 💬
-                    </p>
-                ) : (
-                    chat.map((item, i) => (
-                        <div key={item._id ?? `temp-${i}`} className="flex items-start gap-2 mb-3">
-                            {/* Avatar */}
-                            <div
-                                className={`flex-shrink-0 w-8 h-8 rounded-full ${item.color} flex items-center justify-center text-white font-bold`}
-                            >
-                                {item.user.charAt(0).toUpperCase()}
-                            </div>
-
-                            {/* Message */}
-                            <div>
-                                <div className="flex items-baseline gap-2">
-                                    <span className="font-semibold text-fuchsia-300">
-                                        {item.user}
-                                        {username && item.user === username && " (Me)"}
-                                    </span>
-                                    <span className="text-gray-500 text-xs"> {formatTime(item?.createdAt)}</span>
-                                </div>
-                                <div className="text-gray-200 text-sm sm:text-base break-words whitespace-pre-wrap leading-relaxed">
-                                    {highlightMessage(item.msg)}
-                                </div>
-                            </div>
-                        </div>
-                    ))
-                )}
+              <div
+                className={`w-8 h-8 rounded-full ${item.color} flex items-center justify-center text-white font-bold flex-shrink-0`}
+              >
+                {item.user.charAt(0).toUpperCase()}
+              </div>
+              <div className="min-w-0 break-words">
+                <div className="flex items-baseline gap-2 flex-wrap">
+                  <span className="font-semibold text-fuchsia-300">
+                    {item.user}
+                    {username && item.user === username && " (Me)"}
+                  </span>
+                  <time className="text-gray-500 text-xs">
+                    {formatTime(item.createdAt)}
+                  </time>
+                </div>
+                <p className="text-gray-200 text-sm leading-relaxed whitespace-pre-wrap">
+                  {highlightMessage(item.msg)}
+                </p>
+              </div>
             </div>
+          ))
+        )}
+      </div>
 
-            {/* Input box */}
-            {username ? (
-                <div className="flex items-end gap-2">
-                    <textarea
-                        value={message}
-                        onChange={(e) => setMessage(e.target.value)}
-                        onKeyDown={handleKeyDown}
-                        placeholder="พิมพ์ข้อความที่นี่... (Shift + Enter เพื่อขึ้นบรรทัดใหม่, ใช้ @ชื่อ หรือ #แท็ก ได้)"
-                        rows={2}
-                        className="flex-1 resize-none bg-black/40 border border-fuchsia-400/40 text-white text-sm sm:text-base rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-fuchsia-500"
-                    />
-                    <button
-                        onClick={handleSend}
-                        className="cursor-pointer h-full bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-rose-500 text-black font-bold px-4 rounded-lg hover:brightness-110 transition-all"
-                    >
-                        ส่ง
-                    </button>
-                </div>
-            ) : (
-                <div className="mt-2 p-3 rounded-lg border border-fuchsia-400/30 bg-black/60">
-                    <p className="text-gray-300 mb-2 text-sm">
-                        ⚠️ กรุณาใส่ชื่อก่อนที่จะพิมพ์ข้อความ
-                    </p>
-                    <div className="flex items-center gap-2">
-                        <input
-                            type="text"
-                            value={tempName}
-                            onChange={(e) => setTempName(e.target.value)}
-                            placeholder="เช่น Neung007"
-                            className="flex-1 bg-black/40 border border-fuchsia-400/40 text-white text-sm sm:text-base rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-fuchsia-500"
-                        />
-                        <button
-                            onClick={saveUsername}
-                            className="bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-rose-500 text-black font-bold px-4 py-2 rounded-lg hover:brightness-110 transition-all"
-                        >
-                            ตกลง
-                        </button>
-                    </div>
-                </div>
-            )}
+      {/* Input */}
+      {username ? (
+        <div className="flex items-end gap-2">
+          <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="พิมพ์ข้อความที่นี่... (Shift + Enter เพื่อขึ้นบรรทัดใหม่)"
+            rows={2}
+            className="flex-1 resize-none bg-black/40 border border-fuchsia-400/40 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-fuchsia-500"
+          />
+          <button
+            onClick={handleSend}
+            className="min-w-[64px] h-[42px] bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-rose-500 text-black font-bold rounded-lg hover:brightness-110 transition"
+          >
+            ส่ง
+          </button>
         </div>
-    );
+      ) : (
+        <div className="mt-2 p-3 rounded-lg border border-fuchsia-400/30 bg-black/60">
+          <p className="text-gray-300 mb-2 text-sm">
+            ⚠️ กรุณาใส่ชื่อก่อนเริ่มแชต
+          </p>
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              value={tempName}
+              onChange={(e) => setTempName(e.target.value)}
+              placeholder="เช่น Neung007"
+              className="flex-1 bg-black/40 border border-fuchsia-400/40 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-fuchsia-500"
+            />
+            <button
+              onClick={saveUsername}
+              className="h-[42px] bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-rose-500 text-black font-bold px-4 rounded-lg hover:brightness-110 transition"
+            >
+              ตกลง
+            </button>
+          </div>
+        </div>
+      )}
+    </section>
+  );
 };
 
 export default ChatRoomBox;
