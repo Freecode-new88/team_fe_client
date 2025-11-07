@@ -202,7 +202,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
 
         {/* ✅ Ahrefs Analytics */}
-        <Script src="/js/ahrefsanalytics.js" data-key="wU5GkV8gO2jtwxj7Hi8X8A" strategy="lazyOnload" />
+        <Script
+          src="https://analytics.ahrefs.com/analytics.js"
+          data-key="wU5GkV8gO2jtwxj7Hi8X8A"
+          strategy="lazyOnload"
+        />
       </head>
 
       <body className="m-0 bg-black text-white antialiased">
