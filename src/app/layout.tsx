@@ -190,20 +190,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
 
         {/* ✅ GA4 (lazy load) */}
-        {typeof window !== "undefined" && localStorage.getItem("allow_analytics") === "true" && (
-          <>
-            <Script src="https://www.googletagmanager.com/gtag/js?id=G-GKZCJB90H9" strategy="afterInteractive" />
-            <Script id="ga4-init" strategy="afterInteractive">
-              {`
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        window.gtag = gtag;
-        gtag('js', new Date());
-        gtag('config', 'G-GKZCJB90H9', { transport_type: 'beacon', debug_mode: false });
-      `}
-            </Script>
-          </>
-        )}
+        <Script src="https://www.googletagmanager.com/gtag/js?id=G-GKZCJB90H9" strategy="lazyOnload" />
+        <Script id="ga4-init" strategy="lazyOnload">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', 'G-GKZCJB90H9', { transport_type: 'beacon' });
+          `}
+        </Script>
 
         {/* ✅ Ahrefs Analytics */}
         <Script src="/js/ahrefsanalytics.js" data-key="wU5GkV8gO2jtwxj7Hi8X8A" strategy="lazyOnload" />
