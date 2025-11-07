@@ -37,7 +37,7 @@ export const game_list: GameItem[] = [
     <h2 class="text-2xl font-bold mb-2">รีวิวเกมสล็อต Mahjong Ways</h2>
     <p>
       Mahjong หรือ ไพ่นกกระจอก เป็นเกมคาสิโนที่มีชื่อเสียงและได้รับความนิยมอย่างมากทั่วโลก 
-      และค่าย <a href="/pg-soft" class="text-cyan-600 hover:underline" target="_blank">Pocket Games Soft (PG Soft)</a> 
+      และค่าย <b b class="text-cyan-600 hover:underline" target="_blank">Pocket Games Soft (PG Soft)</b> 
       ได้นำแรงบันดาลใจจากเกมนี้มาสร้างเป็นสล็อตสุดฮิตในชื่อ 
       <strong>Mahjong Ways</strong> ที่มาพร้อมระบบตัวคูณและฟีเจอร์ฟรีสปินสุดมันส์!  
       ตัวเกมออกแบบให้เล่นง่ายแต่ยังคงความตื่นเต้น พร้อมเสียงประกอบแบบจีนที่เข้ากับธีมอย่างลงตัว
@@ -235,7 +235,7 @@ export const game_list: GameItem[] = [
     <h2 class="text-2xl font-bold mb-2">รีวิวเกมสล็อต Mahjong Ways 2</h2>
     <p>
       <strong>Mahjong Ways 2</strong> คือภาคต่อจากเกมสุดฮิต Mahjong Ways ที่พัฒนาโดยค่าย  
-      <a href="/pg-soft" class="text-cyan-600 hover:underline" target="_blank">PG Soft</a>  
+      <b class="text-cyan-600 hover:underline" target="_blank">PG Soft</b>  
       โดยเกมภาคนี้ได้เพิ่มลูกเล่นใหม่ ๆ และระบบตัวคูณที่ให้ผลตอบแทนมากขึ้น  
       พร้อมภาพกราฟิกที่คมชัด สวยงามในสไตล์จีนดั้งเดิม และเสียงดนตรีที่ให้ความรู้สึกสงบแต่ทรงพลัง  
     </p>
@@ -1119,7 +1119,7 @@ export const game_list: GameItem[] = [
     <h2 class="text-2xl font-bold mb-2">รีวิวเกมสล็อต Queen of Bounty</h2>
     <p>
       <strong>Queen of Bounty</strong> จากค่าย 
-      <b href="/pg-soft" class="text-cyan-600 hover:underline" target="_blank">PG Soft</b>  
+      <b class="text-cyan-600 hover:underline" target="_blank">PG Soft</b>  
       เป็นเกมสล็อตวิดีโอขนาด <strong>5 รีล 3 แถว</strong>  
       ที่มาพร้อมฟีเจอร์ “Cascading Reels” และตัวคูณรางวัลเพิ่มขึ้นเรื่อย ๆ  
       สูงสุดถึง <strong>x5</strong> ในเกมหลัก และ <strong>x15</strong> ในรอบฟรีสปิน!
@@ -1229,7 +1229,7 @@ export const game_list: GameItem[] = [
     <h2 class="text-2xl font-bold mb-2">รีวิวเกมสล็อต Speed Winner</h2>
     <p>
       <strong>Speed Winner</strong> จากค่าย  
-      <b href="/pg-soft" class="text-cyan-600 hover:underline" target="_blank">PG Soft</b>  
+      <b class="text-cyan-600 hover:underline">PG Soft</b>  
       คือเกมสล็อตวิดีโอธีม “แข่งรถความเร็วสูง” ที่ได้รับแรงบันดาลใจจากพลังและความตื่นเต้นบนสนามแข่ง  
       ด้วยค่า RTP สูงถึง <strong>96.72%</strong> และระบบรีลแบบ “Cascading” ที่มีตัวคูณเพิ่มขึ้นเรื่อย ๆ  
       สูงสุดถึง <strong>x10</strong> ในเกมหลัก และ <strong>x50</strong> ในโหมดฟรีสปิน!
@@ -1337,7 +1337,7 @@ export const game_list: GameItem[] = [
     <h2 class="text-2xl font-bold mb-2">รีวิวเกมสล็อต Fortune Mouse</h2>
     <p>
       เกมสล็อต <strong>Fortune Mouse</strong> จากค่าย  
-      <b href="/pg-soft" class="text-cyan-600 hover:underline" target="_blank">PG Soft</b>  
+      <b class="text-cyan-600 hover:underline">PG Soft</b>  
       เป็นหนึ่งในซีรีส์แห่งโชคลาภยอดนิยมที่ต่อยอดจาก Fortune Ox, Fortune Tiger, Fortune Dragon และ Fortune Rabbit  
       คราวนี้มาในธีมหนูน้อยนำโชค ผู้ถือสัญลักษณ์แห่งความมั่งคั่งและความสำเร็จตามความเชื่อของจีน  
       เกมนี้มอบโอกาสรับรางวัลสูงสุดถึง <strong>฿45,000.00</strong> ด้วยค่า RTP <strong>96.96%</strong> และความผันผวนระดับปานกลาง
@@ -1431,7 +1431,7 @@ export const game_list: GameItem[] = [
     <h2 class="text-2xl font-bold mb-2">รีวิวเกมสล็อต Captain’s Bounty</h2>
     <p>
       <strong>Captain’s Bounty</strong> จากค่าย  
-      <b href="/pg-soft" class="text-cyan-600 hover:underline" target="_blank">PG Soft</b>  
+      <b class="text-cyan-600 hover:underline">PG Soft</b>  
       เป็นเกมสล็อตวิดีโอขนาด <strong>5 รีล 3 แถว</strong>  
       ที่มาพร้อมระบบ “Cascading Reels” และตัวคูณรางวัลเพิ่มขึ้นทุกครั้งที่ชนะ  
       สูงสุดถึง <strong>x5</strong> ในเกมหลัก และ <strong>x15</strong> ในรอบฟรีสปิน!
