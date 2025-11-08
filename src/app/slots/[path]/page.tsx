@@ -2,14 +2,13 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { game_list } from "@/promotions/game_list";
-import { F168lINK, MK8LINK } from "@/config/site";
 import PlayButton from "@/app/components/PlayButton";
 
 export async function generateStaticParams() {
   return game_list.map((game) => ({ path: game.path }));
 }
 
-// ✅ Safe shuffle (deterministic)
+// ✅ Safe shuffle
 function shuffle<T>(arr: T[]) {
   const a = [...arr];
   for (let i = a.length - 1; i > 0; i--) {
@@ -52,7 +51,7 @@ export default async function GamePage({ params }: { params: Promise<{ path: str
       itemScope
       itemType="https://schema.org/Game"
     >
-      {/* ✅ Breadcrumb (SEO + Mobile Friendly) */}
+      {/* ✅ Breadcrumb */}
       <nav
         aria-label="breadcrumb"
         className="text-[13px] sm:text-sm font-medium text-gray-300 mb-4"
@@ -60,7 +59,6 @@ export default async function GamePage({ params }: { params: Promise<{ path: str
         itemType="https://schema.org/BreadcrumbList"
       >
         <ol className="flex flex-wrap items-center gap-1 sm:gap-2">
-          {/* 🔹 หน้าแรก */}
           <li
             itemProp="itemListElement"
             itemScope
@@ -78,7 +76,6 @@ export default async function GamePage({ params }: { params: Promise<{ path: str
             <span className="text-gray-500 px-1">›</span>
           </li>
 
-          {/* 🔹 หน้าเกมสล็อต */}
           <li
             itemProp="itemListElement"
             itemScope
@@ -91,6 +88,7 @@ export default async function GamePage({ params }: { params: Promise<{ path: str
           </li>
         </ol>
       </nav>
+
       {/* === Title === */}
       <header className="text-center mb-8">
         <h1
@@ -140,6 +138,23 @@ export default async function GamePage({ params }: { params: Promise<{ path: str
               </div>
             ))}
 
+            {/* ✅ Rating Schema */}
+            {game.meta.ratingValue && game.meta.ratingCount && (
+              <div
+                className="flex items-center justify-between mt-4 text-yellow-400"
+                itemProp="aggregateRating"
+                itemScope
+                itemType="https://schema.org/AggregateRating"
+              >
+                <span className="flex items-center gap-1">
+                  ⭐ <span itemProp="ratingValue">{game.meta.ratingValue}</span> / 5
+                </span>
+                <span className="text-sm text-gray-400">
+                  (<span itemProp="ratingCount">{game.meta.ratingCount}</span> รีวิว)
+                </span>
+              </div>
+            )}
+
             {game.meta.provider_img && (
               <div className="flex justify-center py-4">
                 <Image
@@ -156,7 +171,6 @@ export default async function GamePage({ params }: { params: Promise<{ path: str
           </div>
         </div>
 
-        {/* Licensing */}
         {/* Licensing */}
         {game.meta.licensing?.length > 0 && (
           <section className="mt-8 text-center" aria-label="หน่วยงานกำกับดูแลเกม">
@@ -188,7 +202,6 @@ export default async function GamePage({ params }: { params: Promise<{ path: str
               ))}
             </div>
 
-            {/* ✅ ปุ่มทดลองเล่น */}
             <div className="mt-6">
               <PlayButton />
             </div>
@@ -253,8 +266,26 @@ export default async function GamePage({ params }: { params: Promise<{ path: str
                   />
                 </Link>
                 <div className="flex-1">
-                  <h4 className="font-semibold text-white text-sm line-clamp-2">{g.name}</h4>
-                  <p className="text-gray-400 text-xs mt-1">RTP {g.meta?.rtp || "96%"} • {g.meta?.provider}</p>
+                  <h4 className="font-semibold text-white text-sm line-clamp-2" itemProp="name">
+                    {g.name}
+                  </h4>
+                  <p className="text-gray-400 text-xs mt-1">
+                    RTP {g.meta?.rtp || "96%"} • {g.meta?.provider}
+                  </p>
+
+                  {/* ⭐ Rating for related games */}
+                  {g.meta?.ratingValue && g.meta?.ratingCount && (
+                    <p
+                      className="text-yellow-400 text-xs mt-1"
+                      itemProp="aggregateRating"
+                      itemScope
+                      itemType="https://schema.org/AggregateRating"
+                    >
+                      ⭐ <span itemProp="ratingValue">{g.meta.ratingValue}</span>/5
+                      &nbsp;(<span itemProp="ratingCount">{g.meta.ratingCount}</span> รีวิว)
+                    </p>
+                  )}
+
                   <Link
                     href={`/slots/${g.path}/`}
                     className="inline-block mt-2 text-xs px-3 py-1 rounded-full bg-gradient-to-r from-cyan-500 via-purple-500 to-pink-600 text-white hover:from-cyan-400 hover:via-purple-400 hover:to-pink-500 transition"

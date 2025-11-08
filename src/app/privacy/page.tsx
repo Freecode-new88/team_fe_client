@@ -42,17 +42,29 @@ export default function PrivacyPage() {
     "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": "https://thaideal.co/privacy/",
-    name: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaideal",
     url: "https://thaideal.co/privacy/",
+    name: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaideal",
     inLanguage: "th-TH",
     description:
       "Thaideal อธิบายแนวทางการเก็บ ใช้ และคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้งาน รวมถึงการใช้คุกกี้และเครื่องมือวิเคราะห์ ตามหลัก PDPA และ GDPR.",
-    publisher: {
-      "@type": "Organization",
-      "@id": "https://thaideal.co/#organization",
-      name: "Thaideal",
-      url: "https://thaideal.co/",
-      logo: { "@type": "ImageObject", url: "https://thaideal.co/icons/thaibet-icon-512.png" },
+    publisher: { "@id": "https://thaideal.co/#organization" },
+    isPartOf: { "@id": "https://thaideal.co/#website" },
+    breadcrumb: {
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: "หน้าแรก",
+          item: "https://thaideal.co/",
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: "นโยบายความเป็นส่วนตัว",
+          item: "https://thaideal.co/privacy/",
+        },
+      ],
     },
     datePublished: "2023-01-01",
     dateModified: new Date().toISOString(),
@@ -110,23 +122,19 @@ export default function PrivacyPage() {
           >
             นโยบายความเป็นส่วนตัว (Privacy Policy)
           </h1>
-          <p className="text-sm text-gray-500 mt-1">อัปเดตล่าสุด: 16 ตุลาคม 2025</p>
+          <p className="text-sm text-gray-500 mt-1">
+            อัปเดตล่าสุด: 16 ตุลาคม 2025
+          </p>
         </header>
 
-        {/* ✅ Main Content (Lightweight HTML structure, no CLS) */}
+        {/* ✅ Main Content */}
         <article
           className="prose prose-sm sm:prose-base dark:prose-invert prose-a:text-cyan-400"
           itemProp="mainEntity"
         >
           <p>
             Thaideal (“เรา”) ให้ความสำคัญกับความเป็นส่วนตัวของผู้ใช้งาน (“คุณ”)
-            เอกสารนี้อธิบายการเก็บ ใช้ ปกป้อง และแบ่งปันข้อมูล
-            รวมถึงสิทธิของคุณภายใต้ PDPA และ GDPR
-            หากคุณใช้งานเว็บไซต์{" "}
-            <Link href="https://thaideal.co/" className="text-cyan-400 hover:underline">
-              thaideal.co
-            </Link>{" "}
-            ถือว่าคุณยอมรับนโยบายนี้.
+            เอกสารนี้อธิบายการเก็บ ใช้ ปกป้อง และแบ่งปันข้อมูล รวมถึงสิทธิของคุณภายใต้ PDPA และ GDPR.
           </p>
 
           <h2>1) ข้อมูลที่เราเก็บ</h2>
@@ -146,8 +154,7 @@ export default function PrivacyPage() {
 
           <h2>3) คุกกี้</h2>
           <p>
-            เราใช้คุกกี้จำเป็นเพื่อให้เว็บไซต์ทำงานได้ปกติ
-            และคุกกี้วิเคราะห์เพื่อพัฒนาเว็บไซต์
+            เราใช้คุกกี้จำเป็นเพื่อให้เว็บไซต์ทำงานได้ปกติ และคุกกี้วิเคราะห์เพื่อพัฒนาเว็บไซต์
             คุณสามารถตั้งค่าบราว์เซอร์ให้ปฏิเสธคุกกี้ได้ แต่บางฟีเจอร์อาจใช้งานไม่ได้สมบูรณ์.
           </p>
 
@@ -160,14 +167,10 @@ export default function PrivacyPage() {
               <strong>Ahrefs Analytics:</strong> ใช้วัดประสิทธิภาพและการเข้าชมเว็บไซต์.
             </li>
           </ul>
-          <p className="text-xs text-gray-400">
-            *ไม่มีการเก็บข้อมูลส่วนบุคคลอ่อนไหว และมีการปิดบัง IP ตามมาตรฐานความปลอดภัย
-          </p>
 
           <h2>5) ลิงก์ภายนอกและพันธมิตร</h2>
           <p>
-            เว็บไซต์นี้อาจมีลิงก์ไปยังพันธมิตร เช่น F168 และ MK8
-            ซึ่งมีนโยบายความเป็นส่วนตัวของตนเอง โปรดตรวจสอบก่อนใช้งาน.
+            เว็บไซต์นี้อาจมีลิงก์ไปยังพันธมิตร เช่น F168 และ MK8 ซึ่งมีนโยบายความเป็นส่วนตัวของตนเอง โปรดตรวจสอบก่อนใช้งาน.
           </p>
 
           <h2>6) การเปิดเผยข้อมูล</h2>
@@ -190,7 +193,6 @@ export default function PrivacyPage() {
             <li>คัดค้านหรือจำกัดการประมวลผล</li>
             <li>ถอนความยินยอม (ถ้ามี)</li>
           </ul>
-          <p>หากต้องการใช้สิทธิ โปรดติดต่อเราตามช่องทางด้านล่าง.</p>
 
           <h2>9) ติดต่อเรา</h2>
           <p>

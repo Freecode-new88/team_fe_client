@@ -20,7 +20,7 @@ export default function Footer() {
       itemScope
       itemType="https://schema.org/WPFooter"
     >
-      {/* 🔹 Certification Logos — optimized for LCP */}
+      {/* 🔹 Certification Logos */}
       <div
         className="flex flex-wrap justify-center items-center gap-3 sm:gap-5 opacity-90"
         aria-label="certification logos"
@@ -54,7 +54,7 @@ export default function Footer() {
         (อัปเดตทุกวัน) © {year} Thaideal.co สงวนลิขสิทธิ์ทั้งหมด.
       </div>
 
-      {/* 🔹 Footer Nav — SEO Semantic Links */}
+      {/* 🔹 Footer Nav */}
       <nav
         className="flex flex-wrap justify-center gap-4 text-xs sm:text-sm font-medium"
         itemScope
@@ -84,7 +84,7 @@ export default function Footer() {
         </Link>
       </nav>
 
-      {/* ✅ JSON-LD Schema (for organization trust) */}
+      {/* ✅ JSON-LD Schema (เพิ่ม hasCredential ครบทุกใบรับรอง) */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -94,11 +94,69 @@ export default function Footer() {
             name: "Thaideal",
             url: "https://thaideal.co/",
             logo: "https://thaideal.co/icons/thaibet-icon-512.png",
+            description:
+              "Thaideal เป็นเว็บไซต์ที่ได้รับการรับรองมาตรฐานสากลจากองค์กรด้านความรับผิดชอบและการตรวจสอบเกม เช่น GamCare, BeGambleAware, BMM Testlabs, iTech Labs, Gaming Labs International และ Responsible 18+",
             sameAs: [
               "https://x.com/thaideal",
               "https://t.me/NEUNG55",
               "https://facebook.com/",
               "https://youtube.com/",
+            ],
+            hasCredential: [
+              {
+                "@type": "EducationalOccupationalCredential",
+                credentialCategory: "Responsible Gaming",
+                recognizedBy: {
+                  "@type": "Organization",
+                  name: "GamCare",
+                  url: "https://www.gamcare.org.uk/",
+                },
+              },
+              {
+                "@type": "EducationalOccupationalCredential",
+                credentialCategory: "Responsible Gaming",
+                recognizedBy: {
+                  "@type": "Organization",
+                  name: "BeGambleAware",
+                  url: "https://www.begambleaware.org/",
+                },
+              },
+              {
+                "@type": "EducationalOccupationalCredential",
+                credentialCategory: "Gaming Certification",
+                recognizedBy: {
+                  "@type": "Organization",
+                  name: "BMM Testlabs",
+                  url: "https://bmm.com/",
+                },
+              },
+              {
+                "@type": "EducationalOccupationalCredential",
+                credentialCategory: "Game Fairness",
+                recognizedBy: {
+                  "@type": "Organization",
+                  name: "iTech Labs",
+                  url: "https://itechlabs.com/",
+                },
+              },
+              {
+                "@type": "EducationalOccupationalCredential",
+                credentialCategory: "Game Testing Certification",
+                recognizedBy: {
+                  "@type": "Organization",
+                  name: "Gaming Labs International",
+                  url: "https://gaminglabs.com/",
+                },
+              },
+              {
+                "@type": "EducationalOccupationalCredential",
+                credentialCategory: "Responsible Age Policy",
+                recognizedBy: {
+                  "@type": "Organization",
+                  name: "18+ Responsible Gaming",
+                  url: "#",
+                },
+              },
             ],
           }),
         }}

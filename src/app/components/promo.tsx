@@ -16,6 +16,7 @@ import { Copy, Gift } from 'lucide-react';
 import { getSocket } from '@/services/socket';
 import { maskUser, rand0to30 } from '@/utils/random';
 import LastUpdated from "./LastUpdated";
+import { CountdownTimer } from "@/components/CountdownTimer";
 const ChatRoomBox = dynamic(() => import("./ChatRoomBox"), { ssr: false });
 
 const LeftImageWithGifts = dynamic(
@@ -54,38 +55,6 @@ function upsertPromos(prev: PromoItem[], incoming: PromoItem[]) {
 
 export default function Promo() {
   const [start, setStart] = useState(0);
-  const [recentStart, setRecentStart] = useState(0);
-  // countdown Every 15 minutes
-  const getSecondsToHourEnd = () => {
-    const now = new Date();
-    const next = new Date(now);
-    next.setSeconds(0, 0);
-    const m = now.getMinutes();
-    const nextBlockMinute = Math.floor(m / 15) * 15 + 15; //15,30,45,60
-
-    //Run Every 30 minutes
-    if (nextBlockMinute > 60) {
-      next.setHours(now.getHours() + 1, 0, 0, 0);
-    } else {
-      next.setMinutes(nextBlockMinute, 0, 0);
-    }
-    return Math.max(0, Math.floor((next.getTime() - now.getTime()) / 1000));
-  };
-
-  const [secondsLeft, setSecondsLeft] = useState(getSecondsToHourEnd());
-  const timerRef = useRef<number | null>(null);
-  // Let reach 00:00 then start from 15:00 again
-  useEffect(() => {
-    timerRef.current = window.setInterval(() => {
-      setSecondsLeft((s) => (s <= 1 ? getSecondsToHourEnd() : s - 1));
-    }, 1000);
-    return () => { if (timerRef.current) window.clearInterval(timerRef.current); };
-  }, []);
-
-  const isFinal5 = secondsLeft <= 5;
-  const mm = String(Math.floor(secondsLeft / 60)).padStart(2, "0");
-  const ss = String(secondsLeft % 60).padStart(2, "0");
-
   // data
   const [promoData, setPromoData] = useState<PromoItem[]>([]);
   const [claimData, setClaimData] = useState<PromoItem[]>([]);
@@ -279,7 +248,7 @@ export default function Promo() {
 
   /* keep panel pulse for the carousel stepping */
   const box2Changed = usePanelChangeFlag([start]);
-  const box3Changed = usePanelChangeFlag([recentStart]);
+
 
   /* helpers */
   const onlyTime = (ts: string) => {
@@ -398,21 +367,6 @@ export default function Promo() {
     setModalStep('captcha');
   };
 
-  const timeNode = (
-    <strong
-      key={secondsLeft}
-      className={
-        `min-w-[72px] text-center tabular-nums font-mono font-bold
-       transition-all duration-200
-       ${isFinal5
-          ? "text-red-500 drop-shadow-md animate-bounce scale-110"
-          : "text-white"}`
-      }
-    >
-      {mm}:{ss}
-    </strong>
-  );
-
   /* ---------- render ---------- */
   return (
     <section className={styles.topSection}>
@@ -508,11 +462,8 @@ export default function Promo() {
             </thead>
 
             <tbody key={start} className={styles.tableBody}>
-              {visibleRows.map((row, i) => {
-                const now = new Date()
-                const isEpire = now > new Date(row.time);
-
-                return row ? (
+              {visibleRows.map((row, i) => (
+                row ? (
                   <tr
                     key={`${row.code}-${i}`}
                     className={`${styles.tableRow} ${styles.rowEnter}`}
@@ -523,8 +474,7 @@ export default function Promo() {
 
                         <button
                           type="button"
-                          className={`${styles.copyBtn} ${copiedIndex === i ? styles.copyBtnActive : ""
-                            }`}
+                          className={`${styles.copyBtn} ${copiedIndex === i ? styles.copyBtnActive : ""}`}
                           onClick={() => handleCopy(row.code, i)}
                           aria-label={`คัดลอก ${row.code}`}
                           title={copiedIndex === i ? "คัดลอกแล้ว!" : "คัดลอก"}
@@ -549,13 +499,11 @@ export default function Promo() {
                       {`${row.receiveCount}/${row.receiveTotal}`}
                     </td>
 
-                    {/* ใช้ค่าอังกฤษเดิมเพื่อกำหนดคลาส แต่แสดงผลเป็นไทย */}
+                    {/* สถานะ */}
                     <td
-                      className={
-                        (row.receiveCount >= row.receiveTotal || isEpire) ? styles.used : styles.readygreen
-                      }
+                      className={row.receiveCount >= row.receiveTotal ? styles.used : styles.readygreen}
                     >
-                      {row.receiveCount >= row.receiveTotal ? "ถูกใช้แล้ว" : isEpire ? "หมดอายุแล้ว" : "ใช้ได้"}
+                      {row.receiveCount >= row.receiveTotal ? "ถูกใช้แล้ว" : "ใช้ได้"}
                     </td>
 
                     <td>{row.site}</td>
@@ -565,8 +513,7 @@ export default function Promo() {
                     <td colSpan={4}>&nbsp;</td>
                   </tr>
                 )
-              }
-              )}
+              ))}
             </tbody>
           </table>
           <div className="absolute left-3 right-3 bottom-3 flex items-center justify-center gap-2 h-10 rounded-lg text-red-200 backdrop-blur-sm
@@ -574,7 +521,7 @@ export default function Promo() {
                 {secondsLeft <= 5 ? 'shadow-[0_0_20px_rgba(255,0,0,.5)] animate-pulse' : ''}">
             <span className="text-red-500" aria-hidden>●</span>
             <span className="text-sm">โค้ดใหม่ในอีก</span>
-            {timeNode}
+            <CountdownTimer />
           </div>
         </div>
       </div>
@@ -584,7 +531,7 @@ export default function Promo() {
         <div className="col-span-12 md:col-span-6">
           <div className="relative overflow-x-auto rounded-xl bg-black/60 backdrop-blur-sm p-2 sm:p-3 md:p-4">
             {/* Title for Table */}
-            <h2 className="text-lg font-bold mb-2 bg-gradient-to-r from-cyan-400 via-fuchsia-400 to-rose-500 bg-clip-text text-transparent">
+            <h2 className="text-lg font-bold mb-2 ">
               📊 โค้ดที่ใช้ล่าสุด
             </h2>
 

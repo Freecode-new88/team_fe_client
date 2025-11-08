@@ -1,35 +1,4 @@
-export interface GameMeta {
-  rtp: string;
-  volatility: string;
-  maximum_Win: string;
-  provider: string;
-  provider_img: string;
-  release_Date: string;
-  reels: string;
-  rows: string;
-  minBet: string;
-  maxBet: string;
-  ratingValue?: string;
-  ratingCount?: string;
-  licensing: {
-    name: string;
-    website: string;
-    logo: string;
-  }[];
-}
-
-export interface GameItem {
-  path: string;
-  name: string;
-  img: string;
-  review: string;
-  how_to_play: string;
-  features: string;
-  recommended: string;
-  meta: GameMeta;
-}
-
-export const game_list: GameItem[] = [
+[
   {
     "path": "mahjong_ways",
     "name": "Mahjong Ways",
