@@ -66,8 +66,6 @@ export default function Faq() {
     <section
       className={`${styles.fqa} mb-[50px] md:mb-0`}
       aria-labelledby="faq-heading"
-      itemScope
-      itemType="https://schema.org/FAQPage"
     >
       {/* ✅ Heading */}
       <div className={styles.sectionHeading}>
@@ -127,6 +125,35 @@ export default function Faq() {
           );
         })}
       </div>
+
+      {/* ✅ JSON-LD for SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: [
+              {
+                "@type": "Question",
+                name: "Thaideal ได้รับการรับรองจากที่ใด?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Thaideal ได้รับการสนับสนุนจากองค์กรด้านความปลอดภัยและความรับผิดชอบ เช่น GamCare, BeGambleAware, BMM Testlabs, iTech Labs, Gaming Labs International และ Responsible 18+",
+                },
+              },
+              {
+                "@type": "Question",
+                name: "Thaideal อัปเดตโปรโมชันบ่อยแค่ไหน?",
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: "Thaideal อัปเดตข้อมูลโปรโมชันและโค้ดเครดิตฟรีหลายครั้งต่อวัน เพื่อให้ผู้ใช้ได้รับข้อมูลล่าสุดและปลอดภัยเสมอ",
+                },
+              },
+            ],
+          }),
+        }}
+      />
     </section>
   );
 }

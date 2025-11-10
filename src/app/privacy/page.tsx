@@ -18,7 +18,7 @@ export const metadata: Metadata = {
       "อ่านนโยบายความเป็นส่วนตัวของ Thaideal เพื่อเข้าใจแนวทางการเก็บ ใช้ และปกป้องข้อมูลส่วนบุคคลของคุณตามหลัก PDPA และ GDPR.",
     images: [
       {
-        url: "https://thaideal.co/og/og.webp",
+        url: "https://thaideal.co/og/og-v1.webp",
         width: 1200,
         height: 630,
         alt: "Thaideal — นโยบายความเป็นส่วนตัว",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     title: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaideal",
     description:
       "Thaideal ให้ความสำคัญกับการปกป้องข้อมูลของคุณ ตามหลัก PDPA และ GDPR เพื่อความปลอดภัยสูงสุด.",
-    images: ["https://thaideal.co/og/og.webp"],
+    images: ["https://thaideal.co/og/og-v1.webp"],
   },
   robots: { index: true, follow: true },
 };
