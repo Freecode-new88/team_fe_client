@@ -131,7 +131,7 @@ export default function ContactUsClient() {
                 loading="lazy"
               />
               <span className="text-gray-100 text-sm sm:text-base break-all">
-                อีเมล: admin@thaideal.co
+                อีเมล: admin@thaidealt.co
               </span>
             </li>
 

@@ -28,8 +28,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@thaideal",
-    creator: "@thaideal",
+    site: "@thaidealt",
+    creator: "@thaidealt",
     title: "ติดต่อ Thaideal | ช่องทางสอบถามและแจ้งปัญหา",
     description:
       "ติดต่อ Thaideal ได้โดยตรงเพื่อสอบถามข้อมูลโปรโมชัน แจ้งปัญหา หรือเสนอแนะเพิ่มเติมได้ทุกวัน.",
@@ -65,7 +65,7 @@ export default function ContactPage() {
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "Customer Support",
-      email: "admin@thaideal.co",
+      email: "admin@thaidealt.co",
       telephone: "+66-90-123-4567",
       url: "https://thaideal.co/contact-us/",
       areaServed: "TH",

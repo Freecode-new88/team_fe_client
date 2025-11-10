@@ -39,8 +39,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@thaideal",
-    creator: "@thaideal",
+    site: "@thaidealt",
+    creator: "@thaidealt",
     title:
       "Thaideal — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
     description:

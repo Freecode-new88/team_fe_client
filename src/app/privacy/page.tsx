@@ -27,8 +27,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    site: "@thaideal",
-    creator: "@thaideal",
+    site: "@thaidealt",
+    creator: "@thaidealt",
     title: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaideal",
     description:
       "Thaideal ให้ความสำคัญกับการปกป้องข้อมูลของคุณ ตามหลัก PDPA และ GDPR เพื่อความปลอดภัยสูงสุด.",
@@ -196,7 +196,7 @@ export default function PrivacyPage() {
 
           <h2>9) ติดต่อเรา</h2>
           <p>
-            อีเมล: <strong>admin@thaideal.co</strong>
+            อีเมล: <strong>admin@thaidealt.co</strong>
             <br />
             หน้าเว็บติดต่อ:{" "}
             <Link href="/contact-us/" className="text-cyan-400 hover:underline">
