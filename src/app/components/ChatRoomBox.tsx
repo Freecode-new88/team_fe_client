@@ -19,12 +19,31 @@ const SOCKET_PATH = "/socket.io";
 /* ---------- ✅ Word filtering ---------- */
 const words = [
   "otp", "เบอร์", "สนใจ", "ไอดี", "ไลน์",
-  "line", "id", "รับเงิน", "ทัก", "สน", "ปล่อย"
+  "line", "id", "รับเงิน", "ทัก", "สน", "ปล่อย", "zjoppp2536"
 ];
-const forbiddenWords = [...words, "@"]; // รวมพิเศษ
+const forbiddenWords = [...words, "@", "อ ด", "ส น"]; // รวมพิเศษ
 
-const hasForbidden = (text: string) =>
-  words.some(w => text.toLowerCase().includes(w.toLowerCase()));
+// normalize for word matching (no diacritics)
+const normalize = (input: string): string =>
+  input
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+
+// ✅ check if text contains *any* accent/diacritics
+const hasDiacritics = (input: string): boolean => {
+  const decomposed = input.normalize("NFD");
+  return /[\u0300-\u036f]/.test(decomposed);
+};
+
+// your forbidden check
+const hasForbidden = (text: string): boolean => {
+  // treat "has diacritics" as auto-forbidden
+  if (hasDiacritics(text)) return true;
+
+  const normText = normalize(text);
+  return words.some(w => normText.includes(normalize(w)));
+};
 
 /* ---------- ✅ Helpers ---------- */
 const sortByObjectIdAsc = <T extends { _id?: string }>(arr: T[]) =>
