@@ -17,6 +17,7 @@ import { getSocket } from '@/services/socket';
 import { maskUser, rand0to30 } from '@/utils/random';
 import LastUpdated from "./LastUpdated";
 import { CountdownTimer } from "@/components/CountdownTimer";
+import PreditScoreBox from "./PreditScoreBox";
 const ChatRoomBox = dynamic(() => import("./ChatRoomBox"), { ssr: false });
 
 const LeftImageWithGifts = dynamic(
@@ -366,6 +367,12 @@ export default function Promo() {
     setSubmitting(false);
     setModalStep('captcha');
   };
+  const maskCode = (code: string) => {
+    if (!code) return "";
+    const last4 = code.slice(-4);   // เอา 4 ตัวท้าย
+    return `xxxx${last4}`;
+  };
+
 
   /* ---------- render ---------- */
   return (
@@ -597,7 +604,7 @@ export default function Promo() {
                           </div>
                         </td>
                         <td className="py-2 sm:py-3 text-[10px] sm:text-xs md:text-sm">
-                          {r.code}
+                          {maskCode(r.code)}
                         </td>
                         <td className="py-2 sm:py-3 text-[10px] sm:text-xs md:text-sm">
                           ได้รับ {r.point} แต้ม
@@ -619,7 +626,7 @@ export default function Promo() {
         {/* Right: Chat Room */}
         <div className="col-span-12 md:col-span-6">
           <div className="relative h-full">
-            <ChatRoomBox />
+            <PreditScoreBox />
           </div>
         </div>
       </div>

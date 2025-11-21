@@ -1,0 +1,198 @@
+'use client';
+import { getUnplayedCurrentDate } from "@/lib/getUnplayedCurrentDate";
+import { colors } from "@/utils/color";
+import React, { useState, useRef, useEffect } from "react";
+import { toast } from "react-toastify";
+import { io, Socket } from "socket.io-client";
+import PredictScoreDialog from "./PredictScoreDialog";
+
+export enum MatchStatus {
+  TBD = "TBD",   // กำหนดวันยังไม่ชัดเจน
+  NS = "NS",     // ยังไม่เริ่ม (Not Started)
+  "1H" = "1H",   // ครึ่งแรก
+  HT = "HT",     // พักครึ่ง
+  "2H" = "2H",   // ครึ่งหลัง
+  ET = "ET",     // ต่อเวลาพิเศษ
+  BT = "BT",     // พักระหว่างต่อเวลา
+  P = "P",       // ยิงจุดโทษ
+  FT = "FT",     // จบเกม (Full Time)
+  AET = "AET",   // จบเกมหลังต่อเวลา
+  PEN = "PEN",   // จบเกมหลังดวลจุดโทษ
+  SUSP = "SUSP", // เลื่อนแบบไม่มีกำหนด (Suspended)
+  INT = "INT",   // หยุดระหว่างแข่ง (Interrupted)
+  PST = "PST",   // เลื่อน (Postponed)
+  CANC = "CANC", // ยกเลิก (Cancelled)
+  ABD = "ABD",   // ยกเลิกเกมกลางคัน (Abandoned)
+  WO = "WO",     // ชนะบาย (Walkover)
+  LIVE = "LIVE"  // กำลังแข่ง (บางลีกใช้แทน 1H/2H)
+}
+
+export interface MatchData {
+  _id: string;
+  matchId: number;
+  league: {
+    id: number;
+    name: string;
+    season: number;
+    flag: string | null;
+    logo: string;
+    country: string;
+  };
+  date: string;  // ISO String
+  status: MatchStatus; // "NS" | "FT" | ...
+  homeTeam: {
+    id: number;
+    name: string;
+    logo: string;
+  };
+  awayTeam: {
+    id: number;
+    name: string;
+    logo: string;
+  };
+  goals: {
+    home: number | null;
+    away: number | null;
+  };
+  score: {
+    fulltime: {
+      home: number | null;
+      away: number | null;
+    };
+    halftime: {
+      home: number | null;
+      away: number | null;
+    };
+  };
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+
+/* ---------- ✅ Component ---------- */
+const PreditScoreBox: React.FC = () => {
+  const [matches, setMatches] = useState<MatchData[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedMatch, setSelectedMatch] = useState<any>(null);
+
+  useEffect(() => {
+    const loadMatches = async () => {
+      try {
+        const data = await getUnplayedCurrentDate();
+
+        setMatches(data?.matches ?? []);
+      } catch (e) {
+        console.error("error load matches:", e);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadMatches();
+  }, []);
+
+  /* ---------- UI ---------- */
+  return (
+    <>
+      <section
+        aria-label="กิจกรรมทายผลบอล รับโบนัสฟรี"
+        className="relative h-full flex flex-col"
+      >
+        <h2 className="text-lg font-bold mb-2 text-white leading-snug">
+          ⚽️ กิจกรรมทายผลบอล รับโบนัสฟรี
+        </h2>
+
+        {/* Mach List */}
+        <div
+          className="flex-1 overflow-y-auto max-h-[430px] p-3 rounded-lg border border-fuchsia-400/40 bg-black/50 mb-3 scroll-smooth"
+        >
+          {matches.length === 0 ? (
+            <p className="text-gray-400 text-center text-sm mt-12">
+              ตอนนี้ยังไม่มีแมตช์เลยค่ะ รออีกนิดน้า~ ⚽️✨
+            </p>
+          ) : (
+            matches
+              .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+              .map((m, i) => {
+
+                const showScore = ["1H", "HT", "2H", "LIVE", "FT", "AET", "PEN"].includes(m.status);
+                const timeOrScore = showScore
+                  ? `${m.goals?.home ?? "-"} : ${m.goals?.away ?? "-"}`
+                  : new Date(m.date).toLocaleTimeString("th-TH", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  });
+
+                return (
+                  <div
+                    key={m._id ?? `temp-${i}`}
+                    className="flex items-center justify-between bg-zinc-900/60 rounded-lg px-4 py-3 mb-2"
+                  >
+                    {/* LEFT: status */}
+                    <div className="w-12 text-xs md:text-sm font-bold text-gray-300 flex items-center gap-1">
+                      <span>{m.status}</span>
+                      {["1H", "HT", "2H", "LIVE"].includes(m.status) && (
+                        <span className="text-red-500 text-[10px] md:text-xs">🔴</span>
+                      )}
+                    </div>
+
+                    {/* HOME TEAM */}
+                    <div className="flex items-center gap-2 flex-1 justify-end">
+                      {/* ชื่อทีม - desktop only */}
+                      <span className="text-sm text-white text-right hidden md:inline">
+                        {m.homeTeam.name}
+                      </span>
+
+                      {/* Logo - always show */}
+                      <img src={m.homeTeam.logo} alt="" className="w-6 h-6 rounded" />
+                    </div>
+
+                    {/* TIME OR SCORE */}
+                    <div className="w-14 text-center text-white font-semibold text-xs md:text-base">
+                      {timeOrScore}
+                    </div>
+
+                    {/* AWAY TEAM */}
+                    <div className="flex items-center gap-2 flex-1">
+                      {/* Logo */}
+                      <img src={m.awayTeam.logo} alt="" className="w-6 h-6 rounded" />
+
+                      {/* ชื่อทีม - desktop only */}
+                      <span className="text-sm text-white hidden md:inline">
+                        {m.awayTeam.name}
+                      </span>
+                    </div>
+
+                    {/* Predict Button */}
+                    <button
+                      disabled={m.status !== "NS"}
+                      onClick={() => {
+                        setSelectedMatch(m);
+                        setDialogOpen(true);
+                      }}
+                      className={`ml-3 px-3 py-1 rounded text-white text-xs transition-all
+    ${m.status === "NS"
+                          ? "bg-fuchsia-600 hover:bg-fuchsia-700 cursor-pointer"
+                          : "bg-zinc-600 cursor-not-allowed opacity-50"
+                        }`}
+                    >
+                      ⚽ ทายผล
+                    </button>
+                  </div>
+                );
+              })
+          )}
+        </div>
+      </section>
+      <PredictScoreDialog
+        open={dialogOpen}
+        onClose={() => setDialogOpen(false)}
+        match={selectedMatch}
+      />
+    </>
+  );
+};
+
+export default PreditScoreBox;
