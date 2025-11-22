@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export async function getUnplayedCurrentDate(status: string = "NS") {
-  const BASE_URL = "https://chat.sexfotzen.com";  // เช่น https://chat.sexfotzen.com
+  const BASE_URL = "https://chat.sexfotzen.com";
 
   if (!BASE_URL) {
     throw new Error("⚠️ NEXT_FOOTBALL_BASE_URL not found");
@@ -13,11 +13,10 @@ export async function getUnplayedCurrentDate(status: string = "NS") {
     const res = await axios.get(`${BASE_URL}/matches/unplayed-db`, {
       params: {
         date: today,
-        status
+        limit: 300
       },
       timeout: 20000
     });
-
     return res.data; // ✔ ส่งเต็ม response ทั้งก้อน
 
   } catch (err: any) {

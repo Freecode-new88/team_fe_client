@@ -1,9 +1,6 @@
 'use client';
 import { getUnplayedCurrentDate } from "@/lib/getUnplayedCurrentDate";
-import { colors } from "@/utils/color";
 import React, { useState, useRef, useEffect } from "react";
-import { toast } from "react-toastify";
-import { io, Socket } from "socket.io-client";
 import PredictScoreDialog from "./PredictScoreDialog";
 
 export enum MatchStatus {
@@ -81,7 +78,6 @@ const PreditScoreBox: React.FC = () => {
     const loadMatches = async () => {
       try {
         const data = await getUnplayedCurrentDate();
-
         setMatches(data?.matches ?? []);
       } catch (e) {
         console.error("error load matches:", e);
@@ -146,18 +142,28 @@ const PreditScoreBox: React.FC = () => {
                       </span>
 
                       {/* Logo - always show */}
-                      <img src={m.homeTeam.logo} alt="" className="w-6 h-6 rounded" />
+                      <img src={m.homeTeam.logo} title={m.homeTeam.name} alt={m.homeTeam.name} className="w-6 h-6 rounded" />
                     </div>
 
-                    {/* TIME OR SCORE */}
-                    <div className="w-14 text-center text-white font-semibold text-xs md:text-base">
-                      {timeOrScore}
+                    {/* LEAGUE LOGO + TIME OR SCORE */}
+                    <div className="w-14 flex flex-col items-center justify-center text-white">
+                      {m.league.logo && (
+                        <img
+                          src={m.league.logo}
+                          alt={m.league.name}
+                          title={m.league.name}
+                          className="w-4 h-4 mb-1"
+                        />
+                      )}
+                      <span className="text-center font-semibold text-xs md:text-base">
+                        {timeOrScore}
+                      </span>
                     </div>
 
                     {/* AWAY TEAM */}
                     <div className="flex items-center gap-2 flex-1">
                       {/* Logo */}
-                      <img src={m.awayTeam.logo} alt="" className="w-6 h-6 rounded" />
+                      <img src={m.awayTeam.logo}  title={m.awayTeam.name} alt={m.awayTeam.name} className="w-6 h-6 rounded" />
 
                       {/* ชื่อทีม - desktop only */}
                       <span className="text-sm text-white hidden md:inline">
@@ -173,7 +179,7 @@ const PreditScoreBox: React.FC = () => {
                         setDialogOpen(true);
                       }}
                       className={`ml-3 px-3 py-1 rounded text-white text-xs transition-all
-    ${m.status === "NS"
+                        ${m.status === "NS"
                           ? "bg-fuchsia-600 hover:bg-fuchsia-700 cursor-pointer"
                           : "bg-zinc-600 cursor-not-allowed opacity-50"
                         }`}
