@@ -10,15 +10,17 @@ import {
 import { claimBonus, getPredictions } from "@/lib/getUnplayedCurrentDate";
 import { PredictionItem } from "@/model/Predictions.model";
 import { toast } from "react-toastify";
+import PredictTermsDialog from "./PredictTermsDialog";
 
 export default function MyPredictionDialog({ open, onClose }: any) {
     const [items, setItems] = useState<PredictionItem[]>([]);
     const [username, setUsername] = useState("");
 
     const [page, setPage] = useState(1);
-    const [limit] = useState(1);
+    const [limit] = useState(10);
     const [totalPages, setTotalPages] = useState(1);
     const [claimingId, setClaimingId] = useState<string | null>(null);
+    const [showTerms, setShowTerms] = useState(false);
 
     const [searchUsername, setSearchUsername] = useState<
         string | undefined
@@ -66,6 +68,7 @@ export default function MyPredictionDialog({ open, onClose }: any) {
             setTotalPages(1);
             setPage(1);
             setSearchUsername(undefined);
+            setShowTerms(false)
         }}>
             <Dialog onClose={onClose} className="relative z-50">
 
@@ -228,8 +231,20 @@ export default function MyPredictionDialog({ open, onClose }: any) {
                                                     ).toLocaleString("th-TH")}
                                                 </div>
 
+                                                {p.restricted && (
+                                                    <div className="text-red-500 text-xs font-bold flex items-center gap-1">
+                                                        ❌ ระเมิดกติกา
+                                                        <button
+                                                            onClick={() => setShowTerms(true)}
+                                                            className="underline text-blue-300 hover:text-blue-400 cursor-pointer"
+                                                        >
+                                                            อ่านเงื่อนไข
+                                                        </button>
+                                                    </div>
+                                                )}
+
                                                 {/* Claim Button */}
-                                                {p.result === "correct" && !p.claim && (
+                                                {p.result === "correct" && !p.claim && !p.restricted && (
                                                     <button
                                                         onClick={async () => {
                                                             try {
@@ -313,6 +328,11 @@ export default function MyPredictionDialog({ open, onClose }: any) {
                     </TransitionChild>
                 </div>
             </Dialog>
+            {/* TERMS DIALOG */}
+            <PredictTermsDialog
+                open={showTerms}
+                onClose={() => setShowTerms(false)}
+            />
         </Transition>
     );
 }

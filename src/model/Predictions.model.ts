@@ -77,7 +77,7 @@ export interface PredictionItem {
 
   claim: boolean;
   luckyCode: string | null;
-
+  restricted: boolean;
   createdAt: string;
   __v: number;
 }
