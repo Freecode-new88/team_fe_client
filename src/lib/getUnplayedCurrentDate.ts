@@ -1,7 +1,7 @@
 import { PredictionsResponse } from "@/model/Predictions.model";
 import axios from "axios";
 
-const BASE_URL = "https://chat.sexfotzen.com"; // "http://127.0.0.1:3600"; //
+const BASE_URL =  "https://chat.sexfotzen.com"; // "http://127.0.0.1:3600"; //
 
 /* ---------------------------------------------
    📌 GET UNPLAYED MATCHES (Today)

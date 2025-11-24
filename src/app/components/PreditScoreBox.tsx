@@ -198,14 +198,19 @@ const PreditScoreBox: React.FC = () => {
                         setSelectedMatch(m);
                         setDialogOpen(true);
                       }}
-                      className={`ml-3 px-3 py-1 rounded text-white text-xs transition-all
-                        ${!isDisabled
+                      className={`ml-3 px-3 py-1 rounded text-white text-xs transition-all flex items-center gap-1
+    ${!isDisabled
                           ? "bg-fuchsia-600 hover:bg-fuchsia-700 cursor-pointer"
                           : "bg-zinc-600 cursor-not-allowed opacity-50"
                         }
-                      `}
+  `}
                     >
-                      ⚽ ทายผล
+                      <img
+                        src="https://file.781243555.com/emoji/fire.webp"
+                        style={{ width: 16, height: 16 }}
+                        alt=""
+                      />
+                      ทายผล
                     </button>
                   </div>
                 );
