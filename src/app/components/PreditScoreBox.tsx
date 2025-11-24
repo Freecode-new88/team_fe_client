@@ -2,6 +2,7 @@
 import { getUnplayedCurrentDate } from "@/lib/getUnplayedCurrentDate";
 import React, { useState, useRef, useEffect } from "react";
 import PredictScoreDialog from "./PredictScoreDialog";
+import MyPredictionDialog from "./MyPredictionDialog";
 
 export enum MatchStatus {
   TBD = "TBD",   // กำหนดวันยังไม่ชัดเจน
@@ -66,6 +67,20 @@ export interface MatchData {
   __v: number;
 }
 
+function formatThai(dt: number) {
+  const date = new Date(dt);
+
+  const options: Intl.DateTimeFormatOptions = {
+    timeZone: "Asia/Bangkok",
+    hour: "2-digit",
+    minute: "2-digit",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+  };
+
+  return new Intl.DateTimeFormat("th-TH", options).format(date);
+}
 
 /* ---------- ✅ Component ---------- */
 const PreditScoreBox: React.FC = () => {
@@ -73,6 +88,7 @@ const PreditScoreBox: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedMatch, setSelectedMatch] = useState<any>(null);
+  const [openHistory, setOpenHistory] = useState(false);
 
   useEffect(() => {
     const loadMatches = async () => {
@@ -90,6 +106,7 @@ const PreditScoreBox: React.FC = () => {
   }, []);
 
   /* ---------- UI ---------- */
+
   return (
     <>
       <section
@@ -121,6 +138,9 @@ const PreditScoreBox: React.FC = () => {
                     minute: "2-digit",
                   });
 
+                const matchDate = new Date(m.date).getTime();
+                const now = Date.now();
+                const isDisabled = m.status !== "NS" || matchDate < now;
                 return (
                   <div
                     key={m._id ?? `temp-${i}`}
@@ -163,7 +183,7 @@ const PreditScoreBox: React.FC = () => {
                     {/* AWAY TEAM */}
                     <div className="flex items-center gap-2 flex-1">
                       {/* Logo */}
-                      <img src={m.awayTeam.logo}  title={m.awayTeam.name} alt={m.awayTeam.name} className="w-6 h-6 rounded" />
+                      <img src={m.awayTeam.logo} title={m.awayTeam.name} alt={m.awayTeam.name} className="w-6 h-6 rounded" />
 
                       {/* ชื่อทีม - desktop only */}
                       <span className="text-sm text-white hidden md:inline">
@@ -173,16 +193,17 @@ const PreditScoreBox: React.FC = () => {
 
                     {/* Predict Button */}
                     <button
-                      disabled={m.status !== "NS"}
+                      disabled={isDisabled}
                       onClick={() => {
                         setSelectedMatch(m);
                         setDialogOpen(true);
                       }}
                       className={`ml-3 px-3 py-1 rounded text-white text-xs transition-all
-                        ${m.status === "NS"
+                        ${!isDisabled
                           ? "bg-fuchsia-600 hover:bg-fuchsia-700 cursor-pointer"
                           : "bg-zinc-600 cursor-not-allowed opacity-50"
-                        }`}
+                        }
+                      `}
                     >
                       ⚽ ทายผล
                     </button>
@@ -191,11 +212,22 @@ const PreditScoreBox: React.FC = () => {
               })
           )}
         </div>
+        {/* check my  prediction */}
+        <button
+          onClick={() => setOpenHistory(true)}
+          className="mt-2 w-full bg-fuchsia-700 hover:bg-fuchsia-800 text-white py-2 rounded text-sm font-semibold transition cursor-pointer"
+        >
+          📋 ตรวจสอบผลทายของฉัน
+        </button>
       </section>
       <PredictScoreDialog
         open={dialogOpen}
         onClose={() => setDialogOpen(false)}
         match={selectedMatch}
+      />
+      <MyPredictionDialog
+        open={openHistory}
+        onClose={() => setOpenHistory(false)}
       />
     </>
   );

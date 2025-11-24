@@ -9,6 +9,8 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.9",
+    "@heroicons/react": "^2.2.0",
     "axios": "^1.12.2",
     "canvas-confetti": "^1.9.3",
     "clsx": "^2.1.1",

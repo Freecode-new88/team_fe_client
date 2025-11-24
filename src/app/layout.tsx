@@ -157,7 +157,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           right={{ label: "สมัคร MK8", href: MK8LINK }}
         />
         <Footer />
-        <ToastContainer />
+        <ToastContainer autoClose={5000} />
       </body>
     </html>
   );
