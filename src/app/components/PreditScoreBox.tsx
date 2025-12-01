@@ -110,11 +110,11 @@ const PreditScoreBox: React.FC = () => {
   return (
     <>
       <section
-        aria-label="กิจกรรมทายผลบอล รับโบนัสฟรี"
+        aria-label="กิจกรรมทายผลบอล รับโบนัสฟรี 3 คู่ต่อวัน"
         className="relative h-full flex flex-col"
       >
         <h2 className="text-lg font-bold mb-2 text-white leading-snug">
-          ⚽️ กิจกรรมทายผลบอล รับโบนัสฟรี
+          ⚽️ กิจกรรมทายผลบอล รับโบนัสฟรี 3 คู่ต่อวัน
         </h2>
 
         {/* Mach List */}

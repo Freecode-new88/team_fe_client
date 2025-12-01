@@ -75,7 +75,7 @@ const PredictTermsDialog: React.FC<TermsDialogProps> = ({ open, onClose }) => {
           <h4 className="font-semibold mb-1">เงื่อนไขการเข้าร่วม:</h4>
           <ul className="list-disc list-inside mb-3 space-y-1">
             <li>ลูกค้ามียอดฝากรวมภายในวันตั้งแต่ 50 บาทขึ้นไป</li>
-            <li>1 บัญชี / 1 IP สามารถร่วมกิจกรรมได้เพียง 1 ครั้งต่อวัน</li>
+            <li>1 บัญชี / 1 IP สามารถร่วมกิจกรรมได้ 3 ครั้งต่อวัน (คู่ละครั้งเท่านั้น)</li>
             <li>ชื่อ-นามสกุล ต้องตรงกับข้อมูลสมาชิกในระบบ</li>
           </ul>
 
