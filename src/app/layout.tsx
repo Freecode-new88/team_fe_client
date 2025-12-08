@@ -128,16 +128,38 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
 
-        {/* ✅ GA4 */}
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-GKZCJB90H9" strategy="lazyOnload" />
-        <Script id="ga4-init" strategy="lazyOnload">
+        {/* ⚡ Lazy GA4: load only after user interaction */}
+        <Script id="lazy-ga4" strategy="afterInteractive">
           {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            window.gtag = gtag;
-            gtag('js', new Date());
-            gtag('config', 'G-GKZCJB90H9', { transport_type: 'beacon' });
-          `}
+  function loadGA4() {
+    if (window.__gaLoaded) return;
+    window.__gaLoaded = true;
+
+    const gtagScript = document.createElement('script');
+    gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=G-GKZCJB90H9';
+    gtagScript.async = true;
+    document.head.appendChild(gtagScript);
+
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    window.gtag = gtag;
+
+    gtag('js', new Date());
+    gtag('config', 'G-GKZCJB90H9', {
+      transport_type: 'beacon'
+    });
+
+    window.removeEventListener('scroll', loadGA4);
+    window.removeEventListener('mousemove', loadGA4);
+    window.removeEventListener('touchstart', loadGA4);
+    window.removeEventListener('click', loadGA4);
+  }
+
+  window.addEventListener('scroll', loadGA4);
+  window.addEventListener('mousemove', loadGA4);
+  window.addEventListener('touchstart', loadGA4);
+  window.addEventListener('click', loadGA4);
+`}
         </Script>
 
         {/* ✅ Ahrefs Analytics */}
