@@ -163,7 +163,14 @@ const PreditScoreBox: React.FC = () => {
 
                       {/* Logo - always show */}
                       <div className="w-6 h-6 rounded overflow-hidden flex items-center justify-center bg-gray-900">
-                        <img src={m.homeTeam.logo} className="w-full h-full object-cover" />
+                        <img
+                          src={m.homeTeam.logo}
+                          alt={m.homeTeam.name}
+                          title={m.homeTeam.name}
+                          width="24"
+                          height="24"
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     </div>
 
@@ -190,6 +197,8 @@ const PreditScoreBox: React.FC = () => {
                           src={m.awayTeam.logo}
                           alt={m.awayTeam.name}
                           title={m.awayTeam.name}
+                          width="24"
+                          height="24"
                           className="w-full h-full object-cover"
                         />
                       </div>
