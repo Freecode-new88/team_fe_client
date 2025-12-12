@@ -1,5 +1,4 @@
 'use client';
-import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef, useState } from 'react';
 import styles from '../f168.module.css';
 import copy from 'copy-to-clipboard';
@@ -18,12 +17,6 @@ import { maskUser, rand0to30 } from '@/utils/random';
 import LastUpdated from "./LastUpdated";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import PreditScoreBox from "./PreditScoreBox";
-const ChatRoomBox = dynamic(() => import("./ChatRoomBox"), { ssr: false });
-
-const LeftImageWithGifts = dynamic(
-  () => import("@/components/LeftImageWithGifts").then(m => m.LeftImageWithGifts),
-  { ssr: false } // 👈 ปิด SSR
-);
 
 /* ---------- constants / helpers ---------- */
 const VISIBLE_COUNT = 6;
@@ -46,9 +39,12 @@ function upsertPromos(prev: PromoItem[], incoming: PromoItem[]) {
   for (const it of incoming) map.set(it.code, it);
   const merged = Array.from(map.values());
   merged.sort(
-    (a, b) =>
-      new Date(b.time.replace(' ', 'T')).getTime() -
-      new Date(a.time.replace(' ', 'T')).getTime()
+    (a, b) => {
+      const timeA = a.time ? a.time.replace(' ', 'T') : ''; // ตรวจสอบก่อนใช้ replace
+      const timeB = b.time ? b.time.replace(' ', 'T') : ''; // ตรวจสอบก่อนใช้ replace
+
+      return new Date(timeB).getTime() - new Date(timeA).getTime();
+    }
   );
   return merged;
 }
@@ -115,7 +111,7 @@ export default function Promo() {
       const normalized: PromoItem = {
         ...payload,
         user: maskUser({ user: payload.user }),
-        time: payload.time.includes("T") ? payload.time : payload.time.replace(" ", "T"),
+        time: payload.time && payload.time.includes("T") ? payload.time : (payload.time ? payload.time.replace(" ", "T") : ''),
         emoji: rand0to30()
       };
 
@@ -253,6 +249,11 @@ export default function Promo() {
 
   /* helpers */
   const onlyTime = (ts: string) => {
+    // ตรวจสอบว่า ts เป็น string และไม่ใช่ค่า null หรือ undefined
+    if (typeof ts !== 'string' || ts.trim() === '') {
+      return ''; // คืนค่าว่างถ้า ts ไม่ใช่สตริงที่ถูกต้อง
+    }
+
     const d = new Date(ts);
     if (!Number.isNaN(d.getTime())) {
       const hh = String(d.getHours()).padStart(2, '0');
@@ -260,6 +261,8 @@ export default function Promo() {
       const ss = String(d.getSeconds()).padStart(2, '0');
       return `${hh}:${mm}:${ss}`;
     }
+
+    // ถ้า ts ไม่สามารถแปลงเป็นวันเวลาได้ ให้ใช้ replace เพื่อแปลง T เป็นช่องว่าง
     const s = ts.replace('T', ' ');
     return s.length >= 19 ? s.slice(11, 19) : s.slice(11);
   };
