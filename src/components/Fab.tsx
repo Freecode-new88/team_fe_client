@@ -1,54 +1,130 @@
 "use client";
 
+import { useState } from "react";
+import { X, Send, Phone, Gift } from "lucide-react";
 import Image from "next/image";
 
 export function Fab() {
-  const avatarUrl = "/images/ryan-giggs.jpg";
-
-  const handleFabClick = () => {
-    const win = window as any;
-    win?.gtag?.("event", "chat_ai", {
-      event_category: "interaction",
-      event_label: "Telegram Floating Button",
-      location: "fab",
-      destination: "telegram_bot",
-      link_url: "https://t.me/f168th_bot",
-      debug_mode: true,
-    });
-  };
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className="fixed bottom-20 sm:bottom-10 right-5 z-50 group">
-      <a
-        href="https://t.me/f168th_bot"
-        target="_blank"
-        rel="noopener noreferrer nofollow"
-        aria-label="เปิด Telegram กับบอท f168th_bot"
-        onClick={handleFabClick}
-        className="
-          cursor-pointer
-          grid h-16 w-16 place-items-center overflow-hidden rounded-full
-          bg-black
-          border-2 border-pink-500
-          ring-2 ring-pink-400/60
-          shadow-[0_0_20px_#ff00aa,0_0_40px_#ff00aa]
-          hover:shadow-[0_0_25px_#ff00aa,0_0_60px_#ff00aa]
-          transition-all duration-200 ease-in-out
-          focus:outline-none focus-visible:ring-4 focus-visible:ring-pink-300/60
-          active:scale-95
-        "
-      >
-        <Image
-          src={avatarUrl}
-          alt="เปิดแชตกับ f168 Telegram Bot"
-          width={64}
-          height={64}
-          className="rounded-full object-cover"
-          draggable={false}
-          loading="lazy"
-          decoding="async"
-        />
-      </a>
+    <div className="fixed bottom-10 right-6 z-50">
+      <div className="relative flex items-center justify-center">
+
+        {/* === Telegram (บนตรง) === */}
+        <a
+          href="https://t.me/f168th_bot"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`
+    absolute h-12 w-12 rounded-full
+    overflow-hidden
+    border-2
+    transition-all duration-300
+    ${open
+              ? "-translate-y-24 opacity-100 scale-100"
+              : "opacity-0 scale-0"}
+  `}
+          style={{
+            borderColor: "#FC8B00",
+            boxShadow: "0 0 12px #FC8B00, 0 0 28px #FC8B00"
+          }}
+        >
+          <Image
+            src="/images/ryan-giggs.jpg"
+            alt="Telegram"
+            fill
+            className="object-cover"
+            sizes="48px"
+          />
+        </a>
+
+        {/* === Chat (45° ซ้ายบน) === */}
+        <a
+          href="https://t.me/th789b_bot"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`
+    absolute h-12 w-12 rounded-full
+    overflow-hidden
+    border-2
+    shadow-lg transition-all duration-300
+    ${open
+              ? "-translate-x-16 -translate-y-16 opacity-100 scale-100"
+              : "opacity-0 scale-0"}
+  `}
+          style={{
+            borderColor: "#fc8f00",
+            boxShadow: "0 0 12px #fc8f00, 0 0 24px #fc8f00"
+          }}
+        >
+          <Image
+            src="/images/luis-suarez.jpg"
+            alt="Chat"
+            fill
+            className="object-cover"
+            sizes="48px"
+          />
+        </a>
+
+        {/* === Call (ซ้ายตรง) === */}
+        <a
+          href="https://t.me/jun88VIPbot"
+          target="_blank"
+          rel="noopener noreferrer"
+          className={`
+    absolute h-12 w-12 rounded-full
+    overflow-hidden
+    border-2
+    shadow-lg transition-all duration-300
+    ${open
+              ? "-translate-x-24 opacity-100 scale-100"
+              : "opacity-0 scale-0"}
+  `}
+          style={{
+            borderColor: "#3CAAE1",
+            boxShadow: "0 0 12px #3CAAE1"
+          }}
+        >
+          <Image
+            src="/images/manny-pacquiao.jpg"
+            alt="Call"
+            fill
+            className="object-cover"
+            sizes="48px"
+          />
+        </a>
+
+        {/* === Main Button === */}
+        <button
+          onClick={() => setOpen(!open)}
+          className="
+    relative
+    fixed bottom-7 right-0 z-50
+    h-16 w-16 rounded-full
+    overflow-hidden
+    border-2 border-white
+    shadow-[0_0_25px_#ff00aa,0_0_50px_#ff00aa]
+    transition-all duration-300
+    active:scale-95
+  "
+        >
+          <Image
+            src="/images/gift.jpg"
+            alt="Gift"
+            fill
+            className="object-cover"
+            sizes="64px"
+          />
+
+          {open && (
+            <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+              <X size={28} className="text-white" />
+            </div>
+          )}
+        </button>
+
+      </div>
     </div>
   );
 }
