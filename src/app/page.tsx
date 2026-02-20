@@ -1,5 +1,3 @@
-'use client';
-
 import styles from './f168.module.css';
 import Promo from './components/promo';
 import Promotions from './components/Promotions';

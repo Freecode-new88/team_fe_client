@@ -1,5 +1,6 @@
 'use client';
 import { colors } from "@/utils/color";
+import { safeLocalStorage } from "@/utils/storage";
 import React, { useState, useRef, useEffect } from "react";
 import { toast } from "react-toastify";
 import { io, Socket } from "socket.io-client";
@@ -73,7 +74,7 @@ const ChatRoomBox: React.FC = () => {
 
   /* ---------- Load username ---------- */
   useEffect(() => {
-    const saved = localStorage.getItem("chat_username");
+    const saved = safeLocalStorage.get("chat_username");
     if (saved && !forbiddenWords.some(w => saved.toLowerCase().includes(w)))
       setUsername(saved);
   }, []);
@@ -146,7 +147,7 @@ const ChatRoomBox: React.FC = () => {
       toast.warn("ชื่อมีคำต้องห้าม");
       return;
     }
-    localStorage.setItem("chat_username", name);
+    safeLocalStorage.set("chat_username", name);
     setUsername(name);
   };
 

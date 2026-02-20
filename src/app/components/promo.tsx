@@ -17,6 +17,8 @@ import { maskUser, rand0to30 } from '@/utils/random';
 import LastUpdated from "./LastUpdated";
 import { CountdownTimer } from "@/components/CountdownTimer";
 import PreditScoreBox from "./PreditScoreBox";
+import Image from "next/image";
+import { safeSessionStorage } from "@/utils/storage";
 
 /* ---------- constants / helpers ---------- */
 const VISIBLE_COUNT = 6;
@@ -88,9 +90,7 @@ export default function Promo() {
 
   useEffect(() => {
     const clearOnUnload = () => {
-      try {
-        sessionStorage.removeItem(CLAIMS_BOOTSTRAPPED_KEY);
-      } catch { }
+      safeSessionStorage.remove(CLAIMS_BOOTSTRAPPED_KEY);
     };
     window.addEventListener('beforeunload', clearOnUnload);
     return () => window.removeEventListener('beforeunload', clearOnUnload);
@@ -183,7 +183,7 @@ export default function Promo() {
   /* ----- Get Recent claims ----- */
   useEffect(() => {
     let alive = true;
-    /* if (sessionStorage.getItem(CLAIMS_BOOTSTRAPPED_KEY) === '1') {
+    /* if (safeSessionStorage.get(CLAIMS_BOOTSTRAPPED_KEY) === '1') {
        return;
      }*/
 
@@ -197,7 +197,7 @@ export default function Promo() {
       }));
 
       setClaimData(masked.slice(0, 8));
-      sessionStorage.setItem(CLAIMS_BOOTSTRAPPED_KEY, '1');
+      safeSessionStorage.set(CLAIMS_BOOTSTRAPPED_KEY, '1');
     })();
 
     return () => { alive = false; };
@@ -393,13 +393,13 @@ export default function Promo() {
         {/* Box 1 */}
         <div className={`${styles.box1} ${styles.leftBox}`}>
           <div className="relative">
-            <img
+            <Image
               src="/images/left1434.jpg"
               alt="ภาพประกอบโปรโมชัน"
               width={500}
               height={500}
-              loading="lazy"
-              decoding="async"
+              priority
+              sizes="(max-width: 768px) 100vw, 500px"
               className={`${styles.pokerArt} w-full h-auto object-cover rounded-xl`}
             />
 
@@ -417,13 +417,21 @@ export default function Promo() {
             {/* <LeftImageWithGifts count={6} /> */}
           </div>
           <div className={styles.formStack}>
+            <label htmlFor="promo-code" className="sr-only">
+              กรอกโค้ดโปรโมชัน
+            </label>
             <input
+              id="promo-code"
               className={styles.input}
               placeholder="กรอกโค้ดโปรโมชัน"
               value={promoCode}
               onChange={(e) => setPromoCode(e.target.value)}
             />
+            <label htmlFor="promo-site" className="sr-only">
+              เลือกเว็บไซต์
+            </label>
             <select
+              id="promo-site"
               className={styles.select}
               value={selectedSite}
               onChange={(e) => setSelectedSite(e.target.value as SiteKey)}

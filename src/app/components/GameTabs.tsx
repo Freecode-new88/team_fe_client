@@ -1,5 +1,3 @@
-'use client';
-import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { game_list } from "@/promotions/game_list";
@@ -14,25 +12,11 @@ function shuffle<T>(arr: T[]) {
   return a;
 }
 
+const MAX_GAMES = 24;
+const MOBILE_HIDE_FROM_INDEX = 12;
+
 export default function GameTabs() {
-  const [isMobile, setIsMobile] = useState(false);
-  const [hydrated, setHydrated] = useState(false);
-
-  // ✅ Detect viewport
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    check();
-    window.addEventListener("resize", check);
-    setHydrated(true);
-    return () => window.removeEventListener("resize", check);
-  }, []);
-
-  const randomGames = useMemo(() => {
-    const count = isMobile ? 12 : 24;
-    return shuffle(game_list).slice(0, count);
-  }, [isMobile]);
-
-  if (!hydrated) return null;
+  const randomGames = shuffle(game_list).slice(0, MAX_GAMES);
 
   return (
     <section
@@ -62,7 +46,7 @@ export default function GameTabs() {
             itemProp="itemListElement"
             itemScope
             itemType="https://schema.org/Game"
-            className="col-span-1 flex flex-col bg-[#121826] rounded-2xl shadow-lg shadow-black/30 overflow-hidden border border-gray-800 hover:border-cyan-500/40 hover:shadow-cyan-500/20 transition-all duration-300"
+            className={`col-span-1 flex flex-col bg-[#121826] rounded-2xl shadow-lg shadow-black/30 overflow-hidden border border-gray-800 hover:border-cyan-500/40 hover:shadow-cyan-500/20 transition-all duration-300 ${index >= MOBILE_HIDE_FROM_INDEX ? "hidden md:flex" : ""}`}
           >
             <Link
               href={`/slots/${game.path}/`}

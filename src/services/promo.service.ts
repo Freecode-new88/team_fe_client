@@ -1,6 +1,7 @@
 import api from "@/lib/axios";
 import type { SiteKey } from "../config/site";
 import { siteByKey } from "../config/site";
+import { safeLocalStorage } from "@/utils/storage";
 
 export type PromoItem = {
   user: string | "";
@@ -187,14 +188,22 @@ export async function verifyPromoCode(args: {
 
 export function getFp(): string {
   const KEY = "fp_id_v1";
-  const existing = localStorage.getItem(KEY);
+  const existing = safeLocalStorage.get(KEY);
   if (existing) return existing;
 
+  const nav = typeof navigator !== "undefined" ? navigator : undefined;
+  const scr = typeof screen !== "undefined" ? screen : undefined;
+  const tz = typeof Intl !== "undefined"
+    ? Intl.DateTimeFormat().resolvedOptions().timeZone ?? ""
+    : "";
+
   const data = [
-    navigator.userAgent,
-    Intl.DateTimeFormat().resolvedOptions().timeZone ?? "",
-    screen?.width, screen?.height, screen?.colorDepth,
-    navigator.language,
+    nav?.userAgent ?? "",
+    tz,
+    scr?.width ?? "",
+    scr?.height ?? "",
+    scr?.colorDepth ?? "",
+    nav?.language ?? "",
   ].join("|");
 
   // simple hash
@@ -204,7 +213,7 @@ export function getFp(): string {
     h |= 0;
   }
   const fp = `${Math.abs(h)}_${Date.now().toString(36).slice(-5)}`;
-  localStorage.setItem(KEY, fp);
+  safeLocalStorage.set(KEY, fp);
   return fp;
 }
 

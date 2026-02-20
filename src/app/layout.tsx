@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Prompt } from "next/font/google";
 import Script from "next/script";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -7,6 +8,12 @@ import { ToastContainer } from "react-toastify";
 import MobileBottomBar from "./components/BottomBar";
 import { F168lINK, MK8LINK } from "@/config/site";
 import "./globals.css";
+
+const prompt = Prompt({
+  subsets: ["thai", "latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
 
 /* -------------------------------------------------------------------------- */
 /* 🔹 SEO Metadata (คุณภาพสูง)                                               */
@@ -100,6 +107,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/icons/thaibet-icon-180.png" />
         <meta name="theme-color" content="#ffffff" />
+        <meta
+          name="description"
+          content="Thaideal แหล่งรวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีจาก F168/MK8 อัปเดตทุกวัน พร้อมข้อมูลเงื่อนไขจริงจากแหล่งทางการ เว็บไซต์ที่ได้รับการรับรองมาตรฐานสากล"
+        />
 
         {/* ✅ Verification */}
         <meta name="msvalidate.01" content="1C15A36A3A5BC7B9C3B25F930B875D3C" />
@@ -107,17 +118,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta
           name="ahrefs-site-verification"
           content="331fc5cd20258534cbd5350c2f14552462a6314fc939757dfcecc1554bc30388"
-        />
-
-        {/* ✅ Fonts */}
-        <link
-          rel="preload"
-          as="style"
-          href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap"
-        />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;600;700&display=swap"
         />
 
         {/* ✅ Combined JSON-LD */}
@@ -170,9 +170,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
 
-      <body className="m-0 bg-black text-white antialiased">
+      <body className={`${prompt.className} m-0 bg-black text-white antialiased`}>
         <Header />
-        {children}
+        <main id="main">{children}</main>
         <Fab />
         <MobileBottomBar
           left={{ label: "สมัคร F168", href: F168lINK }}
