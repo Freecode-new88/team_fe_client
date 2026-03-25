@@ -275,7 +275,7 @@ export default function Promo() {
                 <span className="text-2xl" aria-hidden>🏅</span>
                 <div>
                   <h2 className="text-base font-bold text-yellow-300 leading-tight">ชวนเพื่อน รับรางวัล</h2>
-                  <p className="text-xs text-gray-400">รวมรางวัลกว่า <span className="text-yellow-300 font-semibold">2,000฿+</span> ต่อรอบ</p>
+                  <p className="text-xs text-gray-400">รวมรางวัลกว่า <span className="text-yellow-300 font-semibold">2,000+ เครดิตฟรี</span> ต่อรอบ</p>
                 </div>
               </div>
             </div>
@@ -283,13 +283,14 @@ export default function Promo() {
             {/* TOP 3 podium */}
             <div className="flex gap-2">
               {([
-                { icon: '🥇', rank: '1st', prize: '500฿', color: 'text-yellow-300', ring: 'ring-yellow-500/40' },
-                { icon: '🥈', rank: '2nd', prize: '350฿', color: 'text-gray-200',   ring: 'ring-gray-500/30'   },
-                { icon: '🥉', rank: '3rd', prize: '200฿', color: 'text-amber-400',  ring: 'ring-amber-600/30'  },
+                { icon: '🥇', rank: '1st', prize: '500', color: 'text-yellow-300', ring: 'ring-yellow-500/40' },
+                { icon: '🥈', rank: '2nd', prize: '350', color: 'text-gray-200',   ring: 'ring-gray-500/30'   },
+                { icon: '🥉', rank: '3rd', prize: '200', color: 'text-amber-400',  ring: 'ring-amber-600/30'  },
               ] as const).map(({ icon, rank, prize, color, ring }) => (
                 <div key={rank} className={`flex-1 text-center rounded-xl py-1.5 bg-white/5 ring-1 ${ring}`}>
                   <div className="text-xl">{icon}</div>
                   <div className={`font-bold text-sm ${color}`}>{prize}</div>
+                  <div className="text-[9px] text-gray-400 leading-none">เครดิตฟรี</div>
                 </div>
               ))}
             </div>
@@ -297,15 +298,15 @@ export default function Promo() {
             {/* Ranks 4–100 ranges */}
             <div className="grid grid-cols-3 gap-1 text-[11px] text-center">
               {([
-                ['4',     '130฿'],
-                ['5',     '80฿'],
-                ['6–10',  '40฿'],
-                ['11–20', '20฿'],
-                ['21–50', '10฿'],
-                ['51–100','5฿'],
+                ['4',     '130'],
+                ['5',     '80'],
+                ['6–10',  '40'],
+                ['11–20', '20'],
+                ['21–50', '10'],
+                ['51–100','5'],
               ] as const).map(([rank, prize]) => (
                 <div key={rank} className="bg-white/5 border border-white/10 rounded-lg py-1 text-gray-300">
-                  <span className="text-gray-500">{rank}.</span> {prize}
+                  <span className="text-gray-500">{rank}.</span> {prize} <span className="text-[9px] text-gray-500">cr</span>
                 </div>
               ))}
             </div>
@@ -326,21 +327,7 @@ export default function Promo() {
             href="https://t.me/th789b_bot?start=web"
             target="_blank"
             rel="noopener noreferrer"
-            className="no-underline flex-shrink-0 w-full"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '6px',
-              marginTop: '6px',
-              padding: '8px 12px',
-              fontSize: '13px',
-              fontWeight: 800,
-              color: '#fff',
-              borderRadius: '10px',
-              background: 'linear-gradient(90deg, #f64f59, #c471ed, #12c2e9)',
-              whiteSpace: 'nowrap',
-            }}
+            className={styles.inviteBtn}
           >
             🏅 ร่วมชวนเพื่อน รับรางวัล — MK8
           </a>

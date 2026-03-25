@@ -14,7 +14,7 @@ export default function LastUpdated() {
   }, []);
 
   return (
-    <h2 className="my-2 text-white/60">
+    <h2 className="my-2 text-white/60" suppressHydrationWarning>
       อัปเดตล่าสุด: {s}
     </h2>
   );
