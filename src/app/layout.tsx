@@ -4,8 +4,8 @@ import Script from "next/script";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Fab } from "@/components/Fab";
-import { ToastContainer } from "react-toastify";
 import MobileBottomBar from "./components/BottomBar";
+import LazyToastContainer from "./components/LazyToastContainer";
 import { F168lINK, MK8LINK } from "@/config/site";
 import "./globals.css";
 
@@ -179,7 +179,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           right={{ label: "สมัคร MK8", href: MK8LINK }}
         />
         <Footer />
-        <ToastContainer autoClose={5000} />
+        <LazyToastContainer />
       </body>
     </html>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { X, Send, Phone, Gift } from "lucide-react";
+import { X } from "lucide-react";
 import Image from "next/image";
 
 export function Fab() {

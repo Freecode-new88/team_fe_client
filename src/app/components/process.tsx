@@ -1,5 +1,3 @@
-'use client'
-import { useEffect, useRef } from 'react';
 import styles from '../f168.module.css'
 
 type PROCESS = { step: string; title: string; text: string }
@@ -11,58 +9,20 @@ const procs: PROCESS[] = [
   { step: "04", title: "รอระบบยืนยันและรับโปรโมชั่น", text: "รอสักครู่ ระบบจะมอบสิทธิ์ให้อัตโนมัติ จากนั้นเริ่มใช้งานโปรได้ทันที" },
 ];
 
+const howToSchema = {
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  name: "ขั้นตอนรับโปรโมชั่น",
+  description: "วิธีรับโปรโมชั่นและการใช้งานโค้ดสำหรับสมาชิก Thaideal",
+  step: procs.map((p) => ({
+    "@type": "HowToStep",
+    position: Number(p.step),
+    name: p.title,
+    text: p.text,
+  })),
+};
+
 export default function Process() {
-  const gridRef = useRef<HTMLDivElement | null>(null);
-
-  // ✅ Lazy animation — ใช้ IntersectionObserver แบบเบาและ mobile-safe
-  useEffect(() => {
-    const items = gridRef.current?.querySelectorAll<HTMLElement>('[data-step-item]');
-    if (!items) return;
-
-    const io = new IntersectionObserver(
-      (entries, observer) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add(styles.stepVisible);
-            observer.unobserve(entry.target);
-          }
-        }
-      },
-      {
-        threshold: 0.2,
-        rootMargin: '80px',
-        // 👇 force TS accept experimental fields
-        ...({ trackVisibility: true, delay: 100 } as any),
-      }
-    );
-
-    items.forEach((el) => io.observe(el));
-    return () => io.disconnect();
-  }, []);
-
-  // ✅ ใส่ Schema Markup (Structured Data) เพื่อ SEO
-  useEffect(() => {
-    requestIdleCallback?.(() => {
-      const schema = {
-        "@context": "https://schema.org",
-        "@type": "HowTo",
-        name: "ขั้นตอนรับโปรโมชั่น",
-        description: "วิธีรับโปรโมชั่นและการใช้งานโค้ดสำหรับสมาชิก Thaideal",
-        step: procs.map((p) => ({
-          "@type": "HowToStep",
-          position: Number(p.step),
-          name: p.title,
-          text: p.text,
-        })),
-      };
-      const script = document.createElement("script");
-      script.type = "application/ld+json";
-      script.text = JSON.stringify(schema);
-      document.head.appendChild(script);
-      return () => document.head.removeChild(script);
-    });
-  }, []);
-
   return (
     <section
       className={`${styles.process} py-8 md:py-12`}
@@ -70,23 +30,22 @@ export default function Process() {
       itemScope
       itemType="https://schema.org/HowTo"
     >
-      {/* Heading สำหรับ SEO */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }}
+      />
+
       <div className={`${styles.sectionHeading} text-center mb-6`}>
         <h2 id="howto-heading" className={`${styles.gradientFont} text-2xl md:text-4xl font-extrabold`}>
           ขั้นตอนรับโปรโมชั่น 🪄
         </h2>
       </div>
 
-      {/* Grid layout: mobile-first */}
-      <div
-        ref={(el) => void (gridRef.current = el)}
-        className="grid grid-cols-12 gap-4 sm:gap-6 px-4 md:px-6 lg:px-12"
-      >
+      <div className="grid grid-cols-12 gap-4 sm:gap-6 px-4 md:px-6 lg:px-12">
         {procs.map((item, i) => (
           <article
             key={i}
-            className={`${styles.processItem} col-span-12 sm:col-span-6 lg:col-span-3 text-center p-4 md:p-6 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-sm hover:shadow-cyan-400/20 transition`}
-            data-step-item
+            className={`${styles.processItem} col-span-12 sm:col-span-6 lg:col-span-3 text-center p-4 md:p-6 rounded-2xl bg-white/10 border border-white/10 backdrop-blur-sm`}
             style={{ ['--i' as any]: i }}
             itemProp="step"
             itemScope

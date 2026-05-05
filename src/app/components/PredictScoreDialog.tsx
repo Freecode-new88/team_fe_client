@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import PredictTermsDialog from "./PredictTermsDialog";
 import { createPrediction } from "@/lib/getUnplayedCurrentDate";
-import { toast } from "react-toastify";
 
 interface PredictProps {
     open: boolean;
@@ -53,10 +52,12 @@ export default function PredictScoreDialog({ open, onClose, match }: PredictProp
 
             const res = await createPrediction(payload);
 
+            const { toast } = await import("react-toastify");
             toast.success("ส่งผลสำเร็จค่ะ 🎉");
             onClose();
 
         } catch (err: any) {
+            const { toast } = await import("react-toastify");
             toast.error(err?.response?.data?.error || "ส่งผลไม่สำเร็จค่ะ");
         } finally {
             setLoading(false);

@@ -8,11 +8,22 @@ export async function generateStaticParams() {
   return game_list.map((game) => ({ path: game.path }));
 }
 
-// ✅ Safe shuffle
-function shuffle<T>(arr: T[]) {
+// ✅ Deterministic shuffle (seeded) — same output across crawls/builds for the same seed
+function seededShuffle<T>(arr: T[], seed: string): T[] {
   const a = [...arr];
+  let h = 2166136261;
+  for (let i = 0; i < seed.length; i++) {
+    h ^= seed.charCodeAt(i);
+    h = Math.imul(h, 16777619);
+  }
+  const rand = () => {
+    h ^= h << 13;
+    h ^= h >>> 17;
+    h ^= h << 5;
+    return ((h >>> 0) % 1_000_000) / 1_000_000;
+  };
   for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+    const j = Math.floor(rand() * (i + 1));
     [a[i], a[j]] = [a[j], a[i]];
   }
   return a;
@@ -21,22 +32,54 @@ function shuffle<T>(arr: T[]) {
 export async function generateMetadata({ params }: { params: Promise<{ path: string }> }) {
   const { path } = await params;
   const game = game_list.find((g) => g.path === path);
-  if (!game) return { title: "ไม่พบเกมนี้ | Thaideal" };
+  if (!game) {
+    return {
+      title: "ไม่พบเกมนี้ | Thaideal",
+      description: "ไม่พบเกมที่คุณค้นหา กลับไปดูเกมสล็อตยอดนิยมอื่น ๆ ของ Thaideal",
+      robots: { index: false, follow: true },
+    };
+  }
 
-  const description = `${game.name} รีวิวเกมสล็อต ${game.meta.provider} | อัตรา RTP ${game.meta.rtp} | ฟีเจอร์ ${game.meta.volatility} | ทดลองเล่นฟรีบน Thaideal!`;
+  const canonical = `https://thaideal.co/slots/${path}/`;
+  const description = `${game.name} รีวิวเกมสล็อตจาก ${game.meta.provider} | RTP ${game.meta.rtp} | ความผันผวน ${game.meta.volatility} | อ่านรีวิวจริงและทดลองเล่นฟรีที่ Thaideal`;
 
   return {
-    title: `${game.name} | รีวิวเกมสล็อต`,
+    title: `${game.name} — รีวิว RTP ${game.meta.rtp} | สล็อต ${game.meta.provider} | Thaideal`,
     description,
+    keywords: [
+      game.name,
+      `สล็อต ${game.name}`,
+      `${game.meta.provider} สล็อต`,
+      `RTP ${game.meta.rtp}`,
+      "เกมสล็อต",
+      "Thaideal",
+    ],
+    alternates: { canonical },
     openGraph: {
-      title: game.name,
+      type: "article",
+      locale: "th_TH",
+      siteName: "Thaideal",
+      title: `${game.name} — รีวิวสล็อต ${game.meta.provider}`,
+      description,
+      url: canonical,
+      images: [
+        {
+          url: game.img,
+          width: 1200,
+          height: 630,
+          alt: `${game.name} — เกมสล็อตจาก ${game.meta.provider}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      site: "@thaidealt",
+      creator: "@thaidealt",
+      title: `${game.name} — รีวิวสล็อต ${game.meta.provider}`,
       description,
       images: [game.img],
-      url: `https://thaideal.co/slots/${path}/`,
     },
-    alternates: {
-      canonical: `https://thaideal.co/slots/${path}/`,
-    },
+    robots: { index: true, follow: true },
   };
 }
 
@@ -244,7 +287,7 @@ export default async function GamePage({ params }: { params: Promise<{ path: str
       >
         <h3 className="text-2xl font-bold text-cyan-400 mb-3">🎰 เกมที่น่าสนใจอื่น ๆ</h3>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {shuffle(game_list)
+          {seededShuffle(game_list.filter((g) => g.path !== path), path)
             .slice(0, 10)
             .map((g, i) => (
               <article

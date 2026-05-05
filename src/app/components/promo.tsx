@@ -65,31 +65,49 @@ export default function Promo() {
     return () => window.removeEventListener('beforeunload', clear);
   }, []);
 
-  /* socket */
+  /* socket — defer connection until browser is idle to free up TBT */
   useEffect(() => {
-    const socket = getSocket();
+    let cleanup: (() => void) | undefined;
+    let cancelled = false;
 
-    const onClaimCreated = (payload: PromoItem) => {
-      const normalized: PromoItem = {
-        ...payload,
-        user: maskUser({ user: payload.user }),
-        time: payload.time?.includes('T') ? payload.time : (payload.time?.replace(' ', 'T') ?? ''),
-        emoji: rand0to30(),
+    const start = () => {
+      if (cancelled) return;
+      const socket = getSocket();
+
+      const onClaimCreated = (payload: PromoItem) => {
+        const normalized: PromoItem = {
+          ...payload,
+          user: maskUser({ user: payload.user }),
+          time: payload.time?.includes('T') ? payload.time : (payload.time?.replace(' ', 'T') ?? ''),
+          emoji: rand0to30(),
+        };
+        setClaimData(prev => [normalized, ...prev].slice(0, 8));
+        const k = `${normalized.user}|${normalized.code}|${normalized.time}`;
+        setClaimHighlights(old => ({ ...old, [k]: Date.now() + CLAIM_HIGHLIGHT_MS }));
       };
-      setClaimData(prev => [normalized, ...prev].slice(0, 8));
-      const k = `${normalized.user}|${normalized.code}|${normalized.time}`;
-      setClaimHighlights(old => ({ ...old, [k]: Date.now() + CLAIM_HIGHLIGHT_MS }));
+
+      const onPresenceStats = (data: Record<string, number>) => {
+        setLive(Object.values(data).reduce((a, b) => a + b, 0));
+      };
+
+      socket.on('claim:created', onClaimCreated);
+      socket.on('presence:stats', onPresenceStats);
+      cleanup = () => {
+        socket.off('claim:created', onClaimCreated);
+        socket.off('presence:stats', onPresenceStats);
+      };
     };
 
-    const onPresenceStats = (data: Record<string, number>) => {
-      setLive(Object.values(data).reduce((a, b) => a + b, 0));
-    };
+    const w = window as any;
+    const handle = w.requestIdleCallback
+      ? w.requestIdleCallback(start, { timeout: 2000 })
+      : window.setTimeout(start, 1500);
 
-    socket.on('claim:created', onClaimCreated);
-    socket.on('presence:stats', onPresenceStats);
     return () => {
-      socket.off('claim:created', onClaimCreated);
-      socket.off('presence:stats', onPresenceStats);
+      cancelled = true;
+      if (w.cancelIdleCallback && w.requestIdleCallback) w.cancelIdleCallback(handle);
+      else clearTimeout(handle);
+      cleanup?.();
     };
   }, []);
 

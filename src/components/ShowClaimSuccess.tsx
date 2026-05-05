@@ -1,9 +1,5 @@
 'use client';
 
-import Swal from 'sweetalert2';
-import confetti from 'canvas-confetti';
-import fan3 from '../../public/images/fan3.png'
-
 type Props = {
   points: number;
   soundUrl?: string;
@@ -17,8 +13,14 @@ export async function showClaimSuccess({
   autoCloseMs = 5000,
   onClose,
 }: Props) {
+  // ⚡ Lazy-load heavy libs only when bonus is actually claimed (~150KB off initial JS)
+  const [{ default: Swal }, { default: confetti }] = await Promise.all([
+    import('sweetalert2'),
+    import('canvas-confetti'),
+  ]);
+
   const audio = soundUrl ? new Audio(soundUrl) : null;
-  
+
   // Fire the modal
   await Swal.fire({
     imageUrl: '/images/fan3.png',

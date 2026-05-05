@@ -1,4 +1,3 @@
-'use client';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -97,10 +96,8 @@ export default function Footer() {
             description:
               "Thaideal เป็นเว็บไซต์ที่ได้รับการรับรองมาตรฐานสากลจากองค์กรด้านความรับผิดชอบและการตรวจสอบเกม เช่น GamCare, BeGambleAware, BMM Testlabs, iTech Labs, Gaming Labs International และ Responsible 18+",
             sameAs: [
-              "https://x.com/thaideal",
+              "https://x.com/thaidealt",
               "https://t.me/NEUNG55",
-              "https://facebook.com/",
-              "https://youtube.com/",
             ],
             hasCredential: [
               {
@@ -146,15 +143,6 @@ export default function Footer() {
                   "@type": "Organization",
                   name: "Gaming Labs International",
                   url: "https://gaminglabs.com/",
-                },
-              },
-              {
-                "@type": "EducationalOccupationalCredential",
-                credentialCategory: "Responsible Age Policy",
-                recognizedBy: {
-                  "@type": "Organization",
-                  name: "18+ Responsible Gaming",
-                  url: "#",
                 },
               },
             ],

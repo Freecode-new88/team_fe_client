@@ -33,7 +33,8 @@ export default function Header() {
             alt="Thaideal | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)"
             width={180}
             height={45}
-            priority
+            fetchPriority="high"
+            loading="eager"
             draggable={false}
             className="block h-auto w-[100px] object-contain"
           />

@@ -46,7 +46,7 @@ export default function GameTabs() {
             itemProp="itemListElement"
             itemScope
             itemType="https://schema.org/Game"
-            className={`col-span-1 flex flex-col bg-[#121826] rounded-2xl shadow-lg shadow-black/30 overflow-hidden border border-gray-800 hover:border-cyan-500/40 hover:shadow-cyan-500/20 transition-all duration-300 ${index >= MOBILE_HIDE_FROM_INDEX ? "hidden md:flex" : ""}`}
+            className={`col-span-1 flex flex-col bg-[#121826] rounded-2xl shadow-lg shadow-black/30 overflow-hidden border border-gray-800 hover:border-cyan-500/40 transition-colors duration-200 ${index >= MOBILE_HIDE_FROM_INDEX ? "hidden md:flex" : ""}`}
           >
             <Link
               href={`/slots/${game.path}/`}

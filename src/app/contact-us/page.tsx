@@ -66,19 +66,13 @@ export default function ContactPage() {
       "@type": "ContactPoint",
       contactType: "Customer Support",
       email: "admin@thaidealt.co",
-      telephone: "+66-90-123-4567",
       url: "https://thaideal.co/contact-us/",
       areaServed: "TH",
       availableLanguage: ["th"],
       description:
         "ช่องทางหลักในการติดต่อ Thaideal สำหรับสอบถามข้อมูล แจ้งปัญหา หรือให้ข้อเสนอแนะเพิ่มเติม",
     },
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "123 ถนนสุขุมวิท แขวงคลองตัน เขตวัฒนา กรุงเทพมหานคร 10110",
-      addressCountry: "TH",
-    },
-    sameAs: ["https://thaideal.co"],
+    sameAs: ["https://t.me/NEUNG55", "https://x.com/thaidealt"],
     brand: {
       "@type": "Brand",
       name: "Thaideal",

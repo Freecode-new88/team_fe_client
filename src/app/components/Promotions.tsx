@@ -187,7 +187,7 @@ export default function Promotions() {
                   e.preventDefault();
                   trackAndOpen(item.img, item.web as "mk8" | "f168", item.path);
                 }}
-                className="group relative block overflow-hidden rounded-xl border border-white/10 shadow-md hover:shadow-cyan-400/40 transition-transform duration-300 hover:scale-[1.02] bg-black/30 backdrop-blur-sm"
+                className="group relative block overflow-hidden rounded-xl border border-white/10 shadow-md bg-black/30 backdrop-blur-sm transition-transform duration-200 will-change-transform hover:scale-[1.02]"
                 itemProp="url"
               >
                 <Image
@@ -197,7 +197,8 @@ export default function Promotions() {
                   height={198}
                   loading="lazy"
                   decoding="async"
-                  className="w-full h-auto object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+                  sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                  className="w-full h-auto object-cover"
                   draggable={false}
                   itemProp="image"
                 />

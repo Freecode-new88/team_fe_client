@@ -146,22 +146,7 @@ export default function ContactUsClient() {
             </li>
 
             <li className="flex items-center gap-3">
-              <span className="text-gray-100 text-sm sm:text-base">
-                ที่อยู่: 123 ถนนสุขุมวิท แขวงคลองตัน เขตวัฒนา กรุงเทพมหานคร 10110
-              </span>
-            </li>
-
-            <li className="flex items-center gap-3">
               <span className="text-gray-100 text-sm sm:text-base">ชื่อแบรนด์: Thaideal</span>
-            </li>
-
-            <li className="flex items-center gap-3">
-              <span className="text-gray-100 text-sm sm:text-base">
-                เบอร์โทรศัพท์:{" "}
-                <Link href="tel:+66901234567" className="text-cyan-400 hover:underline">
-                  +66 90 123 4567
-                </Link>
-              </span>
             </li>
 
             <li className="flex items-center gap-3">
