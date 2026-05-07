@@ -104,7 +104,7 @@ export default function ContactUsClient() {
           <ul className={`${styles.infoList} flex flex-col gap-3 mt-2`} ref={listRef}>
             <li className="flex items-center gap-3">
               <Link
-                href="https://t.me/NEUNG55"
+                href="https://t.me/DEATPHING55"
                 target="_blank"
                 rel="noopener noreferrer me"
                 className="flex items-center gap-3 hover:opacity-90 transition"
@@ -117,7 +117,7 @@ export default function ContactUsClient() {
                   className="w-8 h-8 sm:w-10 sm:h-10 object-contain"
                   loading="lazy"
                 />
-                <span className="text-gray-100 text-sm sm:text-base">Telegram: @NEUNG55</span>
+                <span className="text-gray-100 text-sm sm:text-base">Telegram: @DEATPHING55</span>
               </Link>
             </li>
 

@@ -72,7 +72,7 @@ export default function ContactPage() {
       description:
         "ช่องทางหลักในการติดต่อ Thaideal สำหรับสอบถามข้อมูล แจ้งปัญหา หรือให้ข้อเสนอแนะเพิ่มเติม",
     },
-    sameAs: ["https://t.me/NEUNG55", "https://x.com/thaidealt"],
+    sameAs: ["https://t.me/DEATPHING55", "https://x.com/thaidealt"],
     brand: {
       "@type": "Brand",
       name: "Thaideal",

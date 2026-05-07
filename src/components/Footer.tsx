@@ -97,7 +97,7 @@ export default function Footer() {
               "Thaideal เป็นเว็บไซต์ที่ได้รับการรับรองมาตรฐานสากลจากองค์กรด้านความรับผิดชอบและการตรวจสอบเกม เช่น GamCare, BeGambleAware, BMM Testlabs, iTech Labs, Gaming Labs International และ Responsible 18+",
             sameAs: [
               "https://x.com/thaidealt",
-              "https://t.me/NEUNG55",
+              "https://t.me/DEATPHING55",
             ],
             hasCredential: [
               {
