@@ -4,18 +4,18 @@ import Script from "next/script";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaideal",
+  title: "นโยบายความเป็นส่วนตัว (Privacy Policy)",
   description:
-    "Thaideal ให้ความสำคัญกับการคุ้มครองข้อมูลส่วนบุคคลของผู้ใช้งาน ตามหลัก PDPA และ GDPR เพื่อความปลอดภัย โปร่งใส และน่าเชื่อถือสูงสุด.",
+    "Thaideal คุ้มครองข้อมูลส่วนบุคคลตามหลัก PDPA และ GDPR เพื่อความปลอดภัย โปร่งใส และน่าเชื่อถือสูงสุด",
   alternates: { canonical: "https://thaideal.co/privacy/" },
   openGraph: {
     type: "article",
     locale: "th_TH",
     url: "https://thaideal.co/privacy/",
     siteName: "Thaideal — ศูนย์รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี",
-    title: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaideal",
+    title: "นโยบายความเป็นส่วนตัว (Privacy Policy)",
     description:
-      "อ่านนโยบายความเป็นส่วนตัวของ Thaideal เพื่อเข้าใจแนวทางการเก็บ ใช้ และปกป้องข้อมูลส่วนบุคคลของคุณตามหลัก PDPA และ GDPR.",
+      "อ่านนโยบายความเป็นส่วนตัวของ Thaideal เพื่อเข้าใจการเก็บ ใช้ และปกป้องข้อมูลส่วนบุคคลตามหลัก PDPA และ GDPR",
     images: [
       {
         url: "https://thaideal.co/og/og-v1.webp",
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@thaidealt",
     creator: "@thaidealt",
-    title: "นโยบายความเป็นส่วนตัว (Privacy Policy) | Thaideal",
+    title: "นโยบายความเป็นส่วนตัว (Privacy Policy)",
     description:
-      "Thaideal ให้ความสำคัญกับการปกป้องข้อมูลของคุณ ตามหลัก PDPA และ GDPR เพื่อความปลอดภัยสูงสุด.",
+      "Thaideal ปกป้องข้อมูลของคุณตามหลัก PDPA และ GDPR เพื่อความปลอดภัยสูงสุด",
     images: ["https://thaideal.co/og/og-v1.webp"],
   },
   robots: { index: true, follow: true },

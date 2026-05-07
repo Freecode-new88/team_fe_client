@@ -27,10 +27,9 @@ export async function generateMetadata({
   }
 
   const canonical = `${baseUrl}promotion-info/${promo.path}/`;
-  const titleFull = `${promo.title} | โปรโมชั่น ${promo.category?.[0] || ""} ${promo.web?.toUpperCase()}`.trim();
 
   return {
-    title: titleFull,
+    title: { absolute: promo.title },
     description: promo.subtitle,
     keywords: promo.keywords,
     alternates: { canonical },

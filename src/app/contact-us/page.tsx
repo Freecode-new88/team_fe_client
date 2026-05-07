@@ -3,9 +3,9 @@ import Script from "next/script";
 import ContactUsClient from "./ContactUsClient";
 
 export const metadata: Metadata = {
-  title: "ติดต่อ Thaideal | ช่องทางติดต่อและสนับสนุนข้อมูลโปรโมชั่น",
+  title: "ติดต่อเรา — ช่องทางสอบถามและแจ้งปัญหา",
   description:
-    "ติดต่อทีมงาน Thaideal เพื่อสอบถามข้อมูล แจ้งปัญหา หรือเสนอแนะเกี่ยวกับโปรโมชันและโค้ดเครดิตฟรีจาก F168 และ MK8 ได้ที่นี่ — ทีมงานพร้อมตอบกลับภายใน 24 ชั่วโมง",
+    "ติดต่อทีมงาน Thaideal เพื่อสอบถาม แจ้งปัญหา หรือเสนอแนะเกี่ยวกับโปรโมชันและโค้ดเครดิตฟรี F168/MK8 ตอบกลับภายใน 24 ชม.",
   alternates: {
     canonical: "https://thaideal.co/contact-us/",
   },
@@ -14,9 +14,9 @@ export const metadata: Metadata = {
     locale: "th_TH",
     url: "https://thaideal.co/contact-us/",
     siteName: "Thaideal — รวมข้อมูลโปรโมชันและโค้ดเครดิตฟรี",
-    title: "ติดต่อ Thaideal (Contact Us) | Thaideal",
+    title: "ติดต่อเรา — ช่องทางสอบถามและแจ้งปัญหา",
     description:
-      "ช่องทางติดต่อ Thaideal เพื่อสอบถาม แจ้งปัญหา หรือติดต่อฝ่ายสนับสนุน เกี่ยวกับโปรโมชันและโค้ดเครดิตฟรีจาก F168 และ MK8.",
+      "ช่องทางติดต่อ Thaideal เพื่อสอบถาม แจ้งปัญหา หรือฝ่ายสนับสนุน เกี่ยวกับโปรโมชันและโค้ดเครดิตฟรี F168/MK8",
     images: [
       {
         url: "https://thaideal.co/og/contact.webp",
@@ -30,9 +30,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@thaidealt",
     creator: "@thaidealt",
-    title: "ติดต่อ Thaideal | ช่องทางสอบถามและแจ้งปัญหา",
+    title: "ติดต่อเรา — ช่องทางสอบถามและแจ้งปัญหา",
     description:
-      "ติดต่อ Thaideal ได้โดยตรงเพื่อสอบถามข้อมูลโปรโมชัน แจ้งปัญหา หรือเสนอแนะเพิ่มเติมได้ทุกวัน.",
+      "ติดต่อ Thaideal โดยตรงเพื่อสอบถามข้อมูลโปรโมชัน แจ้งปัญหา หรือเสนอแนะเพิ่มเติมได้ทุกวัน",
     images: ["https://thaideal.co/og/contact.webp"],
   },
   robots: { index: true, follow: true },

@@ -2,9 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "404 — ไม่พบหน้านี้ | Thaideal",
+  title: "404 — ไม่พบหน้านี้",
   description:
-    "ขออภัย ไม่พบหน้าที่คุณกำลังค้นหา กลับไปที่หน้าหลักของ Thaideal เพื่อดูโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีล่าสุด",
+    "ขออภัย ไม่พบหน้าที่คุณค้นหา กลับไปหน้าหลัก Thaideal เพื่อดูโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีล่าสุด",
   robots: { index: false, follow: true },
   alternates: { canonical: "https://thaideal.co/404" },
 };

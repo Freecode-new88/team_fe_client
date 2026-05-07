@@ -7,10 +7,11 @@ import Faq from './components/faq';
 import GameTabs from './components/GameTabs';
 
 export const metadata: Metadata = {
-  title:
-    "Thaideal | ศูนย์รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 (อัปเดตทุกวัน)",
+  title: {
+    absolute: "Thaideal | รวมโปรโมชัน เครดิตฟรี F168/MK8 อัปเดตทุกวัน",
+  },
   description:
-    "Thaideal รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีจาก F168 และ MK8 อัปเดตทุก 15 นาที พร้อมเงื่อนไขจริงจากแหล่งทางการ ตรวจสอบสิทธิ์ได้ทันทีและรับโบนัสง่ายในไม่กี่ขั้นตอน",
+    "Thaideal รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีจาก F168/MK8 อัปเดตทุก 15 นาที พร้อมเงื่อนไขจริงและขั้นตอนรับสิทธิ์",
   keywords: [
     "โปรโมชัน",
     "เครดิตฟรี",
@@ -27,10 +28,9 @@ export const metadata: Metadata = {
     locale: "th_TH",
     url: "https://thaideal.co/",
     siteName: "Thaideal",
-    title:
-      "Thaideal | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8 อัปเดตทุกวัน",
+    title: "Thaideal | รวมโปรโมชัน เครดิตฟรี F168/MK8 อัปเดตทุกวัน",
     description:
-      "ศูนย์รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีจาก F168 / MK8 อัปเดตทุก 15 นาที พร้อมเงื่อนไขจริงและขั้นตอนรับสิทธิ์ครบถ้วน",
+      "ศูนย์รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีจาก F168/MK8 อัปเดตทุก 15 นาที พร้อมเงื่อนไขจริงและขั้นตอนรับสิทธิ์",
     images: [
       {
         url: "https://thaideal.co/og/og-v1.webp",
@@ -44,10 +44,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@thaidealt",
     creator: "@thaidealt",
-    title:
-      "Thaideal | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี F168/MK8",
+    title: "Thaideal | รวมโปรโมชัน เครดิตฟรี F168/MK8",
     description:
-      "อัปเดตโปรโมชันและโค้ดเครดิตฟรี F168 / MK8 ทุก 15 นาที พร้อมเงื่อนไขจริงและขั้นตอนรับสิทธิ์ครบถ้วน",
+      "อัปเดตโปรโมชันและโค้ดเครดิตฟรี F168/MK8 ทุก 15 นาที พร้อมเงื่อนไขจริงและขั้นตอนรับสิทธิ์",
     images: ["https://thaideal.co/og/og-v1.webp"],
   },
 };

@@ -41,10 +41,13 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   }
 
   const canonical = `https://thaideal.co/slots/${path}/`;
-  const description = `${game.name} รีวิวเกมสล็อตจาก ${game.meta.provider} | RTP ${game.meta.rtp} | ความผันผวน ${game.meta.volatility} | อ่านรีวิวจริงและทดลองเล่นฟรีที่ Thaideal`;
+  const description = `รีวิว ${game.name} จาก ${game.meta.provider} RTP ${game.meta.rtp} ความผันผวน ${game.meta.volatility} ทดลองเล่นฟรีที่ Thaideal`;
+
+  const baseTitle = `รีวิว ${game.name} สล็อต ${game.meta.provider}`;
+  const trimmedTitle = baseTitle.length > 60 ? `รีวิว ${game.name}` : baseTitle;
 
   return {
-    title: `${game.name} — รีวิว RTP ${game.meta.rtp} | สล็อต ${game.meta.provider} | Thaideal`,
+    title: { absolute: trimmedTitle },
     description,
     keywords: [
       game.name,
@@ -59,7 +62,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
       type: "article",
       locale: "th_TH",
       siteName: "Thaideal",
-      title: `${game.name} — รีวิวสล็อต ${game.meta.provider}`,
+      title: `รีวิว ${game.name} สล็อต ${game.meta.provider}`,
       description,
       url: canonical,
       images: [
@@ -75,7 +78,7 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
       card: "summary_large_image",
       site: "@thaidealt",
       creator: "@thaidealt",
-      title: `${game.name} — รีวิวสล็อต ${game.meta.provider}`,
+      title: `รีวิว ${game.name} สล็อต ${game.meta.provider}`,
       description,
       images: [game.img],
     },

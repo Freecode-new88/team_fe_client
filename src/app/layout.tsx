@@ -22,19 +22,19 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://thaideal.co/"),
   alternates: { canonical: "https://thaideal.co" },
   title: {
-    default: "Thaideal | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
-    template: "%s | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี — Thaideal",
+    default: "Thaideal | รวมโปรโมชัน เครดิตฟรี F168/MK8",
+    template: "%s | Thaideal",
   },
   description:
-    "Thaideal แหล่งรวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีจาก F168/MK8 อัปเดตทุกวัน พร้อมข้อมูลเงื่อนไขจริงจากแหล่งทางการ เว็บไซต์ที่ได้รับการรับรองมาตรฐานสากล",
+    "Thaideal รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีจาก F168/MK8 อัปเดตทุกวัน พร้อมเงื่อนไขจริงจากแหล่งทางการ",
   openGraph: {
     type: "website",
     locale: "th_TH",
     siteName: "Thaideal — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี",
     url: "https://thaideal.co/",
-    title: "Thaideal | รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
+    title: "Thaideal | รวมโปรโมชัน เครดิตฟรี F168/MK8",
     description:
-      "Thaideal เว็บไซต์ที่ได้รับการรับรองด้านความปลอดภัยและความรับผิดชอบ รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีจาก F168 / MK8 อัปเดตทุกวัน",
+      "รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีจาก F168 / MK8 อัปเดตทุกวัน พร้อมเงื่อนไขจริงจากแหล่งทางการ",
     images: [
       {
         url: "https://thaideal.co/og/og-v1.webp",
@@ -48,10 +48,9 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     site: "@thaidealt",
     creator: "@thaidealt",
-    title:
-      "Thaideal — รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรี (อัปเดตทุกวัน)",
+    title: "Thaideal | รวมโปรโมชัน เครดิตฟรี F168/MK8",
     description:
-      "Thaideal เว็บไซต์ที่ได้รับการรับรองมาตรฐาน อัปเดตโปรโมชันและโค้ดเครดิตฟรีทุกวัน ใช้งานง่าย ปลอดภัย และโปร่งใส",
+      "อัปเดตโปรโมชันและโค้ดเครดิตฟรี F168/MK8 ทุกวัน ใช้งานง่าย ปลอดภัย และโปร่งใส",
     images: ["https://thaideal.co/og/og-v1.webp"],
   },
   robots: {
@@ -109,7 +108,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="theme-color" content="#ffffff" />
         <meta
           name="description"
-          content="Thaideal แหล่งรวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีจาก F168/MK8 อัปเดตทุกวัน พร้อมข้อมูลเงื่อนไขจริงจากแหล่งทางการ เว็บไซต์ที่ได้รับการรับรองมาตรฐานสากล"
+          content="Thaideal รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีจาก F168/MK8 อัปเดตทุกวัน พร้อมเงื่อนไขจริงจากแหล่งทางการ"
         />
 
         {/* ✅ Verification */}
