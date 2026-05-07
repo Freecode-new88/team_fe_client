@@ -111,23 +111,11 @@ function trackAndOpen(img: string, web: "mk8" | "f168", path: string) {
   window.location.href = `/promotion-info/${path}/`;
 }
 
-function shuffle<T>(arr: T[]) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
 export default function Promotions() {
   const [visible, setVisible] = useState<Set<number>>(new Set());
   const itemRefs = useRef<(HTMLElement | null)[]>([]);
   const uniqueGames = useMemo(() => Array.from(new Map(games.map(g => [g.img, g])).values()), []);
-  const [picked, setPicked] = useState<Game[]>(() => uniqueGames.slice(0, 8));
-
-  // ✅ สุ่มหลัง mount (1 ครั้ง)
-  useEffect(() => setPicked(shuffle(uniqueGames).slice(0, 8)), [uniqueGames]);
+  const picked = uniqueGames;
 
   // ✅ Lazy animation เฉพาะที่มองเห็น
   useEffect(() => {

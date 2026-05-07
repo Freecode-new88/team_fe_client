@@ -2,21 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { game_list } from "@/promotions/game_list";
 
-// 🔹 ใช้ random แต่ deterministic (ไม่เปลี่ยนทุก render)
-function shuffle<T>(arr: T[]) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
-
-const MAX_GAMES = 24;
 const MOBILE_HIDE_FROM_INDEX = 12;
 
 export default function GameTabs() {
-  const randomGames = shuffle(game_list).slice(0, MAX_GAMES);
+  const randomGames = game_list;
 
   return (
     <section

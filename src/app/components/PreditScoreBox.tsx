@@ -227,6 +227,7 @@ const PreditScoreBox: React.FC = () => {
                         src="https://file.781243555.com/emoji/fire.webp"
                         style={{ width: 16, height: 16 }}
                         alt=""
+                        aria-hidden="true"
                       />
                       ทายผล
                     </button>

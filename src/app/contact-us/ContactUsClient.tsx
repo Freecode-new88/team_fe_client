@@ -154,7 +154,7 @@ export default function ContactUsClient() {
             </li>
 
             <li className="flex items-center gap-3">
-              <Link href="/privacy" className="flex items-center gap-3 hover:opacity-90 transition">
+              <Link href="/privacy/" className="flex items-center gap-3 hover:opacity-90 transition">
                 <Image
                   src="/images/privacy.svg"
                   alt="นโยบายความเป็นส่วนตัว Thaideal"

@@ -106,10 +106,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/icons/thaibet-icon-180.png" />
         <meta name="theme-color" content="#ffffff" />
-        <meta
-          name="description"
-          content="Thaideal รวมโปรโมชัน เครดิตฟรี และโค้ดเครดิตฟรีจาก F168/MK8 อัปเดตทุกวัน พร้อมเงื่อนไขจริงจากแหล่งทางการ"
-        />
 
         {/* ✅ Verification */}
         <meta name="msvalidate.01" content="1C15A36A3A5BC7B9C3B25F930B875D3C" />

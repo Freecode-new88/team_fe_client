@@ -171,7 +171,7 @@ export default function AboutUsPage() {
             <div className="w-12 h-12 sm:w-16 sm:h-16 mb-2">
               <Image
                 src={c.icon}
-                alt=""
+                alt={c.label || "ไอคอนสถิติ Thaideal"}
                 width={76}
                 height={76}
                 className="object-contain w-full h-full"

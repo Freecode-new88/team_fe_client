@@ -73,26 +73,35 @@ export default async function PromotionInfoPage({
     "@context": "https://schema.org",
     "@graph": [
       {
-        "@type": "Offer",
-        "@id": `${canonical}#offer`,
+        "@type": "Article",
+        "@id": `${canonical}#article`,
         url: canonical,
-        name: promo.title,
+        headline: promo.title,
         description: promo.subtitle,
         image: promo.imgs,
-        category: promo.category,
-        availability: "https://schema.org/InStock",
-        priceCurrency: "THB",
-        price: 0,
-        eligibleQuantity: promo.maxBonus
-          ? { "@type": "QuantitativeValue", maxValue: promo.maxBonus, unitText: "THB" }
-          : undefined,
-        seller: {
+        keywords: promo.keywords?.join(", "),
+        inLanguage: "th-TH",
+        datePublished: "2023-01-01",
+        dateModified: new Date().toISOString().split("T")[0],
+        author: {
           "@type": "Organization",
-          name: promo.web?.toUpperCase() || "Thaideal",
+          name: "Thaideal",
           url: "https://thaideal.co/",
         },
-        validFrom: new Date().toISOString().split("T")[0],
-        keywords: promo.keywords?.join(", "),
+        publisher: {
+          "@type": "Organization",
+          name: "Thaideal",
+          url: "https://thaideal.co/",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://thaideal.co/icons/thaibet-icon-512.png",
+          },
+        },
+        mainEntityOfPage: { "@type": "WebPage", "@id": canonical },
+        about: {
+          "@type": "Organization",
+          name: promo.web?.toUpperCase() || "Thaideal",
+        },
       },
       {
         "@type": "BreadcrumbList",
@@ -117,8 +126,6 @@ export default async function PromotionInfoPage({
   return (
     <main
       className="relative min-h-screen py-10 px-4 md:px-8 lg:px-16 text-white"
-      itemScope
-      itemType="https://schema.org/Offer"
     >
       <script
         type="application/ld+json"
@@ -135,14 +142,9 @@ export default async function PromotionInfoPage({
           backgroundRepeat: "no-repeat",
         }}
       />
-      <meta itemProp="url" content={`${baseUrl}promotion-info/${promo.path}/`} />
-      <meta itemProp="name" content={promo.title} />
-      <meta itemProp="description" content={promo.subtitle} />
 
       <article
         className="max-w-5xl mx-auto bg-black/70 backdrop-blur-sm rounded-2xl border border-cyan-400/40 shadow-xl p-6 md:p-10"
-        itemScope
-        itemType="https://schema.org/Offer"
       >
         <nav
           aria-label="breadcrumb"
@@ -199,10 +201,7 @@ export default async function PromotionInfoPage({
           )}
           <p className="text-sm text-gray-400 mt-2">
             อัปเดตล่าสุด:
-            <time
-              dateTime={new Date().toISOString()}
-              itemProp="priceValidUntil"
-            >
+            <time dateTime={new Date().toISOString()}>
               {" "}
               {new Date().toLocaleDateString("th-TH", {
                 year: "numeric",
@@ -241,8 +240,6 @@ export default async function PromotionInfoPage({
         <section
           className="mt-10"
           aria-label="รายละเอียดโปรโมชั่น"
-          itemScope
-          itemType="https://schema.org/Offer"
         >
           <h2 className="text-center text-2xl font-bold mb-5 bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">
             รายละเอียดโปรโมชั่น
