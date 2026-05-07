@@ -41,7 +41,11 @@ export async function generateMetadata({ params }: { params: Promise<{ path: str
   }
 
   const canonical = `https://thaideal.co/slots/${path}/`;
-  const description = `รีวิว ${game.name} จาก ${game.meta.provider} RTP ${game.meta.rtp} ความผันผวน ${game.meta.volatility} ทดลองเล่นฟรีที่ Thaideal`;
+  const maxWin = game.meta.maximum_Win ? ` แตกสูงสุด ${game.meta.maximum_Win}` : "";
+  const baseDesc = `รีวิวสล็อต ${game.name} ค่าย ${game.meta.provider} RTP ${game.meta.rtp} ความผันผวน${game.meta.volatility}${maxWin} พร้อมวิธีเล่น ฟีเจอร์โบนัส ทดลองเล่นฟรีที่ Thaideal`;
+  const description = baseDesc.length > 158
+    ? `รีวิวสล็อต ${game.name} ค่าย ${game.meta.provider} RTP ${game.meta.rtp} ความผันผวน${game.meta.volatility} วิธีเล่น ฟีเจอร์โบนัส ทดลองเล่นฟรีที่ Thaideal`
+    : baseDesc;
 
   const baseTitle = `รีวิว ${game.name} สล็อต ${game.meta.provider}`;
   const trimmedTitle = baseTitle.length > 60 ? `รีวิว ${game.name}` : baseTitle;
