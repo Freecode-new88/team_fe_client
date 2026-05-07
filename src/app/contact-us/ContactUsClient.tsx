@@ -185,7 +185,7 @@ export default function ContactUsClient() {
             data-motion="drop"
           >
             <Image
-              src="/images/TGQR.png"
+              src="/images/tg.png"
               alt="QR code ติดต่อ Thaideal ทาง Telegram"
               width={280}
               height={280}
