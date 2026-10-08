@@ -13,6 +13,7 @@ export enum MatchStatus {
   ET = "ET",     // ต่อเวลาพิเศษ
   BT = "BT",     // พักระหว่างต่อเวลา
   P = "P",       // ยิงจุดโทษ
+  K = "K",       // กำลังแข่ง (kick-off)
   FT = "FT",     // จบเกม (Full Time)
   AET = "AET",   // จบเกมหลังต่อเวลา
   PEN = "PEN",   // จบเกมหลังดวลจุดโทษ
@@ -21,6 +22,7 @@ export enum MatchStatus {
   PST = "PST",   // เลื่อน (Postponed)
   CANC = "CANC", // ยกเลิก (Cancelled)
   ABD = "ABD",   // ยกเลิกเกมกลางคัน (Abandoned)
+  AWD = "AWD",   // ชนะทางเทคนิค (Awarded)
   WO = "WO",     // ชนะบาย (Walkover)
   LIVE = "LIVE"  // กำลังแข่ง (บางลีกใช้แทน 1H/2H)
 }
